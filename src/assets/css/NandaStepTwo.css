@@ -1,0 +1,7 @@
+.nd-born-thead, th {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    background: #2962ff !important;
+    color: var(--nd-white) !important;
+}

@@ -1,0 +1,40 @@
+.sector-thead th{
+    background-color:#373A65 !important;
+}
+.search-btn-sector{
+display: inline-block;
+    margin: var(--nd-space-100) var(--nd-space-50);
+    background-color: #373A65;
+    font-size: var(--nd-space-700);
+    padding: var(--nd-space-0) var(--nd-space-300);
+    height: 35px;
+    width: 35px;
+    line-height: 38px;
+    text-align: center;
+    color: var(--nd-white);
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    border: none;
+    border-radius: 50%;
+}
+.sector-paging .active>.page-link, .page-link.active {
+    background: #373A65 !important;
+    border: 1px solid #373A65;
+    color: var(--nd-white) !important;
+}
+a.page-link{
+    color: #373A65 !important;
+}
+.nd-sector-heading h1 {
+    font-size: var(--nd-space-400);
+    font-weight: 600;
+    color: #0F123F !important;
+}
+
+@media (max-width: 575.98px) {
+.nd-sector-heading h1{
+    font-size: var(--nd-space-350);
+}
+}

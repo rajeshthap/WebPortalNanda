@@ -1,0 +1,7 @@
+.nd-born-thead th{
+    background-color: var(--nd-blue)
+     !important;
+}
+.form-check-input[type=radio] {
+    border: 1px solid gray;
+}

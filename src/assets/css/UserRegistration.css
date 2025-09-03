@@ -1,0 +1,24 @@
+.nd-registration{
+    text-align: center !important;
+}
+.modal-footer{
+    justify-content: center !important;
+    }
+    .nd-forgot-input{
+        font-size: var(--nd-space-300);
+        
+    }
+    .nd-label-input{
+        font-size: var(--nd-space-300);
+        font-weight: 550;
+
+    }
+    .nd-form-label:hover{
+color: var(--nd-primary) !important;
+    }
+    
+.nd-label-input .form-select{
+     
+    font-size: var(--nd-space-300) !important;
+    
+    }

@@ -1,0 +1,239 @@
+.nd-btn-district {
+    border-radius: 16px !important;
+    font-size: 10px;
+    padding: 0px;
+    color: #1d1d9e;
+}
+
+span.badge.rounded-pill.text-dark-white.d-inline-block.nd-btn-district1 {
+    position: relative;
+    top: -6px;
+}
+
+button.view-report.btn.btn-primary {
+    background-color: transparent !important;
+    color: var(--nd-black);
+    border: none;
+    padding: var(--nd-space-0);
+}
+
+button.view-report-cdpo.btn.btn-primary {
+    background-color: transparent !important;
+    color: red;
+    border: none;
+    padding: var(--nd-space-0);
+
+}
+
+button.view-app-cdpo.btn.btn-primary {
+    background-color: transparent !important;
+    color: green;
+    border: none;
+    padding: var(--nd-space-0);
+
+}
+
+span.badge.rounded-pill.text-dark-white.d-inline-block.nd-cdpo-district.nd-btn-district1 {
+    color: #ef5350;
+    font-size: var(--nd-space-250) !important;
+}
+
+span.badge.rounded-pill.text-dark-white.d-inline-block.nd-cdpo-district.nd-btn-app {
+    color: #5c62d6;
+    font-size: var(--nd-space-250) !important;
+    position: relative;
+    top: -6px;
+}
+
+.nd-data-report {
+    font-weight: inherit;
+    background-color: #1d1d9e;
+    margin-left: var(--nd-space-100);
+    font-size: 10px;
+    border-radius: 13px;
+    padding: 4px;
+    margin-right: var(--nd-space-100);
+}
+
+.pro-report-view1 {
+    font-size: var(--nd-space-500);
+    border-radius: 4px;
+    color: #1d1d9e;
+    margin-left: 4px;
+}
+
+.pro-form-view {
+    font-size: var(--nd-space-500);
+    border-radius: 4px;
+    color: #ef5350;
+    margin-left: 4px;
+}
+
+.pro-form-app {
+    font-size: var(--nd-space-500);
+    border-radius: 4px;
+    color: #5c62d6;
+    margin-left: 4px;
+}
+
+.nd-district-heading h1 {
+    font-size: var(--nd-space-400);
+    font-weight: 600;
+    color: var(--nd-bg-dark-green) !important;
+}
+
+.district-thead th {
+    background-color: var(--nd-bg-dark-green) !important;
+}
+
+.dis-paging .active>.page-link,
+.page-link.active {
+    background: #278557 !important;
+    border: 1px solid #278557;
+    color: var(--nd-white) !important;
+}
+
+a.page-link {
+    color: #166a41;
+}
+
+.search-btn1 {
+    display: inline-block;
+    margin: var(--nd-space-100) var(--nd-space-50);
+    background-color: #166a41;
+    font-size: var(--nd-space-700);
+    padding: var(--nd-space-0) var(--nd-space-300);
+    height: 35px;
+    width: 35px;
+    line-height: 38px;
+    text-align: center;
+    color: var(--nd-white);
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    border: none;
+    border-radius: 50%;
+}
+
+.dis-search {
+    margin-top: var(--nd-space-100);
+    position: absolute;
+    left: 0px;
+    height: 42px !important;
+    background-color: #dbf5e8;
+    outline: none;
+    border: none;
+    padding: 0;
+    width: 0;
+    height: 100%;
+    z-index: 10;
+    transition: width 0.4sease-in-out, padding 0.4sease-in-out;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.td.td-p {
+    padding: 4px !important;
+}
+
+.table-container-data {
+    overflow-x: auto;
+
+}
+
+.nd-district-td {
+    width: 314px;
+}
+
+.nd-district-td1 {
+    width: 125px;
+}
+
+.nd-district-td2 {
+    width: 75px;
+}
+
+.nd-app-td {
+    width: 75px;
+}
+
+.pro-list-note h2 {
+    font-size: var(--nd-space-300);
+    color: #ef5350;
+}
+
+.pro-list-data h3 {
+    font-size: var(--nd-space-300);
+}
+
+.upload-chekbox {
+    font-size: var(--nd-space-300);
+}
+
+.dis-upload {
+    line-height: 16px;
+}
+
+.input-group-text {
+    padding: 0px !important;
+    border: none !important;
+    margin-top: 4px;
+}
+
+.form-check-input[type=checkbox] {
+    border: 1px var(--nd-border) solid !important;
+}
+
+.upload-chekbox {
+    padding-top: 6px !important;
+    color: var(--nd-Primary);
+}
+.pro-offline-text h4{
+    margin-left: 4px;
+    font-size: var(--nd-space-300);
+
+}
+.dis-input{
+    width: 610px;
+    border: 1px var(--nd-border) solid !important;
+    background: #dbf5e8;
+    color: #000;
+}
+.dis-btn-fortward{
+    display: flex;
+    justify-content: flex-start;
+}
+/* .nd-staff-mobresp{
+    display: flex ;
+        justify-content: space-between;
+} */
+@media (max-width: 575.98px){
+    .dis-btn-fortward{
+       display: block;
+    }
+   
+    .dis-input{
+        width: 310px;
+        border: 1px var(--nd-border) solid !important;
+    }
+    .upload-chekbox{
+        font-size: 10px;
+    }
+    .search-container{
+        position: relative;
+    display: inline-block;
+    margin: var(--nd-space-100) var(--nd-space-50);
+    height: 50px;
+    width: 192px;
+    }
+
+    .dis-prnt-btn{
+display: flex;
+    }
+    
+
+
+   
+   
+}

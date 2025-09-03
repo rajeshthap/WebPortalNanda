@@ -1,0 +1,18 @@
+.nd-modal-title {
+    font-size: var(--nd-space-400);
+    color: var(--nd-Primary) !important;
+    font-weight: 700;
+}
+
+.nd-modal-body ol li {
+    font-size: var(--nd-space-300);
+ 
+    line-height: var(--nd-space-600);
+   
+
+}
+
+.nd-footer {
+    justify-content: center !important;
+}
+

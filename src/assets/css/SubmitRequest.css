@@ -1,0 +1,18 @@
+tfoot, th, thead, tr {
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    /* background: #2962ff !important;
+    color: var(--nd-white) !important; */
+}
+.nd-Request p{
+    font-size: var(--space-300);
+}
+.form-label {
+    font-size: var(--nd-space-350);
+ 
+}
+.nd-red{
+    color: var(--nd-Primary) !important;
+    font-weight: 600;
+}

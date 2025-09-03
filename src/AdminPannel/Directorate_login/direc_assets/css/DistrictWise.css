@@ -1,0 +1,12 @@
+.direc-12th-heading{
+    background-color:#ab492a !important;
+ 
+}
+.nd-direc-border{
+    border-right: 1px solid white;
+}
+.nd-direc-heading h1{
+    font-size: var(--nd-space-300);
+    color: var(--nd-orange);
+    font-weight: 600;
+}

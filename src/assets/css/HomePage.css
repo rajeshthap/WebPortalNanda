@@ -1,0 +1,117 @@
+.nd-card-title {
+    color: var(--nd-Primary) !important;
+    font-weight: bold;
+}
+
+.nd-card-btn {
+    background-color: var(--nd-Primary) !important;
+    min-width: 150px;
+}
+
+
+
+.nd-Login-form .nd-btn {
+    text-align: center;
+    margin-bottom: var(--nd-space-300);
+}
+
+.nd-card-img {
+    text-align: center;
+}
+
+dl,
+ol,
+ul {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.carousel-control-prev-icon {
+    background-image: none;
+    background-color: var(--nd-Primary);
+    border-radius: 50%;
+    opacity: 100%;
+    color: var(--nd-white) !important;
+    font-size: var(--nd-space-450) !important;
+    padding-top: var(--nd-space-25) !important;
+    font-weight: 600;
+    font-weight: 600;
+
+
+}
+
+.carousel-control-next-icon {
+    background-image: none;
+    background-color: var(--nd-Primary);
+    border-radius: 50%;
+    opacity: 100%;
+    color: var(--nd-white) !important;
+    font-size: var(--nd-space-450) !important;
+    padding-top: var(--nd-space-25) !important;
+    font-weight: 600;
+}
+
+.carousel-control-prev-icon::before {
+    content: "<";
+    color: inherit;
+}
+
+.carousel-control-next-icon::after {
+    content: ">";
+}
+
+.nd-card-info {
+    padding: var(--nd-space-300);
+
+}
+button.nd-primary-btn.btn.btn-primary{
+    background-color: var(--nd-Primary) !important;
+}
+
+.nd-card-body ol li {
+    padding: 2px;
+    padding-right: 16px;
+    line-height: var(--nd-space-500) !important;
+    font-size: var(--nd-space-300) !important;
+    text-align: justify;
+}
+
+.nd-card-body .nd-spann-info {
+    font-size: var(--nd-space-250);
+    text-align: center !important;
+}
+
+.nd-card-info p {
+    font-size: var(--nd-space-300);
+
+}
+
+.nd-card-info-data {
+    margin-top: 0px;
+}
+
+.nd-card-icon {
+    color: var(--nd-Primary);
+    padding: var(--nd-space-200);
+}
+
+
+.carousel-control-next,
+.carousel-control-prev {
+    opacity: 100% !important;
+    text-decoration: none;
+}
+
+@media (max-width: 576px) {
+
+
+    .nd-btn {
+        padding: var(--nd-space-200);
+    }
+    .accordion-body{
+        padding: var(--nd-space-0);
+    }
+    .nd-card-title{
+        margin-top: var(--nd-space-300);
+    }
+}

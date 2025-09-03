@@ -1,0 +1,11 @@
+.nd-Login-footer {
+    padding: var(--nd-space-300);
+    margin-top: var(--nd-space-300);
+    background-color: var(--nd-blue);
+}
+
+.nd-Login-footer p {
+    text-align: center;
+    color: var(--nd-black);
+    font-size: var(--nd-space-300);
+}

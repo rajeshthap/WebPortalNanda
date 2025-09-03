@@ -1,0 +1,82 @@
+
+
+.contact-card {
+    position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      word-wrap: break-word;
+      background-clip: border-box;
+  
+      border-radius: .25rem;
+    border-width: 0;
+    transition: all .2s;
+    margin-bottom: var(--nd-space-600);
+  
+  }
+  .contact-box{
+    background-color: #f2f5f9;
+  }
+  
+  #div2 { 
+    width : 100%;
+    border: 1px solid var(--nd-border);
+    border-radius: var(--nd-space-200);
+    float:right;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03), 0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
+  }
+  
+  #msgErreur {
+    background: var(--nd-blue);
+    color:white;
+    /* top:30px; */
+    /* left: -10px; */
+    padding:var(--nd-space-150);
+    padding-left: var(--nd-space-300);
+    width : auto;
+    height : auto;
+    border-radius: var(--nd-space-200);
+    font-size: var(--nd-space-350);
+      font-weight: 500;
+    position: absolute; /* not relative anymore */
+    /* z-index:5; It's already stacked above if positioned. Needed if other positioned elements are there (a value of 1 would be enough) */
+    transform: translate(-10px,-10px); /* replaces relative positioning (left and top => X and Y) */
+  }
+  .nd-Dep-details{
+    margin-top: var(--nd-space-800);
+    margin-bottom: var(--nd-space-300);
+    padding-left: var(--nd-space-300);
+  }
+  .nd-Dep-txt{
+    color: var(--nd-Primary);
+    font-weight: 500;
+  }
+  .nd-dep-main{
+    margin-top: var(--nd-space-500);
+  }
+  .nd-notic{
+    font-size: var(--nd-space-350);
+    color: var(--nd-Primary);
+  }
+  .nd-return-txt{
+    font-size: var(--nd-space-300);
+
+      background-color: #fff;
+      background-clip: border-box;
+      border: 1px solid rgba(26, 54, 126, 0.125);
+      border-radius: .25rem;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(4, 9, 20, 0.03), 0 0.9375rem 1.40625rem rgba(4, 9, 20, 0.03), 0 0.25rem 0.53125rem rgba(4, 9, 20, 0.05), 0 0.125rem 0.1875rem rgba(4, 9, 20, 0.03);
+    border-width: 0;
+    transition: all .2s;
+  }
+  .list-group-item {
+    position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+
+  }
+
+ 

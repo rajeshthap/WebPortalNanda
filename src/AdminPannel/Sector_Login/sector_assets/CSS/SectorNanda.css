@@ -1,0 +1,19 @@
+.sector-nanda-title h1 {
+    color: #0F123F;
+    font-size: var(--nd-space-600);
+    font-weight: 600;
+}
+.sector-nanda-title h2 {
+    color: #0F123F;
+    font-size: var(--nd-space-300);
+    font-weight: 600;
+    margin-top: var(--nd-space-100);
+}
+.sector-nanda-title span{
+    color: var(--nd-black);
+}
+@media (max-width: 575.98px) {
+    .sector-nanda-title h1{
+        font-size: 18px;
+    }
+}

@@ -1,0 +1,178 @@
+.form {
+    position: relative;
+}
+
+.form .search {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #9ca3af;
+    top: -8px !important;
+}
+
+.form span {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+
+}
+
+.left-pan {
+    padding-left: 7px;
+}
+
+.left-pan span {
+    padding-left: 10px;
+}
+
+.form-input {
+    height: 40px;
+    text-indent: 33px;
+    border-radius: 40px;
+}
+
+.form-input:focus {
+    box-shadow: none;
+    border: none;
+}
+
+
+
+.search-box {
+    margin: var(--we-space-0) auto;
+    margin-top: var(--we-space-400);
+}
+
+.search-box img {
+    width: 24px;
+    height: 24px;
+    margin-top: 12px;
+}
+
+.tech-nd-search {
+    padding: 12px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgb(182 182 182 / 10%) 0.99%, rgb(202 101 8 / 32%) 97.77%);
+
+}
+
+.tech-nd-btn-primary {
+    color: var(--nd-white);
+    background: #033C73 linear-gradient(180deg, #295988, #033C73) repeat-x;
+    border-color: #033C73;
+}
+
+.tech-nd-btn-primary:hover {
+    color: var(--nd-white);
+    background: #02294e linear-gradient(180deg, #284968, #02294e) repeat-x;
+    border-color: #022241;
+}
+
+.tech-nd-btn-primary:active {
+    color: var(--nd-white);
+    background-color: #022241;
+    background-image: none;
+    border-color: #011c35;
+}
+
+.tech-nd-btn-success {
+    color: var(--nd-white);
+    background: #f7b025 linear-gradient(180deg, #f37d11, #eda922) repeat-x;
+    border-color: var(--nd-orange-border);
+    /* background: #73A839 linear-gradient(180deg, #88b557, #73A839) repeat-x;
+    border-color: #73A839; */
+    font-size: 12px !important;
+    padding: 10px !important;
+    border-radius: 0px 12px 12px 0px !important;
+}
+
+.tech-nd-btn-success:active {
+    color: var(--nd-white);
+    background-color: #59822c;
+    background-image: none;
+    border-color: var(--nd-green-border);
+}
+
+.tech-nd-btn-success:hover {
+    color: var(--nd-white);
+    background: #5f8b2f linear-gradient(180deg, #779d4e, #5f8b2f) repeat-x;
+    border-color: var(--nd-green-border);
+}
+
+.tech-nd-status-data {
+    background-color: #f3f4f7;
+    border-radius: 8px;
+    border: rgb(8 10 12 / 7%) 1px solid;
+    font-size: 14px;
+    margin-left: 2px;
+}
+
+.nd-tech-status h1 {
+    font-size: var(--we-space-400);
+    padding: 10px;
+}
+
+.nd-tech-status h2 {
+    font-size: var(--we-space-400);
+    padding: 10px;
+}
+
+.nd-tech-body.accordion-item:first-of-type>.accordion-header .accordion-button {
+    background-color: var(--nd-orange-border) !important;
+    border-radius: var(--nd-space-200) !important;
+    color: var(--nd-white);
+    border: 1px solid var(--nd-orange-border) !important;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(0, 0, 0, 0.03), 0 0.9375rem 1.40625rem rgba(0, 0, 0, 0.03), 0 0.25rem 0.53125rem rgba(0, 0, 0, 0.05), 0 0.125rem 0.1875rem rgba(0, 0, 0, 0.03);
+
+}
+
+.nd-tech-header.accordion-item:first-of-type>.accordion-header .accordion-button {
+    background-color: var(--nd-gray);
+}
+
+.nd-tech-header .accordion-button {
+    background-color: var(--nd-gray);
+    color: var(--nd-white);
+    border-radius: var(--nd-space-200) !important;
+    box-shadow: 0 0.46875rem 2.1875rem rgba(0, 0, 0, 0.03), 0 0.9375rem 1.40625rem rgba(0, 0, 0, 0.03), 0 0.25rem 0.53125rem rgba(0, 0, 0, 0.05), 0 0.125rem 0.1875rem rgba(0, 0, 0, 0.03);
+
+}
+
+.nd-tech-header .accordion-button:not(.collapsed) {
+    background-color: var(--nd-orange-border) !important;
+}
+
+.nd-tech-body.accordion-item:first-of-type {
+    margin-bottom: 10px;
+}
+
+.nd-tech-body.accordion-item:not(:first-of-type) {
+    margin-bottom: 10px;
+}
+
+.tech-checkform {
+    display: flex;
+    justify-content: stretch;
+    margin-top: var(--nd-space-200);
+}
+
+
+/* .tech-mll-0{
+    
+} */
+@media (max-width: 575.98px) {
+
+    .tech-nd-status-data {
+        margin: 0px;
+    }
+    .tech-checkform {
+        display: flex;
+        justify-content:space-between;
+        margin-top: var(--nd-space-200);
+    }
+    .accrdion-form{
+        margin-top: var(--nd-space-500);
+    }
+    
+
+}

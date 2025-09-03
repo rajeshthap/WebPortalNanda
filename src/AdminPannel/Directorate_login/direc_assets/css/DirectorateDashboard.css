@@ -1,0 +1,208 @@
+.girlsbox {
+    z-index: 1;
+    border-radius: var(--nd-space-250);
+}
+
+.girlsbox::after {
+    background-image: url("../../../../assets/images/dash12thimg.png");
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: repeat;
+    z-index: -1;
+    opacity: .1;
+    border-radius: var(--nd-space-200);
+}
+
+.girlsbox::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right top, #ff9794, #fd8dac, #e58cc6, #bf7cdc, #6f78f4);
+    z-index: -1;
+    border-radius: var(--nd-space-200);
+}
+
+.bornbox {
+    z-index: 1;
+    border-radius: var(--nd-space-250);
+}
+
+.bornbox::after {
+    background-image: url("../../../../assets/images/dash12thimg.png");
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: repeat;
+    z-index: -1;
+    opacity: .1;
+    border-radius: var(--nd-space-200);
+}
+
+.bornbox::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #5c67f7;
+    z-index: -1;
+    border-radius: var(--nd-space-200);
+}
+
+.nd-tech-heading1 {
+    display: flex;
+    justify-content: space-around;
+    padding: var(--nd-space-50);
+    margin-top: var(--nd-space-100);
+   
+}
+
+.nd-tech-heading1 h2 {
+    font-size: var(--nd-space-400);
+    color: var(--nd-orange) !important;
+    padding: var(--nd-space-300);
+    font-weight: 500;
+}
+
+.bg-praroop-feedback {
+    z-index: 1;
+    border-radius: var(--nd-space-250);
+}
+
+.bg-praroop-feedback::after {
+    background-image: url("../../../../assets/images/bg-01.png");
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: repeat;
+    z-index: -1;
+    opacity: .6;
+    border-radius: var(--nd-space-200);
+}
+
+.bg-praroop-feedback::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom right, #00d2d7, #07b2dd);
+    z-index: -1;
+    border-radius: var(--nd-space-200);
+}
+
+.bg-praroop-appo {
+    z-index: 1;
+    border-radius: var(--nd-space-250);
+}
+
+.bg-praroop-appo::after {
+    background-image: url("../../../../assets/images/bg-02.jpg");
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: repeat;
+    z-index: -1;
+    opacity: .5;
+    border-radius: var(--nd-space-200);
+}
+
+.bg-praroop-appo::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom right, #ffd85d, #ffc200);
+    z-index: -1;
+    border-radius: var(--nd-space-200);
+}
+
+.nd-approved {
+    color: var(--nd-black);
+    font-size: var(--nd-space-300);
+    padding: var(--nd-space-50);
+}
+
+.nd-direc-heading p {
+    font-size: var(--nd-space-300);
+    color: var(--nd-black);
+    line-height: 12px;
+
+}
+
+.direc-dashboard {
+    font-size: var(--nd-space-350);
+    font-weight: 500;
+}
+
+.stats h1 {
+    color: var(--nd-white);
+    font-size: var(--nd-space-500);
+}
+
+
+.direc-icon img {
+
+    align-items: center;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.stats h6 {
+    color: var(--nd-white);
+}
+
+.nd-praroop-heading {
+    color: var(--nd-white);
+    font-size: var(--nd-space-400);
+}
+
+.direc-praroop-data {
+    color: var(--nd-white);
+    font-size: var(--nd-space-300);
+    padding: var(--nd-space-50);
+}
+
+.direc-praroop-data1 {
+    color: var(--nd-white);
+    font-weight: 600;
+    padding: var(--nd-space-50);
+}
+
+.cdpo-data {
+    color: var(--nd-black);
+    font-size: var(--nd-space-300);
+    padding: var(--nd-space-50);
+}
+
+
+
+.project-card-box{
+    border-radius: 10px;
+        padding-top: 12px;
+        border: 1px solid var(--nd-border);
+        box-shadow: 1px 1px 15px rgba(161, 182, 253, 0.825);
+    }
+    
+@media (max-width: 568px) {
+    .direc-icon img {
+        display: none;
+    }
+
+    .nd-m-t {
+        margin-top: var(--nd-space-400);
+    }
+
+}

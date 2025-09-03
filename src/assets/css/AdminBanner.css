@@ -1,0 +1,102 @@
+.nd-login-banner {
+    background-image: url("../images//AdminBanner.png");
+    background-color: var(--nd-blue);
+    height: auto;
+    background-size: cover;
+}
+
+.nd-admin-login label {
+    font-size: var(--nd-space-300);
+}
+
+.nd-form-check {
+    margin-top: var(--nd-space-200);
+}
+
+.nd-admin-login .form-check-input {
+    border: 1px solid var(--nd-black) !important;
+}
+
+.nd-admin-btn {
+    text-align: center !important;
+}
+
+.nd-admin-form {
+    padding: var(--nd-space-600) !important;
+
+}
+
+.nd-login-title h1 {
+    font-size: var(--nd-space-400);
+    text-align: center;
+    padding-top: var(--nd-space-500) !important;
+}
+
+.nd-login-title {
+    font-size: var(--nd-space-500);
+    font-weight: bold;
+    text-align: center;
+}
+
+.nd-form-label {
+    color: var(--nd-black);
+    font-weight: 500;
+}
+
+.form-check-label {
+    color: var(--nd-black);
+    font-weight: 500;
+}
+@media (min-width: 992px) {
+    .nd-admin-top{
+        margin-top: 12px;
+    }
+}
+
+/* @media screen and (max-width: 844px) {
+    .form-check1{
+        margin-top: 14px;
+    }
+} */
+
+
+@media screen and (min-width: 768px) and (max-width: 1024px){
+    .form-check1{
+        margin-top: 14px;
+    }
+}
+@media screen and (max-width: 667px){
+    .form-check1{
+        margin-top: 0px !important;
+    }
+  
+
+}
+@media only screen and (max-width: 568px) {
+    .nd-admin-form {
+        padding: var(--nd-space-200);
+    }
+    
+
+    .nd-login-banner {
+        background-image: none !important;
+        height: auto !important;
+        padding: 0px;
+    }
+
+    .nd-admin-form {
+        margin-bottom: var(--nd-space-300);
+    }
+
+    .form-check {
+        margin-top: var(--nd-space-175);
+
+    }
+
+    .nd-p-18 .form-check {
+        padding: var(--nd-space-50) var(--nd-space-0) var(--nd-space-200) var(--nd-space-500);
+    }
+  .nd-admin-btn{
+    margin-top: 24px;
+  }
+}

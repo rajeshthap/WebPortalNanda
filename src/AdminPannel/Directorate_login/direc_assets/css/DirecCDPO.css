@@ -1,0 +1,24 @@
+.direc-thead ,
+th
+ {
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+  background: #ef6236 !important;
+  color: var(--nd-white) !important;
+}
+.direct-paging .active>.page-link, .page-link.active{
+    background: #ef6236 !important;
+    border: 1px solid #ef6236 ;
+    color: var(--nd-white) !important;
+}
+.direct-paging .page-item:first-child .page-link{
+color: #000;
+}
+.direct-paging .page-item:not(:first-child) .page-link
+{
+    color: black;
+}
+.fokyca {
+    background-color: #ef6236 !important;
+}

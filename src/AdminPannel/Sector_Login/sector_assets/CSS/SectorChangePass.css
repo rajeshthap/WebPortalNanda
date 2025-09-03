@@ -1,0 +1,27 @@
+.dis-edit-btn{
+    margin:0px;
+    background-color: #0F123F !important;
+    font-size: var(--nd-space-300);
+    border: 1px #0F123F solid;
+}
+.nd-dis-heading1 h2{
+    font-size: var(--nd-space-400);
+    color:orange;
+    font-weight: 600;
+    text-align: center;
+    
+}
+
+
+button.dis-edit-btn.btn.btn-primary:hover{
+    background-color: #0F123F !important;
+    border: 1px #0F123F solid;
+}
+@media (max-width: 575.98px) {
+    .nd-dis-heading1 h2{
+margin-top: var(--nd-space-400);
+    }
+    .dis-edit-btn{
+             margin: 0px;
+    }
+}

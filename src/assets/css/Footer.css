@@ -1,0 +1,15 @@
+.nd-footer-data {
+
+
+    margin-top: var(--nd-space-300);
+}
+
+.nd-footer-data p {
+    text-align: center;
+    color: var(--nd-black);
+    font-size: var(--nd-space-300);
+    margin-bottom: var(--nd-space-0) !important;
+}
+.nd-Login-footer p{
+    color: var(--nd-white) !important;
+}

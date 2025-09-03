@@ -1,0 +1,25 @@
+.nd-nanda-main {
+    display: flex
+;
+    align-content: stretch;
+    align-items: center;
+    margin-top: 62px;
+}
+
+.district-nanda-title h1 {
+    color: #166a41;
+    font-size: var(--nd-space-600);
+    font-weight: 600;
+}
+.district-nanda-title h2{
+    color: #166a41;
+    font-size: var(--nd-space-300);
+    font-weight: 600;
+}
+.nd-tech-contact{
+    font-size: 18px;
+}
+.district-nanda-title span{
+    color: black !important;
+}
+

@@ -1,0 +1,45 @@
+.nd-nanda-title h1{
+    color: var(--nd-Primary);
+    font-size: var(--nd-space-600);
+    font-weight: 600;
+}
+.nd-nanda-pdf {
+    background-color: var(--nd-white);
+    border-radius: var(--nd-space-200);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 280px;
+}
+.nd-nanda-pdf a{
+    text-decoration: none;
+}
+.nd-nanda-pdf h2 {
+    font-size: var(--nd-space-350);
+    font-weight: var(--nd-space-800);
+    color: var(--nd-black);
+        padding: var(--nd-space-300);
+      
+}
+
+.nd-nanda-pdf img {
+    margin-right: var(--nd-space-100) !important;
+}
+.nd-nanda p{
+    font-size: var(--nd-space-300);
+    color: var(--nd-Primary);
+}
+.nd-nanda-main{
+    display: flex ;
+    align-content: stretch;
+    align-items: center;
+    margin-top: 61px;
+}
+.project-nanda-title{
+    padding-top: 8px;
+}
+
+@media (max-width: 575.98px) { 
+    
+    .nd-nanda-title h1{
+       padding-left: var(--nd-space-100);
+    }
+ }
