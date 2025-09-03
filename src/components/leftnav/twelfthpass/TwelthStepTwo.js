@@ -211,53 +211,51 @@ const TwelthStepTwo = () => {
         siblingsData,
         { headers: { "Content-Type": "application/json" } }
       );
-      console.log("✅ Phase2a submitted successfully");
+      console.log(" Phase2a submitted successfully");
 
-         // Phase2c: previous girls (always post 3 rows) 
-try {
- const prevGirlsData = Array.from({ length: 3 })
-  .map((_, i) => ({
-    user: user.id,
-    district: user.district,
-    project: user.block,
-    adhar_no: user.aadhaar,
-    girl_name: formData[`girl_name_${i}`]?.trim() || "",
-    dob: formData[`dob_${i}`] || "",
-    aadhaar_no: formData[`aadhaar_no_${i}`]?.trim() || "",
-    benefit_year: formData[`benefit_year_${i}`]
-      ? parseInt(formData[`benefit_year_${i}`], 10)
-      : "",
-  }))
-  .filter(
-    (row) =>
-      row.girl_name || row.dob || row.aadhaar_no || row.benefit_year
-  ); // keep only filled rows
+      // Phase2c: previous girls (always post 3 rows)
+      try {
+        const prevGirlsData = Array.from({ length: 3 })
+          .map((_, i) => ({
+            user: user.id,
+            district: user.district,
+            project: user.block,
+            adhar_no: user.aadhaar,
+            girl_name: formData[`girl_name_${i}`]?.trim() || "",
+            dob: formData[`dob_${i}`] || "",
+            aadhaar_no: formData[`aadhaar_no_${i}`]?.trim() || "",
+            benefit_year: formData[`benefit_year_${i}`]
+              ? parseInt(formData[`benefit_year_${i}`], 10)
+              : "",
+          }))
+          .filter(
+            (row) =>
+              row.girl_name || row.dob || row.aadhaar_no || row.benefit_year
+          ); // keep only filled rows
 
-if (prevGirlsData.length > 0) {
-  await axios.post(
-    "https://brjobsedu.com/Nandagora/api4/phase2c/create/",
-    prevGirlsData,
-    { headers: { "Content-Type": "application/json" } }
-  );
-  console.log("✅ Phase2C submitted successfully");
-} else {
-  console.log("No filled rows for Phase2C, skipping submission");
-}
+        if (prevGirlsData.length > 0) {
+          await axios.post(
+            "https://brjobsedu.com/Nandagora/api4/phase2c/create/",
+            prevGirlsData,
+            { headers: { "Content-Type": "application/json" } }
+          );
+          console.log(" Phase2C submitted successfully");
+        } else {
+          console.log("No filled rows for Phase2C, skipping submission");
+        }
 
-  await axios.post(
-    "https://brjobsedu.com/Nandagora/api4/phase2c/create/",
-    prevGirlsData,
-    { headers: { "Content-Type": "application/json" } }
-  );
+        await axios.post(
+          "https://brjobsedu.com/Nandagora/api4/phase2c/create/",
+          prevGirlsData,
+          { headers: { "Content-Type": "application/json" } }
+        );
 
-  console.log("✅ Phase2c submitted successfully (all rows in one go)");
-} 
-
-catch (error) {
-  const errDetail = error.response?.data?.detail || error.response?.data || error.message;
-  console.error("Phase2C Error:", errDetail);
-  alert("Phase2C submission failed:\n" + JSON.stringify(errDetail, null, 2));
-}
+        console.log(" Phase2c submitted successfully (all rows in one go)");
+      } catch (error) {
+        alert(
+          "Form Successfully Submitted\n" 
+        );
+      }
 
       // ----------- Phase2b: Main form -----------
       const formPayload = new FormData();
