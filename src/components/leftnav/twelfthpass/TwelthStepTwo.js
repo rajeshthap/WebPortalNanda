@@ -22,6 +22,93 @@ const TwelthStepTwo = () => {
   const [formData, setFormData] = useState({});
   const [siblings, setSiblings] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const validateForm = () => {
+    const errors = [];
+
+    // Siblings
+    for (let i = 0; i < siblings; i++) {
+      [
+        "mem_name",
+        "mem_dob",
+        "ten_sch",
+        "twel_sch",
+        "grad_col",
+        "pgrad_col",
+        "work_det",
+      ].forEach((field) => {
+        if (
+          !formData[`${field}_${i}`] ||
+          formData[`${field}_${i}`].trim() === ""
+        ) {
+          errors.push(`Sibling ${i + 1}: ${field} is required`);
+        }
+      });
+    }
+
+    //  Intermediate
+    ["sch_pass", "sch_name", "sch_board", "fur_edu"].forEach((field) => {
+      if (!formData[field] || formData[field].trim() === "") {
+        errors.push(`${field} is required`);
+      }
+    });
+
+    //  PAN Cards
+    ["moth_pan", "fath_pan", "abhi_pan"].forEach((field) => {
+      if (!formData[field] || formData[field].trim() === "") {
+        errors.push(`${field} is required`);
+      }
+    });
+
+    //  Income
+    ["annual_income", "income_cert", "inc_cert_date"].forEach((field) => {
+      if (!formData[field] || formData[field].trim() === "") {
+        errors.push(`${field} is required`);
+      }
+    });
+
+    //  Connections
+    ["elec_conn", "wate_conn"].forEach((field) => {
+      if (!formData[field] || formData[field].trim() === "") {
+        errors.push(`${field} is required`);
+      }
+    });
+    // elec_reso and wate_reso only if not available
+    if (
+      formData.elec_conn === "उपलब्ध नहीं है" &&
+      (!formData.elec_reso || formData.elec_reso.trim() === "")
+    ) {
+      errors.push("Electricity reason is required");
+    }
+    if (
+      formData.wate_conn === "उपलब्ध नहीं है" &&
+      (!formData.wate_reso || formData.wate_reso.trim() === "")
+    ) {
+      errors.push("Water reason is required");
+    }
+
+    //  Occupation
+    ["fath", "moth", "abhi"].forEach((person) => {
+      const occu = formData[`occu_${person}`];
+      if (!occu) {
+        errors.push(`${person} occupation is required`);
+      } else if (occu === "Yes") {
+        if (
+          !formData[`mnrega_${person}`] ||
+          formData[`mnrega_${person}`].trim() === ""
+        ) {
+          errors.push(`${person} MNREGA number is required`);
+        }
+        if (
+          !formData[`mnrega_${person}_days`] ||
+          formData[`mnrega_${person}_days`] === ""
+        ) {
+          errors.push(`${person} MNREGA days is required`);
+        }
+      }
+    });
+
+    return errors;
+  };
 
   // Fetch siblings on load
   useEffect(() => {
@@ -86,6 +173,12 @@ const TwelthStepTwo = () => {
   };
 
   const handleSubmit = async () => {
+    const errors = validateForm();
+    if (errors.length > 0) {
+      alert("Please fill all required fields:\n" + errors.join("\n"));
+      return;
+    }
+
     setIsSubmitting(true);
 
     const userStr = localStorage.getItem("user");
@@ -96,24 +189,8 @@ const TwelthStepTwo = () => {
     }
     const user = JSON.parse(userStr);
 
-    // normalize dependent fields
-    ["fath", "moth", "abhi"].forEach((p) => {
-      if (formData[`occu_${p}`] === "No") {
-        formData[`mnrega_${p}`] = "N/A";
-        formData[`mnrega_${p}_days`] = 0;
-      } else {
-        formData[`mnrega_${p}_days`] = parseInt(
-          formData[`mnrega_${p}_days`] || 0,
-          10
-        );
-      }
-    });
-
-    if (formData.elec_conn === "उपलब्ध है") formData.elec_reso = "N/A";
-    if (formData.wate_conn === "उपलब्ध है") formData.wate_reso = "N/A";
-
-    //  Phase2a: siblings (always post all rows) 
     try {
+      // ----------- Phase2a: Siblings -----------
       const siblingsData = Array.from({ length: siblings }).map((_, index) => ({
         user: user.id,
         girl_name: user.name,
@@ -134,13 +211,9 @@ const TwelthStepTwo = () => {
         siblingsData,
         { headers: { "Content-Type": "application/json" } }
       );
+      console.log("✅ Phase2a submitted successfully");
 
-      console.log("✅ Phase2a submitted successfully (all siblings in one go)");
-    } catch (error) {
-      console.error(" Phase2a Error:", error.response?.data || error.message);
-    }
-
-    // Phase2c: previous girls (always post 3 rows) 
+         // Phase2c: previous girls (always post 3 rows) 
 try {
  const prevGirlsData = Array.from({ length: 3 })
   .map((_, i) => ({
@@ -186,9 +259,7 @@ catch (error) {
   alert("Phase2C submission failed:\n" + JSON.stringify(errDetail, null, 2));
 }
 
-
-    //  Phase2b: main form 
-    try {
+      // ----------- Phase2b: Main form -----------
       const formPayload = new FormData();
       formPayload.append("user", user.id || "");
       formPayload.append("girl_name", user.name || "");
@@ -197,9 +268,10 @@ catch (error) {
       formPayload.append("adhar_no", user.aadhaar || "");
 
       Object.entries(formData).forEach(([key, value]) => {
-        const val =
-          value === undefined || value === null || value === "" ? "" : value;
-        formPayload.append(key, val);
+        formPayload.append(
+          key,
+          value === undefined || value === null ? "" : value
+        );
       });
 
       await axios.post(
@@ -207,13 +279,17 @@ catch (error) {
         formPayload,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      console.log("✅ Phase2b submitted successfully!");
+      console.log("✅ Phase2b submitted successfully");
+      navigate("/TwelthStepThree");
     } catch (error) {
-      console.error(" Phase2b Error:", error.response?.data || error.message);
+      console.error(
+        "❌ Submission failed:",
+        error.response?.data || error.message
+      );
+      alert("Form submission failed. Please check your data and try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
-    navigate("/TwelthStepThree");
   };
 
   return (
@@ -298,37 +374,42 @@ catch (error) {
                           "grad_col",
                           "pgrad_col",
                           "work_det",
-                        ].map((field) => (
-                          <td key={field}>
-                            <Form.Control
-                              type={field.includes("dob") ? "date" : "text"}
-                              name={`${field}_${index}`}
-                              value={formData[`${field}_${index}`] || ""}
-                              onChange={(e) =>
-                                handleChange(
-                                  `${field}_${index}`,
-                                  e.target.value
-                                )
-                              }
-                              placeholder={
-                                field === "mem_name"
-                                  ? "Name"
-                                  : field === "mem_dob"
-                                  ? "DOB"
-                                  : field === "ten_sch"
-                                  ? "10th School"
-                                  : field === "twel_sch"
-                                  ? "12th School"
-                                  : field === "grad_col"
-                                  ? "Graduation College"
-                                  : field === "pgrad_col"
-                                  ? "Post Graduation College"
-                                  : "Work Details"
-                              }
-                              className="shadow1 nd-mt-6"
-                            />
-                          </td>
-                        ))}
+                        ].map((field) => {
+                          const isTextOnly = field !== "mem_dob"; // All fields except DOB
+                          const isDate = field === "mem_dob"; // Date type for DOB
+                          return (
+                            <td key={field}>
+                              <Form.Control
+                                type={isDate ? "date" : "text"}
+                                name={`${field}_${index}`}
+                                value={formData[`${field}_${index}`] || ""}
+                                onChange={(e) => {
+                                  let val = e.target.value;
+                                  if (isTextOnly) {
+                                    val = val.replace(/[^a-zA-Z\s]/g, ""); // Allow letters & spaces only
+                                  }
+                                  handleChange(`${field}_${index}`, val);
+                                }}
+                                placeholder={
+                                  field === "mem_name"
+                                    ? "Name"
+                                    : field === "mem_dob"
+                                    ? "DOB"
+                                    : field === "ten_sch"
+                                    ? "10th School"
+                                    : field === "twel_sch"
+                                    ? "12th School"
+                                    : field === "grad_col"
+                                    ? "Graduation College"
+                                    : field === "pgrad_col"
+                                    ? "Post Graduation College"
+                                    : "Work Details"
+                                }
+                                className="shadow1 nd-mt-6"
+                              />
+                            </td>
+                          );
+                        })}
                       </tr>
                     ))}
                   </tbody>
@@ -431,9 +512,11 @@ catch (error) {
                           type="text"
                           name="sch_pass"
                           value={formData.sch_pass || ""}
-                          onChange={(e) =>
-                            handleChange("sch_pass", e.target.value)
-                          }
+                          onChange={(e) => {
+                            // Allow numbers only
+                            const val = e.target.value.replace(/[^0-9]/g, "");
+                            handleChange("sch_pass", val);
+                          }}
                           placeholder="इण्टर मिडिएट उत्तीर्ण करने का वर्ष"
                           className="shadow1 nd-mt-6"
                         />
@@ -443,9 +526,14 @@ catch (error) {
                           type="text"
                           name="sch_name"
                           value={formData.sch_name || ""}
-                          onChange={(e) =>
-                            handleChange("sch_name", e.target.value)
-                          }
+                          onChange={(e) => {
+                            // Allow letters and spaces only
+                            const val = e.target.value.replace(
+                              /[^a-zA-Z\s]/g,
+                              ""
+                            );
+                            handleChange("sch_name", val);
+                          }}
                           placeholder="स्कूल का नाम"
                           className="shadow1 nd-mt-6"
                         />
@@ -455,9 +543,13 @@ catch (error) {
                           type="text"
                           name="sch_board"
                           value={formData.sch_board || ""}
-                          onChange={(e) =>
-                            handleChange("sch_board", e.target.value)
-                          }
+                          onChange={(e) => {
+                            const val = e.target.value.replace(
+                              /[^a-zA-Z\s]/g,
+                              ""
+                            );
+                            handleChange("sch_board", val);
+                          }}
                           placeholder="बोर्ड का नाम"
                           className="shadow1 nd-mt-6"
                         />
@@ -467,9 +559,13 @@ catch (error) {
                           type="text"
                           name="fur_edu"
                           value={formData.fur_edu || ""}
-                          onChange={(e) =>
-                            handleChange("fur_edu", e.target.value)
-                          }
+                          onChange={(e) => {
+                            const val = e.target.value.replace(
+                              /[^a-zA-Z\s]/g,
+                              ""
+                            );
+                            handleChange("fur_edu", val);
+                          }}
                           placeholder="विवरण"
                           className="shadow1 nd-mt-6"
                         />
@@ -508,10 +604,15 @@ catch (error) {
                           placeholder="माता का पैन कार्ड"
                           className="shadow1 nd-mt-6"
                           name="moth_pan"
+                          maxLength={10}
                           value={formData.moth_pan || ""}
-                          onChange={(e) =>
-                            handleChange("moth_pan", e.target.value)
-                          }
+                          onChange={(e) => {
+                            // Allow letters & digits only, convert letters to uppercase
+                            const val = e.target.value
+                              .replace(/[^a-zA-Z0-9]/g, "")
+                              .toUpperCase();
+                            handleChange("moth_pan", val);
+                          }}
                         />
                       </td>
                       <td>
@@ -520,10 +621,14 @@ catch (error) {
                           placeholder="पिता का पैन कार्ड"
                           className="shadow1 nd-mt-6"
                           name="fath_pan"
+                          maxLength={10}
                           value={formData.fath_pan || ""}
-                          onChange={(e) =>
-                            handleChange("fath_pan", e.target.value)
-                          }
+                          onChange={(e) => {
+                            const val = e.target.value
+                              .replace(/[^a-zA-Z0-9]/g, "")
+                              .toUpperCase();
+                            handleChange("fath_pan", val);
+                          }}
                         />
                       </td>
                       <td>
@@ -532,10 +637,14 @@ catch (error) {
                           placeholder="अभिभावक का पैन कार्ड नंबर"
                           className="shadow1 nd-mt-6"
                           name="abhi_pan"
+                          maxLength={10}
                           value={formData.abhi_pan || ""}
-                          onChange={(e) =>
-                            handleChange("abhi_pan", e.target.value)
-                          }
+                          onChange={(e) => {
+                            const val = e.target.value
+                              .replace(/[^a-zA-Z0-9]/g, "")
+                              .toUpperCase();
+                            handleChange("abhi_pan", val);
+                          }}
                         />
                       </td>
                     </tr>
@@ -572,9 +681,11 @@ catch (error) {
                           type="text"
                           name="annual_income"
                           value={formData.annual_income || ""}
-                          onChange={(e) =>
-                            handleChange("annual_income", e.target.value)
-                          }
+                          onChange={(e) => {
+                            // Allow digits only
+                            const val = e.target.value.replace(/\D/g, "");
+                            handleChange("annual_income", val);
+                          }}
                           placeholder="वार्षिक आय"
                           className="shadow1 nd-mt-6"
                         />
@@ -584,9 +695,11 @@ catch (error) {
                           type="text"
                           name="income_cert"
                           value={formData.income_cert || ""}
-                          onChange={(e) =>
-                            handleChange("income_cert", e.target.value)
-                          }
+                          onChange={(e) => {
+                            // Allow digits only
+                            const val = e.target.value.replace(/\D/g, "");
+                            handleChange("income_cert", val);
+                          }}
                           placeholder="आय प्रमाण पत्र का क्रमांक"
                           className="shadow1 nd-mt-6"
                         />
