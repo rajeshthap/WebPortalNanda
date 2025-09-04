@@ -23,7 +23,17 @@ const TwelthStepOne = () => {
   const [awcData, setawcData] = useState([]);
   const [awc_codeData, setawc_codeData] = useState([]);
   const [awc_typeData, setawc_typeData] = useState([]);
-
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
+  
   const [formData, setFormData] = useState({
     user: localStorage.getItem("user_id") || "",
     girl_name: "",

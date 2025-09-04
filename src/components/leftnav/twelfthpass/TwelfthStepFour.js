@@ -56,6 +56,19 @@ const uploadItems = [
 
 const TwelfthStepFour = () => {
   const navigate = useNavigate();
+
+   // back button code
+    useEffect(() => {
+      window.history.pushState(null, "", window.location.href);
+      const handlePopState = () => {
+        window.history.pushState(null, "", window.location.href);
+      };
+      window.addEventListener("popstate", handlePopState);
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    }, [navigate]);
+    
   const [selectedFiles, setSelectedFiles] = useState({});
   const [uploadFiles, setUploadFiles] = useState({});
   const [dragOver, setDragOver] = useState(null);

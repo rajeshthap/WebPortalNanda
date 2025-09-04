@@ -24,9 +24,21 @@ const TwelthStepThree = () => {
   // --- Fetch bank list ---
   const [banks, setBanks] = useState([]);
   useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
+  useEffect(() => {
     const fetchBanks = async () => {
       try {
-        const res = await axios.get("https://brjobsedu.com/Nandagora/api2/Bankdetails/");
+        const res = await axios.get(
+          "https://brjobsedu.com/Nandagora/api2/Bankdetails/"
+        );
         const bankData = res.data.results ? res.data.results : res.data;
         setBanks(bankData);
       } catch (error) {
@@ -44,7 +56,9 @@ const TwelthStepThree = () => {
   useEffect(() => {
     const fetchConnections = async () => {
       try {
-        const res = await axios.get(`https://brjobsedu.com/Nandagora/api4/phase2b/${user_id}/`);
+        const res = await axios.get(
+          `https://brjobsedu.com/Nandagora/api4/phase2b/${user_id}/`
+        );
         const data = res.data;
 
         // Check electricity
@@ -83,23 +97,37 @@ const TwelthStepThree = () => {
   }, [user_id]);
 
   // --- State for dynamic tables ---
-  const [bankRows, setBankRows] = useState([{ det1: "", det2: "", det3: "", det4: "", type: "account" }]);
-  const addBankRow = () => setBankRows([...bankRows, { det1: "", det2: "", det3: "", det4: "", type: "account" }]);
-  const deleteBankRow = (index) => setBankRows(bankRows.filter((_, i) => i !== index));
+  const [bankRows, setBankRows] = useState([
+    { det1: "", det2: "", det3: "", det4: "", type: "account" },
+  ]);
+  const addBankRow = () =>
+    setBankRows([
+      ...bankRows,
+      { det1: "", det2: "", det3: "", det4: "", type: "account" },
+    ]);
+  const deleteBankRow = (index) =>
+    setBankRows(bankRows.filter((_, i) => i !== index));
   const handleBankChange = (index, field, value) => {
     const updated = [...bankRows];
     updated[index][field] = value;
     setBankRows(updated);
   };
 
-  const [vehicleRows, setVehicleRows] = useState([{ vec_model: "", vec_number: "", vec_amt: "", vec_other: "" }]);
+  const [vehicleRows, setVehicleRows] = useState([
+    { vec_model: "", vec_number: "", vec_amt: "", vec_other: "" },
+  ]);
   const handleVehicleChange = (index, field, value) => {
     const updated = [...vehicleRows];
     updated[index][field] = value;
     setVehicleRows(updated);
   };
-  const addVehicleRow = () => setVehicleRows([...vehicleRows, { vec_model: "", vec_number: "", vec_amt: "", vec_other: "" }]);
-  const deleteVehicleRow = (index) => setVehicleRows(vehicleRows.filter((_, i) => i !== index));
+  const addVehicleRow = () =>
+    setVehicleRows([
+      ...vehicleRows,
+      { vec_model: "", vec_number: "", vec_amt: "", vec_other: "" },
+    ]);
+  const deleteVehicleRow = (index) =>
+    setVehicleRows(vehicleRows.filter((_, i) => i !== index));
 
   const [electricityRows, setElectricityRows] = useState([
     { acno: "", date: "", amount: "" },
@@ -112,12 +140,24 @@ const TwelthStepThree = () => {
     setElectricityRows(updated);
   };
 
-  const [waterBillRow, setWaterBillRow] = useState({ acno: "", date: "", amount: "" });
-  const handleWaterBillChange = (field, value) => setWaterBillRow({ ...waterBillRow, [field]: value });
+  const [waterBillRow, setWaterBillRow] = useState({
+    acno: "",
+    date: "",
+    amount: "",
+  });
+  const handleWaterBillChange = (field, value) =>
+    setWaterBillRow({ ...waterBillRow, [field]: value });
 
   const [staticData, setStaticData] = useState({
-    socio_eco: "", bhoomi_type: "", bhoomi_typer: "", bhoomi_shetr: "",
-    curr_amt: "", res_type: "", rooms: "", area: "", curr_pri: "",
+    socio_eco: "",
+    bhoomi_type: "",
+    bhoomi_typer: "",
+    bhoomi_shetr: "",
+    curr_amt: "",
+    res_type: "",
+    rooms: "",
+    area: "",
+    curr_pri: "",
   });
   const handleStaticChange = (field, value) => {
     setStaticData((prev) => ({ ...prev, [field]: value }));
@@ -172,11 +212,15 @@ const TwelthStepThree = () => {
       valid = false;
     }
     if (!staticData.bhoomi_shetr || parseFloat(staticData.bhoomi_shetr) < 0) {
-      newErrors.bhoomi_shetr = staticData.bhoomi_shetr ? "सकारात्मक संख्या दर्ज करें" : "यह फ़ील्ड आवश्यक है";
+      newErrors.bhoomi_shetr = staticData.bhoomi_shetr
+        ? "सकारात्मक संख्या दर्ज करें"
+        : "यह फ़ील्ड आवश्यक है";
       valid = false;
     }
     if (!staticData.curr_amt || parseFloat(staticData.curr_amt) < 0) {
-      newErrors.curr_amt = staticData.curr_amt ? "सकारात्मक संख्या दर्ज करें" : "यह फ़ील्ड आवश्यक है";
+      newErrors.curr_amt = staticData.curr_amt
+        ? "सकारात्मक संख्या दर्ज करें"
+        : "यह फ़ील्ड आवश्यक है";
       valid = false;
     }
     if (!staticData.res_type) {
@@ -184,32 +228,56 @@ const TwelthStepThree = () => {
       valid = false;
     }
     if (!staticData.rooms || parseInt(staticData.rooms) < 0) {
-      newErrors.rooms = staticData.rooms ? "सकारात्मक संख्या दर्ज करें" : "यह फ़ील्ड आवश्यक है";
+      newErrors.rooms = staticData.rooms
+        ? "सकारात्मक संख्या दर्ज करें"
+        : "यह फ़ील्ड आवश्यक है";
       valid = false;
     }
     if (!staticData.area || parseFloat(staticData.area) < 0) {
-      newErrors.area = staticData.area ? "सकारात्मक संख्या दर्ज करें" : "यह फ़ील्ड आवश्यक है";
+      newErrors.area = staticData.area
+        ? "सकारात्मक संख्या दर्ज करें"
+        : "यह फ़ील्ड आवश्यक है";
       valid = false;
     }
     if (!staticData.curr_pri || parseFloat(staticData.curr_pri) < 0) {
-      newErrors.curr_pri = staticData.curr_pri ? "सकारात्मक संख्या दर्ज करें" : "यह फ़ील्ड आवश्यक है";
+      newErrors.curr_pri = staticData.curr_pri
+        ? "सकारात्मक संख्या दर्ज करें"
+        : "यह फ़ील्ड आवश्यक है";
       valid = false;
     }
 
     // Validate bank rows (allow empty if no rows with data, but if partial, error)
     bankRows.forEach((row, index) => {
       const hasData = row.det1 || row.det2 || row.det3 || row.det4;
-      if (hasData && (!row.det1 || !row.det2 || !row.det3 || !row.det4 || parseFloat(row.det4) < 0)) {
-        newErrors[`bank_${index}`] = `बैंक पंक्ति ${index + 1} में सभी फ़ील्ड भरें और धनराशि सकारात्मक होनी चाहिए`;
+      if (
+        hasData &&
+        (!row.det1 ||
+          !row.det2 ||
+          !row.det3 ||
+          !row.det4 ||
+          parseFloat(row.det4) < 0)
+      ) {
+        newErrors[`bank_${index}`] = `बैंक पंक्ति ${
+          index + 1
+        } में सभी फ़ील्ड भरें और धनराशि सकारात्मक होनी चाहिए`;
         valid = false;
       }
     });
 
     // Validate vehicle rows (similar)
     vehicleRows.forEach((row, index) => {
-      const hasData = row.vec_model || row.vec_number || row.vec_amt || row.vec_other;
-      if (hasData && (!row.vec_model || !row.vec_number || !row.vec_amt || parseFloat(row.vec_amt) < 0)) {
-        newErrors[`vehicle_${index}`] = `वाहन पंक्ति ${index + 1} में सभी आवश्यक फ़ील्ड भरें और मूल्य सकारात्मक हो`;
+      const hasData =
+        row.vec_model || row.vec_number || row.vec_amt || row.vec_other;
+      if (
+        hasData &&
+        (!row.vec_model ||
+          !row.vec_number ||
+          !row.vec_amt ||
+          parseFloat(row.vec_amt) < 0)
+      ) {
+        newErrors[`vehicle_${index}`] = `वाहन पंक्ति ${
+          index + 1
+        } में सभी आवश्यक फ़ील्ड भरें और मूल्य सकारात्मक हो`;
         valid = false;
       }
     });
@@ -217,8 +285,15 @@ const TwelthStepThree = () => {
     // Validate electricity bills if enabled
     if (!disableElectricityTable) {
       electricityRows.forEach((row, index) => {
-        if (!row.acno || !row.date || !row.amount || parseFloat(row.amount) < 0) {
-          newErrors[`elec_${index}`] = `बिजली बिल पंक्ति ${index + 1} में सभी फ़ील्ड भरें और धनराशि सकारात्मक हो`;
+        if (
+          !row.acno ||
+          !row.date ||
+          !row.amount ||
+          parseFloat(row.amount) < 0
+        ) {
+          newErrors[`elec_${index}`] = `बिजली बिल पंक्ति ${
+            index + 1
+          } में सभी फ़ील्ड भरें और धनराशि सकारात्मक हो`;
           valid = false;
         }
       });
@@ -226,7 +301,12 @@ const TwelthStepThree = () => {
 
     // Validate water bill if enabled
     if (!disableWaterTable) {
-      if (!waterBillRow.acno || !waterBillRow.date || !waterBillRow.amount || parseFloat(waterBillRow.amount) < 0) {
+      if (
+        !waterBillRow.acno ||
+        !waterBillRow.date ||
+        !waterBillRow.amount ||
+        parseFloat(waterBillRow.amount) < 0
+      ) {
         newErrors.water = "पानी बिल में सभी फ़ील्ड भरें और धनराशि सकारात्मक हो";
         valid = false;
       }
@@ -266,50 +346,70 @@ const TwelthStepThree = () => {
     try {
       // Common user data for all payloads
       const userData = {
-       user: user.id,
-      girl_name: user.name,
-      phone: user.phone,
-      adhar_no: user.aadhaar, // Map aadhaar to adhar_no
-      project: user.block,
-      district: user.district,
+        user: user.id,
+        girl_name: user.name,
+        phone: user.phone,
+        adhar_no: user.aadhaar, // Map aadhaar to adhar_no
+        project: user.block,
+        district: user.district,
       };
 
       // Step 3A
       const staticPayload = {
         ...userData,
-        ...staticData
+        ...staticData,
       };
-      await axios.post("https://brjobsedu.com/Nandagora/api4/step3a/", staticPayload);
+      await axios.post(
+        "https://brjobsedu.com/Nandagora/api4/step3a/",
+        staticPayload
+      );
 
       // Step 3B (banks)
       const bankData = bankRows
-        .filter(b => b.det1 && b.det2 && b.det3 && b.det4)
-        .map(b => ({ ...userData, ...b }));
-      if (bankData.length) await axios.post("https://brjobsedu.com/Nandagora/api4/step3bcreate/", bankData);
+        .filter((b) => b.det1 && b.det2 && b.det3 && b.det4)
+        .map((b) => ({ ...userData, ...b }));
+      if (bankData.length)
+        await axios.post(
+          "https://brjobsedu.com/Nandagora/api4/step3bcreate/",
+          bankData
+        );
 
       // Step 3Vehicle
       const vehicleData = vehicleRows
-        .filter(v => v.vec_model && v.vec_number && v.vec_amt && v.vec_other)
-        .map(v => ({ ...userData, ...v }));
-      if (vehicleData.length) await axios.post("https://brjobsedu.com/Nandagora/api4/step3vech/", vehicleData);
+        .filter((v) => v.vec_model && v.vec_number && v.vec_amt && v.vec_other)
+        .map((v) => ({ ...userData, ...v }));
+      if (vehicleData.length)
+        await axios.post(
+          "https://brjobsedu.com/Nandagora/api4/step3vech/",
+          vehicleData
+        );
 
       // Step 3Bills (combined electricity and water)
       const combinedData = [
-        ...electricityRows.map(r => ({ ...userData, type: "electric", ...r })),
-        { ...userData, type: "water", ...waterBillRow }
+        ...electricityRows.map((r) => ({
+          ...userData,
+          type: "electric",
+          ...r,
+        })),
+        { ...userData, type: "water", ...waterBillRow },
       ];
-      await axios.post("https://brjobsedu.com/Nandagora/api4/step3bill/", combinedData);
+      await axios.post(
+        "https://brjobsedu.com/Nandagora/api4/step3bill/",
+        combinedData
+      );
 
       alert("Step 3 submitted successfully!");
       navigate("/TwelfthStepFour");
     } catch (error) {
       console.error(error);
-      alert("Error submitting data: " + (error.response?.data?.detail || error.message));
+      alert(
+        "Error submitting data: " +
+          (error.response?.data?.detail || error.message)
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
-
 
   return (
     <>
@@ -357,7 +457,9 @@ const TwelthStepThree = () => {
                             onChange={(e) =>
                               handleStaticChange("socio_eco", e.target.value)
                             }
-                            onBlur={(e) => handleBlur("socio_eco", e.target.value)}
+                            onBlur={(e) =>
+                              handleBlur("socio_eco", e.target.value)
+                            }
                           >
                             <option value="">प्रकार चुने </option>
                             <option value="स्वतः सम्मिलित">
@@ -365,7 +467,9 @@ const TwelthStepThree = () => {
                             </option>
                             <option value="सम्मिलित नही">सम्मिलित नही</option>
                           </Form.Select>
-                          <Form.Text className="text-danger">{errors.socio_eco}</Form.Text>
+                          <Form.Text className="text-danger">
+                            {errors.socio_eco}
+                          </Form.Text>
                         </Form.Group>
                       </Col>
                     </Row>
@@ -387,7 +491,9 @@ const TwelthStepThree = () => {
                             onChange={(e) =>
                               handleStaticChange("bhoomi_type", e.target.value)
                             }
-                            onBlur={(e) => handleBlur("bhoomi_type", e.target.value)}
+                            onBlur={(e) =>
+                              handleBlur("bhoomi_type", e.target.value)
+                            }
                           >
                             <option value="">भूमि प्रकार चुने </option>
                             <option value="पैतृक भूमि">पैतृक भूमि</option>
@@ -395,7 +501,9 @@ const TwelthStepThree = () => {
                             <option value="पट्टा/Lease">पट्टा/Lease</option>
                             <option value="भूमिहीन">भूमिहीन</option>
                           </Form.Select>
-                          <Form.Text className="text-danger">{errors.bhoomi_type}</Form.Text>
+                          <Form.Text className="text-danger">
+                            {errors.bhoomi_type}
+                          </Form.Text>
                         </Form.Group>
                       </Col>
                     </Row>
@@ -417,7 +525,9 @@ const TwelthStepThree = () => {
                             onChange={(e) =>
                               handleStaticChange("bhoomi_typer", e.target.value)
                             }
-                            onBlur={(e) => handleBlur("bhoomi_typer", e.target.value)}
+                            onBlur={(e) =>
+                              handleBlur("bhoomi_typer", e.target.value)
+                            }
                           >
                             <option value="">आवासीय भूमि प्रकार चुने </option>
                             <option value="पैतृक भूमि">पैतृक भूमि</option>
@@ -425,7 +535,9 @@ const TwelthStepThree = () => {
                             <option value="पट्टे की भूमि">पट्टे की भूमि</option>
                             <option value="किराया">किराया</option>
                           </Form.Select>
-                          <Form.Text className="text-danger">{errors.bhoomi_typer}</Form.Text>
+                          <Form.Text className="text-danger">
+                            {errors.bhoomi_typer}
+                          </Form.Text>
                         </Form.Group>
                       </Col>
                     </Row>
@@ -462,9 +574,13 @@ const TwelthStepThree = () => {
                           onChange={(e) =>
                             handleStaticChange("bhoomi_shetr", e.target.value)
                           }
-                          onBlur={(e) => handleBlur("bhoomi_shetr", e.target.value, true)}
+                          onBlur={(e) =>
+                            handleBlur("bhoomi_shetr", e.target.value, true)
+                          }
                         />
-                        <Form.Text className="text-danger">{errors.bhoomi_shetr}</Form.Text>
+                        <Form.Text className="text-danger">
+                          {errors.bhoomi_shetr}
+                        </Form.Text>
                       </Col>
 
                       {/* Sub-row (ii) */}
@@ -488,9 +604,13 @@ const TwelthStepThree = () => {
                           onChange={(e) =>
                             handleStaticChange("curr_amt", e.target.value)
                           }
-                          onBlur={(e) => handleBlur("curr_amt", e.target.value, true)}
+                          onBlur={(e) =>
+                            handleBlur("curr_amt", e.target.value, true)
+                          }
                         />
-                        <Form.Text className="text-danger">{errors.curr_amt}</Form.Text>
+                        <Form.Text className="text-danger">
+                          {errors.curr_amt}
+                        </Form.Text>
                       </Col>
                     </Row>
 
@@ -529,7 +649,9 @@ const TwelthStepThree = () => {
                           <option value="कच्चा">कच्चा</option>
                           <option value="पक्का">पक्का</option>
                         </Form.Select>
-                        <Form.Text className="text-danger">{errors.res_type}</Form.Text>
+                        <Form.Text className="text-danger">
+                          {errors.res_type}
+                        </Form.Text>
                       </Col>
 
                       {/* ii. कक्षों की संख्या */}
@@ -553,9 +675,13 @@ const TwelthStepThree = () => {
                           onChange={(e) =>
                             handleStaticChange("rooms", e.target.value)
                           }
-                          onBlur={(e) => handleBlur("rooms", e.target.value, true)}
+                          onBlur={(e) =>
+                            handleBlur("rooms", e.target.value, true)
+                          }
                         />
-                        <Form.Text className="text-danger">{errors.rooms}</Form.Text>
+                        <Form.Text className="text-danger">
+                          {errors.rooms}
+                        </Form.Text>
                       </Col>
 
                       {/* iii. क्षेत्रफल */}
@@ -579,9 +705,13 @@ const TwelthStepThree = () => {
                           onChange={(e) =>
                             handleStaticChange("area", e.target.value)
                           }
-                          onBlur={(e) => handleBlur("area", e.target.value, true)}
+                          onBlur={(e) =>
+                            handleBlur("area", e.target.value, true)
+                          }
                         />
-                        <Form.Text className="text-danger">{errors.area}</Form.Text>
+                        <Form.Text className="text-danger">
+                          {errors.area}
+                        </Form.Text>
                       </Col>
 
                       {/* iv. वर्तमान मूल्य */}
@@ -605,9 +735,13 @@ const TwelthStepThree = () => {
                           onChange={(e) =>
                             handleStaticChange("curr_pri", e.target.value)
                           }
-                          onBlur={(e) => handleBlur("curr_pri", e.target.value, true)}
+                          onBlur={(e) =>
+                            handleBlur("curr_pri", e.target.value, true)
+                          }
                         />
-                        <Form.Text className="text-danger">{errors.curr_pri}</Form.Text>
+                        <Form.Text className="text-danger">
+                          {errors.curr_pri}
+                        </Form.Text>
                       </Col>
                     </Row>
 
@@ -732,7 +866,11 @@ const TwelthStepThree = () => {
                           + Add Row
                         </Button>
                         <div className="text-danger">
-                          {Object.keys(errors).filter(k => k.startsWith('bank_')).map(k => <div key={k}>{errors[k]}</div>)}
+                          {Object.keys(errors)
+                            .filter((k) => k.startsWith("bank_"))
+                            .map((k) => (
+                              <div key={k}>{errors[k]}</div>
+                            ))}
                         </div>
                       </Col>
                     </Row>
@@ -850,7 +988,11 @@ const TwelthStepThree = () => {
                           + Add Row
                         </Button>
                         <div className="text-danger">
-                          {Object.keys(errors).filter(k => k.startsWith('vehicle_')).map(k => <div key={k}>{errors[k]}</div>)}
+                          {Object.keys(errors)
+                            .filter((k) => k.startsWith("vehicle_"))
+                            .map((k) => (
+                              <div key={k}>{errors[k]}</div>
+                            ))}
                         </div>
                       </Col>
                     </Row>
@@ -888,7 +1030,13 @@ const TwelthStepThree = () => {
                                     type="text"
                                     placeholder="खाता संख्या लिखें"
                                     value={row.acno}
-                                    onChange={(e) => handleElectricityChange(index, "acno", e.target.value)}
+                                    onChange={(e) =>
+                                      handleElectricityChange(
+                                        index,
+                                        "acno",
+                                        e.target.value
+                                      )
+                                    }
                                     disabled={disableElectricityTable}
                                   />
                                 </td>
@@ -928,7 +1076,11 @@ const TwelthStepThree = () => {
                           </tbody>
                         </Table>
                         <div className="text-danger">
-                          {Object.keys(errors).filter(k => k.startsWith('elec_')).map(k => <div key={k}>{errors[k]}</div>)}
+                          {Object.keys(errors)
+                            .filter((k) => k.startsWith("elec_"))
+                            .map((k) => (
+                              <div key={k}>{errors[k]}</div>
+                            ))}
                         </div>
                       </Col>
                     </Row>
@@ -965,7 +1117,12 @@ const TwelthStepThree = () => {
                                   type="text"
                                   placeholder="खाता संख्या लिखें"
                                   value={waterBillRow.acno}
-                                  onChange={(e) => handleWaterBillChange("acno", e.target.value)}
+                                  onChange={(e) =>
+                                    handleWaterBillChange(
+                                      "acno",
+                                      e.target.value
+                                    )
+                                  }
                                   disabled={disableWaterTable}
                                 />
                               </td>
@@ -1001,7 +1158,9 @@ const TwelthStepThree = () => {
                             </tr>
                           </tbody>
                         </Table>
-                        <Form.Text className="text-danger">{errors.water}</Form.Text>
+                        <Form.Text className="text-danger">
+                          {errors.water}
+                        </Form.Text>
                       </Col>
                     </Row>
                   </Row>

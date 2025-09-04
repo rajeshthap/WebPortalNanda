@@ -13,6 +13,18 @@ import FormStatuspending from "../../FormStatuspending";
 const UserOtp = ({ phone, onConfirm, onCancel }) => {
   const [otp, setOtp] = useState("");
   const [verifying, setVerifying] = useState(false);
+  const navigate = useNavigate();
+// back button
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
 
   const verifyOtp = async () => {
     if (!otp) return alert("कृपया OTP दर्ज करें।");

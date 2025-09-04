@@ -22,6 +22,19 @@ const TwelthStepTwo = () => {
   const [formData, setFormData] = useState({});
   const [siblings, setSiblings] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+   // back button code
+    useEffect(() => {
+      window.history.pushState(null, "", window.location.href);
+      const handlePopState = () => {
+        window.history.pushState(null, "", window.location.href);
+      };
+      window.addEventListener("popstate", handlePopState);
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    }, [navigate]);
+    
   const validateForm = () => {
     const errors = [];
 

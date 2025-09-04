@@ -58,6 +58,18 @@ const TwelfthFinalView = () => {
   const [error2c, setError2c] = useState(null);
   const navigate = useNavigate();
 
+   // back button code
+    useEffect(() => {
+      window.history.pushState(null, "", window.location.href);
+      const handlePopState = () => {
+        window.history.pushState(null, "", window.location.href);
+      };
+      window.addEventListener("popstate", handlePopState);
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    }, [navigate]);
+    
   const userId = localStorage.getItem("user_id");
   useEffect(() => {
     if (!userId) return;
