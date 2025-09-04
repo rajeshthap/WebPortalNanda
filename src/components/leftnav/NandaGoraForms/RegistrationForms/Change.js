@@ -119,7 +119,7 @@ const Change = () => {
         return res.json();
       })
       .then(() => {
-        setSuccessMsg("Profile updated successfully.");
+        setSuccessMsg("Profile updated Successfully.");
         setFormData((prev) => ({
           ...prev,
           old_password: "",

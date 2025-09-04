@@ -224,7 +224,7 @@ const TwelthStepTwo = () => {
         siblingsData,
         { headers: { "Content-Type": "application/json" } }
       );
-      console.log(" Phase2a submitted successfully");
+      console.log(" Phase2a submitted Successfully");
 
       // Phase2c: previous girls (always post 3 rows)
       try {
@@ -252,7 +252,7 @@ const TwelthStepTwo = () => {
             prevGirlsData,
             { headers: { "Content-Type": "application/json" } }
           );
-          console.log(" Phase2C submitted successfully");
+          console.log(" Phase2C submitted Successfully");
         } else {
           console.log("No filled rows for Phase2C, skipping submission");
         }
@@ -263,7 +263,7 @@ const TwelthStepTwo = () => {
           { headers: { "Content-Type": "application/json" } }
         );
 
-        console.log(" Phase2c submitted successfully (all rows in one go)");
+        console.log(" Phase2c submitted Successfully (all rows in one go)");
       } catch (error) {
         alert(
           "Form Successfully Submitted\n" 
@@ -290,7 +290,7 @@ const TwelthStepTwo = () => {
         formPayload,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      console.log("✅ Phase2b submitted successfully");
+      console.log("✅ Phase2b submitted Successfully");
       navigate("/TwelthStepThree");
     } catch (error) {
       console.error(
@@ -965,10 +965,10 @@ const TwelthStepTwo = () => {
                 <Button
                   type="button"
                   onClick={handleSubmit}
-                  className="mt-3 nd-primary-btn btn btn-primary"
+                  className="mt-3 nd-secondary-btn btn btn-primary"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Submitting..." : "Submit"}
+                  {isSubmitting ? "Submitting..." : "Submit Step Two"}
                 </Button>
               </div>
             </div>

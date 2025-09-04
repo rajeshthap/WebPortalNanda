@@ -95,9 +95,9 @@ function Orphanage() {
 
           <Modal.Footer className="nd-footer">
             <div className="nd-check-btn">
-              <div className="nd-chek-box mb-3">
+             
                 <OrphanDetailPopup />
-              </div>
+           
             </div>
           </Modal.Footer>
         </Modal>

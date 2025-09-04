@@ -78,7 +78,7 @@ const navigate = useNavigate();
       }
 
       const data = await response.json();
-      setSubmitMessage("Supervisor review submitted successfully.");
+      setSubmitMessage("Supervisor review submitted Successfully.");
     } catch (err) {
       setSubmitMessage("Error submitting review.");
     }

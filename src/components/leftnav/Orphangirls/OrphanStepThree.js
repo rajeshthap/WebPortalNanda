@@ -164,7 +164,7 @@ const OrphanStepThree = () => {
         "https://brjobsedu.com/Nandagora/api4/step3a/",
         staticPayload
       );
-      console.log("Step 3A submitted successfully!");
+      console.log("Step 3A submitted Successfully!");
     } catch (error) {
       if (error.response?.data?.detail?.includes("already submitted")) {
         console.log("Step 3A already submitted — skipping...");
@@ -198,7 +198,7 @@ const OrphanStepThree = () => {
           "https://brjobsedu.com/Nandagora/api4/step3bcreate/",
           bankData
         );
-        console.log("Step 3B (Bank) submitted successfully!");
+        console.log("Step 3B (Bank) submitted Successfully!");
       } catch (error) {
         if (error.response?.data?.detail?.includes("already submitted")) {
           console.log("Step 3B already submitted — skipping...");
@@ -232,7 +232,7 @@ const OrphanStepThree = () => {
           "https://brjobsedu.com/Nandagora/api4/step3vech/",
           vehicleData
         );
-        console.log("Step 3Vech (Vehicle) submitted successfully!");
+        console.log("Step 3Vech (Vehicle) submitted Successfully!");
       } catch (error) {
         if (error.response?.data?.detail?.includes("Phase 2 form not found")) {
           console.warn(
@@ -278,7 +278,7 @@ const OrphanStepThree = () => {
         "https://brjobsedu.com/Nandagora/api4/step3bill/",
         combinedData
       );
-      console.log("Step 3C (Electric + Water) submitted successfully!");
+      console.log("Step 3C (Electric + Water) submitted Successfully!");
     } catch (error) {
       if (error.response?.data?.detail?.includes("Phase 2 form not found")) {
         console.warn("Cannot submit bills — please complete Phase 2 first!");

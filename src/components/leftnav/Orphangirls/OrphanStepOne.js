@@ -228,7 +228,7 @@ const OrphanStepOne = () => {
         localStorage.setItem("family_sister", formData.fam_sis);
       }
 
-      alert(res.data.message || "Form submitted successfully!");
+      alert(res.data.message || "Form submitted Successfully!");
       navigate("/OrphanStepTwo");
     } catch (error) {
       const errMsg = error.response?.data?.message || error.message || "";

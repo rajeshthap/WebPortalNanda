@@ -398,7 +398,7 @@ const TwelthStepThree = () => {
         combinedData
       );
 
-      alert("Step 3 submitted successfully!");
+      alert("Step 3 submitted Successfully!");
       navigate("/TwelfthStepFour");
     } catch (error) {
       console.error(error);
@@ -1168,10 +1168,10 @@ const TwelthStepThree = () => {
                   <div className="nd-btnn text-center">
                     <Button
                       type="submit"
-                      className="mt-3 nd-primary-btn"
+                      className="mt-3 nd-secondary-btn"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "कृपया प्रतीक्षा करें..." : "सबमिट करे"}
+                      {isSubmitting ? "कृपया प्रतीक्षा करें..." : "Submit Step Three"}
                     </Button>
                   </div>
                 </Form>

@@ -312,7 +312,7 @@ const getyesterday = () => {
 
       localStorage.setItem("family_list", JSON.stringify(familyMembers));
 
-      alert("Step Two Form submitted successfully!");
+      alert("Step Two Form submitted Successfully!");
       navigate("/NandaStepThree");
     } catch (err) {
       console.error("Error submitting data:", err);

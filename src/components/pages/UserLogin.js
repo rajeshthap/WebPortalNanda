@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,useEffect } from "react";
 import { Row, Col, Card, Form, Button, Alert } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useNavigate } from "react-router-dom";
@@ -14,13 +14,25 @@ import ForgotPassword from "../modal/ForgotPassword";
 import { useAuth } from "../AuthContext";
 
 function UserLogin() {
+
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [captchaVerified, setCaptchaVerified] = useState(false);
-
   const recaptchaRef = useRef(null);
   const navigate = useNavigate();
+  // back button code
+      useEffect(() => {
+        window.history.pushState(null, "", window.location.href);
+        const handlePopState = () => {
+          window.history.pushState(null, "", window.location.href);
+        };
+        window.addEventListener("popstate", handlePopState);
+        return () => {
+          window.removeEventListener("popstate", handlePopState);
+        };
+      }, [navigate]);
+  
  const { refreshToken, refreshAccessToken, logout , login} = useAuth();
   const validatePhone = (phone) => /^\d{10}$/.test(phone);
 
@@ -83,7 +95,7 @@ const { access, refresh, user_data: user } = response.data || {};
   }));
 
   console.log("Logged in user:", user);
-  alert("Login successfully");
+  alert("Login Successfully");
   navigate("/UserDashboard");
 
 } catch (error) {

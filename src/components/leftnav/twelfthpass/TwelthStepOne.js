@@ -232,7 +232,7 @@ const TwelthStepOne = () => {
         localStorage.setItem("family_sister", formData.fam_sis);
       }
 
-      alert(res.data.message || "Form submitted successfully!");
+      alert(res.data.message || "Form submitted Successfully!");
       navigate("/TwelthStepTwo");
     } catch (error) {
       const errMsg = error.response?.data?.message || error.message || "";
@@ -742,10 +742,10 @@ const TwelthStepOne = () => {
                     </Form.Group>
                   </Col>
                 </Row>
-                <div className="nd-step1 ">
+                <div className="nd-btnn text-center " >
                   <div>
-                    <Button variant="primary" type="submit" className="nd-btn">
-                      Submit
+                    <Button className="mt-3 nd-secondary-btn" type="submit" >
+                      Submit Step One
                     </Button>
                   </div>
                 </div>

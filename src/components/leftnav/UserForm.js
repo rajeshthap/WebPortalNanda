@@ -29,13 +29,12 @@ function UserForm() {
   };
 
   const handleSubmit = () => {
-    if (!isChecked) {
-      alert("Please check the checkbox to proceed.");
-    } else if (alreadySubmitted) {
-      alert("आपने पहले ही आवेदन कर दिया है।");
-    } else {
-      navigate("/NandaStepOne");
+   if (!isChecked) {
+      alert("Please check the box before continuing.");
+      return;
     }
+    navigate("/NandaStepOne");
+    
   };
 
   return (
@@ -44,25 +43,18 @@ function UserForm() {
         <Col>
           <div className="text-center text-white">
             <Form className="d-flex align-items-center justify-content-center">
-              <Form.Check
+             
+              
+            </Form>
+            
+            <button className="nd-chek-box" >
+             <Form.Check
                 type="checkbox"
                 id="checkbox"
                 checked={isChecked}
                 onChange={handleCheckboxChange}
               
-              />
-              <label
-                htmlFor="checkbox"
-                style={{
-                  cursor: "pointer",
-                  userSelect: "none",
-                }}
-              >
-                
-              </label>
-            </Form>
-            <button onClick={handleSubmit}>
-             ऑनलाइन आवेदन
+              /> <div onClick={handleSubmit}>ऑनलाइन आवेदन </div>
             </button>
           </div>
         </Col>

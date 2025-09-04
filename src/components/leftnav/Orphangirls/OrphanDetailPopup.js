@@ -1,11 +1,25 @@
-import React from "react";
-import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Button,Form } from "react-bootstrap";
+import {  useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function OrphanDetailPopup() {
  const navigate = useNavigate();
+const [isChecked, setIsChecked] = useState(false);
 
+ const handleSubmit = () => {
+   if (!isChecked) {
+      alert("Please check the box before continuing.");
+      return;
+    }
+    navigate("/NandaStepOne");
+    
+  };
+
+    const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
+  
   const handleProceed = async () => {
     const userId = localStorage.getItem("user_id");
     if (!userId) return;
@@ -71,8 +85,14 @@ function OrphanDetailPopup() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleProceed}>
-        आवेदन जारी रखें
+      <Button variant="primary" className="nd-chek-box"  onClick={handleProceed}>
+      <Form.Check
+                type="checkbox"
+                id="checkbox"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+              
+              />  <div onClick={handleSubmit}>आवेदन जारी रखें </div>
       </Button>
     </div>
   );

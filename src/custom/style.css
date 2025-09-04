@@ -83,6 +83,30 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.step-heading-final h5{
+  color:var(--nd-blue-dark);
+  font-size:18px;
+  text-align:center;
+}
+
+.final-view-btn {
+  display: flex;
+  align-items: center;     
+  justify-content: center; 
+  gap: 10px;               
+  flex-wrap: wrap;         
+}
+
+
+.container.step-heading-final.mt-4{
+  overflow-x: hidden;
+  max-height: 700px;
+}
+.step-heading-final h2{
+  font-size:24px;
+  color: #cc0000;
+
+}
 .countdown-timer {
   font-weight: bold;
   font-size: 16px;
@@ -91,13 +115,9 @@ input::-webkit-inner-spin-button {
 }
 
 .nd-link-page.disabled {
-
   color: gray;
-
   pointer-events: none;
-
   cursor: not-allowed;
-
 }
 
 .nd-primary-btn {
@@ -106,6 +126,11 @@ input::-webkit-inner-spin-button {
   font-size: var(--nd-space-300);
   color: var(--nd-white);
   padding: var(--nd-space-300);
+}
+#checkbox{
+  margin:2px;
+
+
 }
 
 button.nd-primary-btn.btn.btn-primary {
@@ -958,7 +983,7 @@ select.form-select {
   }
 
   .user-table-scroll {
-    overflow-x: scroll;
+    overflow-x: scroll ;
     overflow-y: scroll;
   }
 

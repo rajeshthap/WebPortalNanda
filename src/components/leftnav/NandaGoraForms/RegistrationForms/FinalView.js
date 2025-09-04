@@ -30,7 +30,7 @@ const FinalView = () => {
     // Replace this with your actual submission logic
     setTimeout(() => {
       // Show success toast
-      toast.success("Form submitted successfully!", {
+      toast.success("Form submitted Successfully!", {
         position: "top-center",
         autoClose: 2000, // Close after 2 seconds
         hideProgressBar: false,

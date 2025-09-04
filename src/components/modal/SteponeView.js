@@ -153,7 +153,7 @@ function SteponeView() {
       }
 
       await res.json();
-      setSuccessMsg("Form updated successfully.");
+      setSuccessMsg("Form updated Successfully.");
       localStorage.setItem("updatedPhase1Data", JSON.stringify(formData));
     } catch (err) {
       setErrorMsg(err.message);

@@ -482,7 +482,7 @@ const [bankList, setBankList] = useState([{ bank_name: "", id: "" }]);
 
       setShowSuccessMessage(true);
       setErrorMessages({});
-      alert("Step Third Form submitted successfully!");
+      alert("Step Third Form submitted Successfully!");
 
       setTimeout(() => {
         navigate("/NandaStep4th");
@@ -509,7 +509,7 @@ const [bankList, setBankList] = useState([{ bank_name: "", id: "" }]);
                   onClose={() => setShowSuccessMessage(false)}
                   dismissible
                 >
-                  Data submitted successfully!
+                  Data submitted Successfully!
                 </Alert>
               )}
               {errorMessages.general && (

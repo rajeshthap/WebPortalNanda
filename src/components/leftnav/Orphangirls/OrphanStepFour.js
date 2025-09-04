@@ -110,7 +110,7 @@ const OrphanStepFour = () => {
       return;
     }
 
-    alert("Step 4 submitted successfully. All documents are uploaded.");
+    alert("Step 4 submitted Successfully. All documents are uploaded.");
   };
 
   const handleSingleSubmit = async (id) => {
@@ -138,7 +138,7 @@ const OrphanStepFour = () => {
       );
 
       console.log("Uploaded:", response.data);
-      alert(`${id} uploaded successfully`);
+      alert(`${id} uploaded Successfully`);
 
       setSelectedFiles((prev) => ({
         ...prev,

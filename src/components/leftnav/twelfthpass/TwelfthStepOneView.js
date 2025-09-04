@@ -172,7 +172,7 @@ const SteponeViewModal = () => {
         `https://brjobsedu.com/Nandagora/api4/step_one_updata__get/${user_id}/`,
         formData
       );
-      alert("Form updated successfully!");
+      alert("Form updated Successfully!");
       window.location.href = "/TwelthStepTwo";
     } catch (error) {
       alert("Failed to update form");

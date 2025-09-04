@@ -90,8 +90,6 @@ function Girls12thPass() {
                 </Button>
               </a>{" "}</li>
 
-               
-             
          </ol>
         </Modal.Body>
         <Modal.Footer className="nd-footer">

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../footer/Footer";
 const BASE_URL = "https://brjobsedu.com/Nandagora";
 const MEDIA_URL = `${BASE_URL}/media`;
 const resolveFileUrl = (filePath) => {
@@ -16,29 +17,52 @@ const uploadItems = [
   { id: "stu_sign", label: "छात्रा के हस्ताक्षर" },
   { id: "par_sign", label: " माता / पिता/अभिभावक के हस्ताक्षर जमा करें " },
   { id: "mark10", label: "हाईस्कूल का प्रमाण-पत्र। " },
-  { id: "mark12", label: "कक्षा 12वीं उत्तीर्ण का अंक पत्र एवं प्रमाण पत्र।" },
+  {
+    id: "mark12",
+    label:
+      "कक्षा 12वीं उत्तीर्ण का अंक पत्र एवं प्रमाण पत्र। OR राष्ट्रीय मुक्त विद्यालय / अन्य शिक्षण संस्थान से कक्षा 12 उत्तीर्ण करने वाली आवेदिका द्वारा स्वप्रमाणित अंक पत्र की छायाप्रति ",
+  },
   { id: "stu_adhar", label: "छात्रा एवं माता-पिता/अभिभावक का आधार कार्ड" },
   { id: "stu_pan", label: "छात्रा एवं माता-पिता/अभिभावक का पैन कार्ड " },
   { id: "stu_dom", label: " छात्रा का स्थाई निवास प्रमाण पत्र " },
   {
     id: "hou_tax",
-    label: " नगरीय / ग्रामीण स्थानीय निकाय द्वारा दिया गया गृह कर...",
+    label:
+      " राष्ट्रीय मुक्त विद्यालय / अन्य शिक्षण संस्थान से कक्षा 12 उत्तीर्ण करने वाली आवेदिका द्वारा स्वप्रमाणित अंक पत्र की छायाप्रति ",
   },
   { id: "inc_cer", label: "आय प्रमाण पत्र" },
-  { id: "fam_reg", label: "परिवार रजिस्टर की नकल..." },
-  { id: "cas_cer", label: "सामाजिक आर्थिक और जाति जनगणना(SECC)..." },
-  { id: "unm_cer", label: " परिवार के विगत 03 बार के बिजली के बिलों..." },
+  {
+    id: "fam_reg",
+    label:
+      "परिवार रजिस्टर की नकल या सभासद/पार्षद द्वारा दिया गया प्रमाण पत्र तथा राशन कार्ड की प्रति (बालिका का नाम राशन कार्ड में अंकित होना अनिवार्य है) ",
+  },
+  {
+    id: "cas_cer",
+    label:
+      " सामाजिक आर्थिक और जाति जनगणना(SECC) में परिवार की स्थिति के आंकलन की प्रति (यदि उपलबध है)",
+  },
+  {
+    id: "unm_cer",
+    label:
+      "  परिवार के विगत 03 बार के बिजली के बिलों की प्रति तथा विगत 01 बार के पानी के बिल की प्रति कनेक्शन न होने की स्तिथि में शपथ पत्र में आवश्यक रूप से उल्लेख करे।",
+  },
   {
     id: "old_ben",
-    label: "शासनादेशानुसार योजना का लाभ केवल 02 बालिकाओं हेतु ही अनुमन्य है...",
+    label:
+      "शासनादेशानुसार योजना का लाभ केवल 02 बालिकाओं हेतु ही अनुमन्य है इसलिए आवेदित बालिका के परिवार की अन्य बालिकाओं को पूर्व में 12वीं कक्षा पूरी करने पर योजना का लाभ दिये जाने / न दिये जाने विषयक शपथ –पत्र में निम्न बिंदु आवश्यक रूप से शामिल होंगे :- मैं प्रमाणित करता/ करती हूँ की यह लाभ मेरी प्रथम/द्वितीय पुत्री द्वारा लिया जा रहा है, मेरी यह पुत्री अविवाहित है। मेरे द्वारा चल अचल सम्पति एवं अन्य चाही गयी समस्त सूचनाएं सही –सहीदी गयी है मेरे द्वारा किसी भी तथ्य को छुपाया नहीं गया है मेरे द्वारा परिवार के समस्त खातो का विवरण,एक वर्ष के बैंक स्टेटमेंट सहित दे दिया गया है",
   },
   { id: "gir_pas", label: "लाभार्थी बालिका के बैंक पासबुक की छाया प्रति " },
   {
     id: "fam_pas",
-    label: "परिवार के समस्त सदस्यों के बैंक पासबुक की प्रति...",
+    label:
+      " परिवार के समस्त सदस्यों के बैंक पासबुक की प्रति / विगत 01 वर्ष के बैंक स्टेटमैन्ट की प्रति ",
   },
   { id: "fur_edu", label: "उच्च शिक्षा में दाखिले के पूर्ण अभिलेखों की प्रति" },
-  { id: "sch_doc", label: "विद्यालय द्वारा जारी प्रमाण पत्र..." },
+  {
+    id: "sch_doc",
+    label:
+      " विद्यालय द्वारा जारी प्रमाण पत्र    स्वप्रमाणित अंक पत्र की छायाप्रति",
+  },
   { id: "aww_doc", label: "आंगनबाड़ी कार्यकर्ती द्वारा प्रदत्त प्रमाण-पत्र।" },
 ];
 
@@ -58,18 +82,18 @@ const TwelfthFinalView = () => {
   const [error2c, setError2c] = useState(null);
   const navigate = useNavigate();
 
-   // back button code
-    useEffect(() => {
+  // back button code
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
       window.history.pushState(null, "", window.location.href);
-      const handlePopState = () => {
-        window.history.pushState(null, "", window.location.href);
-      };
-      window.addEventListener("popstate", handlePopState);
-      return () => {
-        window.removeEventListener("popstate", handlePopState);
-      };
-    }, [navigate]);
-    
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
+
   const userId = localStorage.getItem("user_id");
   useEffect(() => {
     if (!userId) return;
@@ -86,17 +110,17 @@ const TwelfthFinalView = () => {
     axios
       .get(`https://brjobsedu.com/Nandagora/api4/phase2b/${userId}/`)
       .then((res) => setStep2FormData(res.data || {}))
-      .catch(() => setError2b("अन्य जानकारी लोड करने में त्रुटि"));
+      .catch(() => setError2b(""));
 
     axios
       .get(`https://brjobsedu.com/Nandagora/api4/phase2a/update/${userId}/`)
       .then((res) => setMemberData(Array.isArray(res.data) ? res.data : []))
-      .catch(() => setError2a("सदस्य डेटा लोड करने में त्रुटि"));
+      .catch(() => setError2a(""));
 
     axios
       .get(`https://brjobsedu.com/Nandagora/api4/phase2c/update/${userId}/`)
       .then((res) => setGirlData(Array.isArray(res.data) ? res.data : []))
-      .catch(() => setError2c("कन्या डेटा लोड करने में त्रुटि"));
+      .catch(() => setError2c(""));
 
     // Step 3
     const fetchStep3 = async () => {
@@ -226,396 +250,404 @@ const TwelfthFinalView = () => {
   const occupationPersons = ["fath", "moth", "abhi"];
 
   return (
-    <div className="container mt-4">
-      {/* Step 1 */}
-      <h2 className="mb-4">Step 1: व्यक्तिगत जानकारी</h2>
-      <Table bordered responsive className="nd-born-thead">
-        <thead>
-          <tr>
-            <th>क्रमांक</th>
-            <th>शीर्षक</th>
-            <th>जानकारी</th>
-          </tr>
-        </thead>
-        <tbody>
-          {step1Fields.map((field, index) => (
-            <tr key={field.key}>
-              <td>{index + 1}</td>
-              <td>{field.label}</td>
-              <td>{step1Data[field.key] || "-"}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-
-      {/* Step 2 */}
-      <h2 className="mb-4 mt-5">Step 2: अतिरिक्त जानकारी</h2>
-
-      {/* Phase2a Members */}
-      <div className="mb-4">
-        <h5 className="text-center">सदस्य की जानकारी</h5>
-        <Table bordered responsive className="nd-born-table">
-          <thead className="nd-born-thead">
+    <>
+      <div className="container step-heading-final mt-4">
+        {/* Step 1 */}
+        <h2 className="mb-4">Step 1: व्यक्तिगत जानकारी</h2>
+        <Table bordered responsive className="nd-born-thead">
+          <thead>
             <tr>
               <th>क्रमांक</th>
-              {memberFields.map((f) => (
-                <th key={f.key}>{f.label}</th>
-              ))}
+              <th>शीर्षक</th>
+              <th>जानकारी</th>
             </tr>
           </thead>
           <tbody>
-            {error2a ? (
-              <tr>
-                <td
-                  colSpan={memberFields.length + 1}
-                  className="text-danger text-center"
-                >
-                  {error2a}
-                </td>
-              </tr>
-            ) : memberData.length > 0 ? (
-              memberData.map((row, idx) => (
-                <tr key={idx}>
-                  <td>{idx + 1}</td>
-                  {memberFields.map((f) => (
-                    <td key={f.key}>{row[f.key] || "-"}</td>
-                  ))}
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={memberFields.length + 1} className="text-center">
-                  कोई डेटा उपलब्ध नहीं
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
-      </div>
-
-      {/* Phase2c Girl Data */}
-      <div className="mb-4">
-        <h5 className="text-center">लाभार्थी कन्या की जानकारी</h5>
-        <Table bordered responsive className="nd-born-table">
-          <thead className="nd-born-thead">
-            <tr>
-              <th>क्रमांक</th>
-              {girlFields.map((f) => (
-                <th key={f.key}>{f.label}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {error2c ? (
-              <tr>
-                <td
-                  colSpan={girlFields.length + 1}
-                  className="text-danger text-center"
-                >
-                  {error2c}
-                </td>
-              </tr>
-            ) : girlData.length > 0 ? (
-              girlData.map((row, idx) => (
-                <tr key={idx}>
-                  <td>{idx + 1}</td>
-                  {girlFields.map((f) => (
-                    <td key={f.key}>{row[f.key] || "-"}</td>
-                  ))}
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={girlFields.length + 1} className="text-center">
-                  कोई डेटा उपलब्ध नहीं
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
-      </div>
-
-      {/* Other Groups */}
-      {error2b ? (
-        <p className="text-danger text-center">{error2b}</p>
-      ) : (
-        otherGroups.map((group, gIndex) => (
-          <div key={gIndex} className="mb-4">
-            <h5 className="text-center">{group.heading}</h5>
-            <Table bordered responsive className="nd-born-table">
-              <thead className="nd-born-thead">
-                <tr>
-                  <th>क्रमांक</th>
-                  <th>शीर्षक</th>
-                  <th>जानकारी</th>
-                </tr>
-              </thead>
-              <tbody>
-                {group.fields.map((field, index) => (
-                  <tr key={field.key}>
-                    <td>{index + 1}</td>
-                    <td>{field.label}</td>
-                    <td>{step2FormData[field.key] || "-"}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
-        ))
-      )}
-
-      {/* Occupation */}
-      <div className="mb-4">
-        <h5 className="text-center">व्यवसाय का विवरण</h5>
-        <Table bordered responsive className="nd-born-table">
-          <thead className="nd-born-thead">
-            <tr>
-              <th>व्यक्ति</th>
-              <th>व्यवसाय (हाँ / ना)</th>
-              <th>मनरेगा कार्ड संख्या</th>
-              <th>मनरेगा दिवस</th>
-            </tr>
-          </thead>
-          <tbody>
-            {occupationPersons.map((person) => (
-              <tr key={person}>
-                <td>
-                  {person === "fath"
-                    ? "पिता"
-                    : person === "moth"
-                    ? "माता"
-                    : "अभिभावक"}
-                </td>
-                <td>{step2FormData[`occu_${person}`] || "-"}</td>
-                <td>{step2FormData[`mnrega_${person}`] || "-"}</td>
-                <td>{step2FormData[`mnrega_${person}_days`] || "-"}</td>
+            {step1Fields.map((field, index) => (
+              <tr key={field.key}>
+                <td>{index + 1}</td>
+                <td>{field.label}</td>
+                <td>{step1Data[field.key] || "-"}</td>
               </tr>
             ))}
           </tbody>
         </Table>
-      </div>
 
-      {/* Step 3 */}
-      <h2 className="mb-4 mt-5">Step 3: अतिरिक्त संपत्ति और बिल विवरण</h2>
+        {/* Step 2 */}
+        <h2 className="mb-4 mt-5">Step 2: अतिरिक्त जानकारी</h2>
 
-      <h5 className="text-center">सामाजिक और भूमि विवरण</h5>
-      <Table bordered responsive className="nd-born-table">
-        <tbody>
-          <tr>
-            <td>सामाजिक आर्थिक स्थिति</td>
-            <td>{step3Data.socio_eco || "-"}</td>
-          </tr>
-          <tr>
-            <td>भूमि का प्रकार</td>
-            <td>{step3Data.bhoomi_type || "-"}</td>
-          </tr>
-          <tr>
-            <td>आवासीय भूमि का प्रकार</td>
-            <td>{step3Data.bhoomi_typer || "-"}</td>
-          </tr>
-          <tr>
-            <td>भूमि क्षेत्रफल (हेक्टेयर)</td>
-            <td>{step3Data.bhoomi_shetr || "-"}</td>
-          </tr>
-          <tr>
-            <td>भूमि का वर्तमान मूल्य (₹)</td>
-            <td>{step3Data.curr_amt || "-"}</td>
-          </tr>
-          <tr>
-            <td>आवासीय भूमि प्रकार</td>
-            <td>{step3Data.res_type || "-"}</td>
-          </tr>
-          <tr>
-            <td>कक्षों की संख्या</td>
-            <td>{step3Data.rooms || "-"}</td>
-          </tr>
-          <tr>
-            <td>क्षेत्रफल (हेक्टेयर)</td>
-            <td>{step3Data.area || "-"}</td>
-          </tr>
-          <tr>
-            <td>वर्तमान मूल्य (₹)</td>
-            <td>{step3Data.curr_pri || "-"}</td>
-          </tr>
-        </tbody>
-      </Table>
-
-      <h5 className="text-center mt-3">बैंक विवरण</h5>
-      <Table bordered responsive className="nd-born-table">
-        <thead className="nd-born-thead">
-          <tr>
-            <th>क्रमांक</th>
-            <th>सदस्य का नाम</th>
-            <th>बैंक का नाम</th>
-            <th>खाता संख्या</th>
-            <th>कुल जमा (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {bankRows.length ? (
-            bankRows.map((b, i) => (
-              <tr key={i}>
-                <td>{i + 1}</td>
-                <td>{b.det1 || "-"}</td>
-                <td>{b.det2 || "-"}</td>
-                <td>{b.det3 || "-"}</td>
-                <td>{b.det4 || "-"}</td>
+        {/* Phase2a Members */}
+        <div className="mb-4">
+          <h5 className="">सदस्य की जानकारी</h5>
+          <Table bordered responsive className="nd-born-table">
+            <thead className="nd-born-thead">
+              <tr>
+                <th>क्रमांक</th>
+                {memberFields.map((f) => (
+                  <th key={f.key}>{f.label}</th>
+                ))}
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5" className="text-center">
-                कोई डेटा उपलब्ध नहीं
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+            </thead>
+            <tbody>
+              {error2a ? (
+                <tr>
+                  <td
+                    colSpan={memberFields.length + 1}
+                    className="text-danger text-center"
+                  >
+                    {error2a}
+                  </td>
+                </tr>
+              ) : memberData.length > 0 ? (
+                memberData.map((row, idx) => (
+                  <tr key={idx}>
+                    <td>{idx + 1}</td>
+                    {memberFields.map((f) => (
+                      <td key={f.key}>{row[f.key] || "-"}</td>
+                    ))}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={memberFields.length + 1} className="text-center">
+                    कोई डेटा उपलब्ध नहीं
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </div>
 
-      <h5 className="text-center mt-3">वाहन विवरण</h5>
-      <Table bordered responsive className="nd-born-table">
-        <thead className="nd-born-thead">
-          <tr>
-            <th>क्रमांक</th>
-            <th>मॉडल</th>
-            <th>संख्या</th>
-            <th>मूल्य</th>
-            <th>अन्य विवरण</th>
-          </tr>
-        </thead>
-        <tbody>
-          {vehicleRows.length ? (
-            vehicleRows.map((v, i) => (
-              <tr key={i}>
-                <td>{i + 1}</td>
-                <td>{v.vec_model || "-"}</td>
-                <td>{v.vec_number || "-"}</td>
-                <td>{v.vec_amt || "-"}</td>
-                <td>{v.vec_other || "-"}</td>
+        {/* Phase2c Girl Data */}
+        <div className="mb-4">
+          <h5 className="text-center">लाभार्थी कन्या की जानकारी</h5>
+          <Table bordered responsive className="nd-born-table">
+            <thead className="nd-born-thead">
+              <tr>
+                <th>क्रमांक</th>
+                {girlFields.map((f) => (
+                  <th key={f.key}>{f.label}</th>
+                ))}
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5" className="text-center">
-                कोई डेटा उपलब्ध नहीं
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
+            </thead>
+            <tbody>
+              {error2c ? (
+                <tr>
+                  <td
+                    colSpan={girlFields.length + 1}
+                    className="text-danger text-center"
+                  >
+                    {error2c}
+                  </td>
+                </tr>
+              ) : girlData.length > 0 ? (
+                girlData.map((row, idx) => (
+                  <tr key={idx}>
+                    <td>{idx + 1}</td>
+                    {girlFields.map((f) => (
+                      <td key={f.key}>{row[f.key] || "-"}</td>
+                    ))}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={girlFields.length + 1} className="text-center">
+                    कोई डेटा उपलब्ध नहीं
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </Table>
+        </div>
 
-      <h5 className="text-center mt-3">बिजली / पानी बिल विवरण</h5>
-      <Table bordered responsive className="nd-born-table">
-        <thead className="nd-born-thead">
-          <tr>
-            <th>क्रमांक</th>
-            <th>बिल प्रकार</th>
-            <th>खाता संख्या</th>
-            <th>तिथि</th>
-            <th>धनराशि (₹)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {electricityRows.length
-            ? electricityRows.map((e, i) => (
+        {/* Other Groups */}
+        {error2b ? (
+          <p className="text-danger text-center">{error2b}</p>
+        ) : (
+          otherGroups.map((group, gIndex) => (
+            <div key={gIndex} className="mb-4">
+              <h5 className="text-center">{group.heading}</h5>
+              <Table bordered responsive className="nd-born-table">
+                <thead className="nd-born-thead">
+                  <tr>
+                    <th>क्रमांक</th>
+                    <th>शीर्षक</th>
+                    <th>जानकारी</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {group.fields.map((field, index) => (
+                    <tr key={field.key}>
+                      <td>{index + 1}</td>
+                      <td>{field.label}</td>
+                      <td>{step2FormData[field.key] || "-"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          ))
+        )}
+
+        {/* Occupation */}
+        <div className="mb-4">
+          <h5 className="">व्यवसाय का विवरण</h5>
+          <Table bordered responsive className="nd-born-table">
+            <thead className="nd-born-thead">
+              <tr>
+                <th>व्यक्ति</th>
+                <th>व्यवसाय (हाँ / ना)</th>
+                <th>मनरेगा कार्ड संख्या</th>
+                <th>मनरेगा दिवस</th>
+              </tr>
+            </thead>
+            <tbody>
+              {occupationPersons.map((person) => (
+                <tr key={person}>
+                  <td>
+                    {person === "fath"
+                      ? "पिता"
+                      : person === "moth"
+                      ? "माता"
+                      : "अभिभावक"}
+                  </td>
+                  <td>{step2FormData[`occu_${person}`] || "-"}</td>
+                  <td>{step2FormData[`mnrega_${person}`] || "-"}</td>
+                  <td>{step2FormData[`mnrega_${person}_days`] || "-"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+
+        {/* Step 3 */}
+        <h2 className="mb-4 mt-5">Step 3: अतिरिक्त संपत्ति और बिल विवरण</h2>
+
+        <h5 className="">सामाजिक और भूमि विवरण</h5>
+        <Table bordered responsive className="nd-born-table">
+          <tbody>
+            <tr>
+              <td>सामाजिक आर्थिक स्थिति</td>
+              <td>{step3Data.socio_eco || "-"}</td>
+            </tr>
+            <tr>
+              <td>भूमि का प्रकार</td>
+              <td>{step3Data.bhoomi_type || "-"}</td>
+            </tr>
+            <tr>
+              <td>आवासीय भूमि का प्रकार</td>
+              <td>{step3Data.bhoomi_typer || "-"}</td>
+            </tr>
+            <tr>
+              <td>भूमि क्षेत्रफल (हेक्टेयर)</td>
+              <td>{step3Data.bhoomi_shetr || "-"}</td>
+            </tr>
+            <tr>
+              <td>भूमि का वर्तमान मूल्य (₹)</td>
+              <td>{step3Data.curr_amt || "-"}</td>
+            </tr>
+            <tr>
+              <td>आवासीय भूमि प्रकार</td>
+              <td>{step3Data.res_type || "-"}</td>
+            </tr>
+            <tr>
+              <td>कक्षों की संख्या</td>
+              <td>{step3Data.rooms || "-"}</td>
+            </tr>
+            <tr>
+              <td>क्षेत्रफल (हेक्टेयर)</td>
+              <td>{step3Data.area || "-"}</td>
+            </tr>
+            <tr>
+              <td>वर्तमान मूल्य (₹)</td>
+              <td>{step3Data.curr_pri || "-"}</td>
+            </tr>
+          </tbody>
+        </Table>
+
+        <h5 className=" mt-3">बैंक विवरण</h5>
+        <Table bordered responsive className="nd-born-table">
+          <thead className="nd-born-thead">
+            <tr>
+              <th>क्रमांक</th>
+              <th>सदस्य का नाम</th>
+              <th>बैंक का नाम</th>
+              <th>खाता संख्या</th>
+              <th>कुल जमा (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bankRows.length ? (
+              bankRows.map((b, i) => (
                 <tr key={i}>
                   <td>{i + 1}</td>
-                  <td>बिजली</td>
-                  <td>{e.acno || "-"}</td>
-                  <td>{e.date || "-"}</td>
-                  <td>{e.amount || "-"}</td>
+                  <td>{b.det1 || "-"}</td>
+                  <td>{b.det2 || "-"}</td>
+                  <td>{b.det3 || "-"}</td>
+                  <td>{b.det4 || "-"}</td>
                 </tr>
               ))
-            : null}
-          {waterBillRow.acno && (
-            <tr>
-              <td>1</td>
-              <td>पानी</td>
-              <td>{waterBillRow.acno || "-"}</td>
-              <td>{waterBillRow.date || "-"}</td>
-              <td>{waterBillRow.amount || "-"}</td>
-            </tr>
-          )}
-        </tbody>
-      </Table>
-      {/* Step 4: Read-only documents */}
-      <h2 className="mb-4 mt-5">Step 4: दस्तावेज़ (Read-only)</h2>
-      <Table bordered responsive>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Document Type</th>
-            <th>Status</th>
-            <th>Preview</th>
-          </tr>
-        </thead>
-        <tbody>
-          {uploadItems.map((item, idx) => {
-            const fileUrl = resolveFileUrl(uploadedDocs[item.id]);
-            return (
-              <tr key={item.id}>
-                <td>{idx + 1}</td>
-                <td>{item.label}</td>
-                <td>
-                  {fileUrl ? (
-                    <span className="text-success">Uploaded</span>
-                  ) : (
-                    <span className="text-danger">Not Uploaded</span>
-                  )}
-                </td>
-                <td>
-                  {fileUrl ? (
-                    /\.(jpg|jpeg|png|gif)$/i.test(fileUrl) ? (
-                      <a
-                        href={fileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <img
-                          src={fileUrl}
-                          alt={item.label}
-                          style={{
-                            width: "60px",
-                            height: "60px",
-                            objectFit: "cover",
-                            borderRadius: "6px",
-                            cursor: "pointer",
-                          }}
-                        />
-                      </a>
-                    ) : (
-                      <a
-                        href={fileUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View
-                      </a>
-                    )
-                  ) : (
-                    "-"
-                  )}
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center">
+                  कोई डेटा उपलब्ध नहीं
                 </td>
               </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-      <div className="text-center mt-3">
-        <Button variant="primary" onClick={handleSubmit} className="me-2">
-          Confirm Final View
-        </Button>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            alert("Cancelled!");
-            navigate("/TwelfthStepFour");
-          }}
-        >
-          Cancel
-        </Button>
+            )}
+          </tbody>
+        </Table>
+
+        <h5 className=" mt-3">वाहन विवरण</h5>
+        <Table bordered responsive className="nd-born-table">
+          <thead className="nd-born-thead">
+            <tr>
+              <th>क्रमांक</th>
+              <th>मॉडल</th>
+              <th>संख्या</th>
+              <th>मूल्य</th>
+              <th>अन्य विवरण</th>
+            </tr>
+          </thead>
+          <tbody>
+            {vehicleRows.length ? (
+              vehicleRows.map((v, i) => (
+                <tr key={i}>
+                  <td>{i + 1}</td>
+                  <td>{v.vec_model || "-"}</td>
+                  <td>{v.vec_number || "-"}</td>
+                  <td>{v.vec_amt || "-"}</td>
+                  <td>{v.vec_other || "-"}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5" className="text-center">
+                  कोई डेटा उपलब्ध नहीं
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+
+        <h5 className=" mt-3">बिजली / पानी बिल विवरण</h5>
+        <Table bordered responsive className="nd-born-table">
+          <thead className="nd-born-thead">
+            <tr>
+              <th>क्रमांक</th>
+              <th>बिल प्रकार</th>
+              <th>खाता संख्या</th>
+              <th>तिथि</th>
+              <th>धनराशि (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {electricityRows.length
+              ? electricityRows.map((e, i) => (
+                  <tr key={i}>
+                    <td>{i + 1}</td>
+                    <td>बिजली</td>
+                    <td>{e.acno || "-"}</td>
+                    <td>{e.date || "-"}</td>
+                    <td>{e.amount || "-"}</td>
+                  </tr>
+                ))
+              : null}
+            {waterBillRow.acno && (
+              <tr>
+                <td>1</td>
+                <td>पानी</td>
+                <td>{waterBillRow.acno || "-"}</td>
+                <td>{waterBillRow.date || "-"}</td>
+                <td>{waterBillRow.amount || "-"}</td>
+              </tr>
+            )}
+          </tbody>
+        </Table>
+        {/* Step 4: Read-only documents */}
+        <h2 className="mb-4 mt-5 ">Step 4: दस्तावेज़ </h2>
+        <Table bordered responsive className="nd-born-table">
+          <thead className="nd-born-thead">
+            <tr>
+              <th>क्रमांक</th>
+              <th>दस्तावेज़ प्रकार</th>
+              <th>स्थिति</th>
+              <th>पूर्वावलोकन</th>
+            </tr>
+          </thead>
+          <tbody>
+            {uploadItems.map((item, idx) => {
+              const fileUrl = resolveFileUrl(uploadedDocs[item.id]);
+              return (
+                <tr key={item.id}>
+                  <td>{idx + 1}</td>
+                  <td>{item.label}</td>
+                  <td>
+                    {fileUrl ? (
+                      <span className="text-success">Uploaded</span>
+                    ) : (
+                      <span className="text-danger">Not Uploaded</span>
+                    )}
+                  </td>
+                  <td>
+                    {fileUrl ? (
+                      /\.(jpg|jpeg|png|gif)$/i.test(fileUrl) ? (
+                        <a
+                          href={fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <img
+                            src={fileUrl}
+                            alt={item.label}
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              objectFit: "cover",
+                              borderRadius: "6px",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </a>
+                      ) : (
+                        <a
+                          href={fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View
+                        </a>
+                      )
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+        <div className="text-center mt-2 mb-4 final-view-btn">
+          <div>
+            <Button variant="primary" onClick={handleSubmit} className="me-2">
+              Confirm Final View
+            </Button>
+          </div>
+          <div>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                alert("Cancelled!");
+                navigate("/TwelfthStepFour");
+              }}
+            >
+              Cancel / Edit
+            </Button>
+          </div>
+        </div>        
       </div>
-    </div>
+      
+    </>
+    
   );
 };
 

@@ -38,7 +38,7 @@ console.log("access", refreshToken);
         const data = await response.json();
         setAccessToken(data.access);
         localStorage.setItem("access-token", data.access);
-        console.log("Access token successfully refreshed.");
+        console.log("Access token Successfully refreshed.");
         return true;
       } else {
         console.error("Unable to refresh.");

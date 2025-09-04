@@ -149,7 +149,7 @@ const OrphanStepTwo = () => {
       );
     }
     if (siblingsData.length > 0) {
-      console.log(" Phase2a submitted successfully!");
+      console.log(" Phase2a submitted Successfully!");
     } else {
       console.log(" Phase2a skipped (no data provided)");
     }
@@ -179,7 +179,7 @@ try {
       { headers: { "Content-Type": "multipart/form-data" } }
     );
   }
-  console.log(" Phase2c submitted successfully");
+  console.log(" Phase2c submitted Successfully");
 } catch (error) {
   const errMsg = error.response?.data?.detail || error.message;
   if (errMsg.includes("Phase 2A already submitted")) {
@@ -210,7 +210,7 @@ try {
       formPayload,
       { headers: { "Content-Type": "multipart/form-data" } }
     );
-    console.log(" Phase2b submitted successfully!");
+    console.log(" Phase2b submitted Successfully!");
   } catch (error) {
     console.error(" Phase2b Error:", error.response?.data || error.message);
   }

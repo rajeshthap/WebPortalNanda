@@ -252,9 +252,10 @@ const TwelfthFormStatus = () => {
 
   return (
     <>
-      <div className="main-container">
-        <div className="main">
+      
+        <div className="mt-4">
           <div className="box-container">
+            
             <Row>
               <div className="nd-step1">
                 <h3>बारहवीं फॉर्म स्थिति पृष्ठ</h3>
@@ -318,7 +319,7 @@ const TwelfthFormStatus = () => {
           </div>
           <Footer />
         </div>
-      </div>
+   
 
       <Modal show={showUserOtp} onHide={() => setShowUserOtp(false)} centered>
         <Modal.Header closeButton>

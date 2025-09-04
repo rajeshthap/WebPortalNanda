@@ -86,7 +86,7 @@ const TwelfthStepFourView = ({ userId }) => {
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      alert("File updated successfully!");
+      alert("File updated Successfully!");
       window.location.reload();
       setUploadedDocs((prev) => ({
         ...prev,
@@ -108,7 +108,7 @@ const TwelfthStepFourView = ({ userId }) => {
       await axios.delete(`${BASE_URL}/api4/step4update/${userId}/`, {
         params: { field },
       });
-      alert("Document deleted successfully!");
+      alert("Document deleted Successfully!");
       setUploadedDocs((prev) => {
         const updated = { ...prev };
         delete updated[field];
