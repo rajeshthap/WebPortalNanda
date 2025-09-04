@@ -14,7 +14,7 @@ const UserOtp = ({ phone, onConfirm, onCancel }) => {
   const [otp, setOtp] = useState("");
   const [verifying, setVerifying] = useState(false);
   const navigate = useNavigate();
-// back button
+  // back button
   useEffect(() => {
     window.history.pushState(null, "", window.location.href);
     const handlePopState = () => {
@@ -65,7 +65,9 @@ const UserOtp = ({ phone, onConfirm, onCancel }) => {
           रद्द करें
         </Button>
         <Button onClick={verifyOtp} disabled={verifying}>
-          {verifying ? "सत्यापन हो रहा है..." : "OTP सत्यापित करें और फॉर्म हटाएँ"}
+          {verifying
+            ? "सत्यापन हो रहा है..."
+            : "OTP सत्यापित करें और फॉर्म हटाएँ"}
         </Button>
       </div>
     </div>
@@ -145,10 +147,14 @@ const TwelfthFormStatus = () => {
         const step4Data =
           results[3].status === "fulfilled" ? results[3].value.data : {};
 
-        if (step1Data?.form_id) localStorage.setItem("form_id", step1Data.form_id);
-        else if (step2Data?.form_id) localStorage.setItem("form_id", step2Data.form_id);
-        else if (step3Data?.form_id) localStorage.setItem("form_id", step3Data.form_id);
-        else if (step4Data?.form_id) localStorage.setItem("form_id", step4Data.form_id);
+        if (step1Data?.form_id)
+          localStorage.setItem("form_id", step1Data.form_id);
+        else if (step2Data?.form_id)
+          localStorage.setItem("form_id", step2Data.form_id);
+        else if (step3Data?.form_id)
+          localStorage.setItem("form_id", step3Data.form_id);
+        else if (step4Data?.form_id)
+          localStorage.setItem("form_id", step4Data.form_id);
 
         setFormData({
           step1: step1Data,
@@ -199,7 +205,7 @@ const TwelfthFormStatus = () => {
     2: "/TwelthStepTwo",
     3: "/TwelthStepThree",
     4: "/TwelfthStepFour",
-    5: "/TwelfthFinalView", 
+    5: "/TwelfthFinalView",
   };
 
   const handleProceedClick = () => {
@@ -252,74 +258,112 @@ const TwelfthFormStatus = () => {
 
   return (
     <>
-      
-        <div className="mt-4">
-          <div className="box-container">
-            
-            <Row>
-              <div className="nd-step1">
-                <h3>बारहवीं फॉर्म स्थिति पृष्ठ</h3>
-              </div>
+      <div className="mt-4">
+        <div className="box-container">
+          <Row>
+            <div className="nd-step1">
+              <h3>बारहवीं फॉर्म स्थिति पृष्ठ</h3>
+            </div>
 
-              {[1, 2, 3, 4, 5].map((step) => (
-                <Row key={step} className="nd-personalinfo nd-personalID">
-                  <Col lg={3} className="nd-personalID-txt nd-steps-checks">
-                    Step {step}
-                  </Col>
-                  <Col
-                    lg={9}
-                    className={
-                      isStepComplete(step)
-                        ? "personalID-complete"
-                        : "personalID-pendding"
-                    }
-                  >
-                    {getStatusIcon(step)}
-                  </Col>
-                </Row>
-              ))}
-
-              {allStepsCompleted ? (
-                <div className="text-center nd-f-12 text-success">
-                  सभी चरण सफलतापूर्वक जमा किए गए हैं। धन्यवाद!
-                  <div className="nd-btnn text-center">
-                    <Button
-                      className="mt-3 ms-2 btn-danger"
-                      onClick={sendOtp}
-                      disabled={sendingOtp || deleting}
-                    >
-                      {sendingOtp
-                        ? "OTP भेजा जा रहा है..."
-                        : deleting
-                        ? "हटाया जा रहा है..."
-                        : "फॉर्म हटाएँ"}
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <div className="text-center nd-f-12">
-                    फॉर्म अंतिम रूप से सबमिट नहीं किया गया है
-                  </div>
-                  <div className="text-center nd-f-12">
-                    <FormStatuspending /> अगले अधूरे चरण पर आगे बढ़ें।
-                  </div>
-                  <div className="nd-btnn text-center">
-                    <Button
-                      className="mt-3 nd-primary-btn"
-                      onClick={handleProceedClick}
-                      disabled={loading}
-                    >
-                      अगले अधूरे चरण पर जाएँ {firstIncompleteStep || 1}
-                    </Button>
-                  </div>
-                </>
-              )}
+            <Row className="nd-personalinfo nd-personalID">
+              <Col lg={3}>Form ID</Col>
+              <Col lg={9}>{formData.step1.form_id || "none"}</Col>
             </Row>
-          </div>
-          <Footer />
+            <Row className="nd-personalinfo nd-personalID">
+              <Col lg={3}>Girl Name</Col>
+              <Col lg={9}>{formData.step1.girl_name || "none"}</Col>
+            </Row>
+            <Row className="nd-personalinfo nd-personalID">
+              <Col lg={3}>DOB (Y-M-D)</Col>
+              <Col lg={9}>{formData.step1.dob || "none"}</Col>
+            </Row>
+            <Row className="nd-personalinfo nd-personalID">
+              <Col lg={3}>Father Name</Col>
+              <Col lg={9}>{formData.step1.fath_name || "none"}</Col>
+            </Row>
+            <Row className="nd-personalinfo nd-personalID">
+              <Col lg={3}>Mother Name</Col>
+              <Col lg={9}>{formData.step1.moth_name || "none"}</Col>
+            </Row>
+            <Row className="nd-personalinfo nd-personalID">
+              <Col lg={3}>District</Col>
+              <Col lg={9}>{formData.step1.district || "none"}</Col>
+            </Row>
+            <Row className="nd-personalinfo nd-personalID">
+              <Col lg={3}>Project</Col>
+              <Col lg={9}>{formData.step1.project || "none"}</Col>
+            </Row>
+            <Row className="nd-personalinfo nd-personalID">
+              <Col lg={3}>Sector</Col>
+              <Col lg={9}>{formData.step1.sector || "none"}</Col>
+            </Row>
+            <Row className="nd-personalinfo nd-personalID">
+              <Col lg={3}>AWC (AWC/MINI AWC)</Col>
+              <Col lg={9}>{formData.step1.awc_type || "none"}</Col>
+            </Row>
+            <Row className="nd-personalinfo nd-personalID">
+              <Col lg={3}>AWC Code</Col>
+              <Col lg={9}>{formData.step1.awc_code || "none"}</Col>
+            </Row>
+          </Row>
+          <Row>
+            {[1, 2, 3, 4, 5].map((step) => (
+              <Row key={step} className="nd-personalinfo nd-personalID">
+                <Col lg={3} className="nd-personalID-txt nd-steps-checks">
+                  Step {step}
+                </Col>
+                <Col
+                  lg={9}
+                  className={
+                    isStepComplete(step)
+                      ? "personalID-complete"
+                      : "personalID-pendding"
+                  }
+                >
+                  {getStatusIcon(step)}
+                </Col>
+              </Row>
+            ))}
+
+            {allStepsCompleted ? (
+              <div className="text-center nd-f-12 text-success">
+                सभी चरण सफलतापूर्वक जमा किए गए हैं। धन्यवाद!
+                <div className="nd-btnn text-center">
+                  <Button
+                    className="mt-3 ms-2 btn-danger"
+                    onClick={sendOtp}
+                    disabled={sendingOtp || deleting}
+                  >
+                    {sendingOtp
+                      ? "OTP भेजा जा रहा है..."
+                      : deleting
+                      ? "हटाया जा रहा है..."
+                      : "फॉर्म हटाएँ"}
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="text-center nd-f-12">
+                  फॉर्म अंतिम रूप से सबमिट नहीं किया गया है
+                </div>
+                <div className="text-center nd-f-12">
+                  <FormStatuspending /> अगले अधूरे चरण पर आगे बढ़ें।
+                </div>
+                <div className="nd-btnn text-center">
+                  <Button
+                    className="mt-3 nd-primary-btn"
+                    onClick={handleProceedClick}
+                    disabled={loading}
+                  >
+                    अगले अधूरे चरण पर जाएँ {firstIncompleteStep || 1}
+                  </Button>
+                </div>
+              </>
+            )}
+          </Row>
         </div>
-   
+      </div>
 
       <Modal show={showUserOtp} onHide={() => setShowUserOtp(false)} centered>
         <Modal.Header closeButton>

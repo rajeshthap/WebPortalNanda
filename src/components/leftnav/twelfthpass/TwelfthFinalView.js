@@ -643,7 +643,8 @@ const TwelfthFinalView = () => {
               Cancel / Edit
             </Button>
           </div>
-        </div>        
+        </div>     
+        <Footer/>   
       </div>
       
     </>
