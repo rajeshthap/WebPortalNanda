@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { Link } from "react-router-dom";
 import "../../assets/css/LeftNav.css";
 import Accordion from "react-bootstrap/Accordion";
@@ -20,9 +20,24 @@ import TwelthCheckbox from "./twelfthpass/TwelthCheckbox";
 import TwelthdetailPopup from "./twelfthpass/TwelthdetailPopup";
 import Orphanage from "./Orphangirls/Orphanage";
 import OrphanDetailPopup from "./Orphangirls/OrphanDetailPopup";
+import { useNavigate } from "react-router-dom";
 
 const UserDashboard = () => {
   
+const navigate = useNavigate();
+
+    useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
+      window.history.pushState(null, "", window.location.href);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
+
+
   return (
     <>
       <div>
