@@ -62,7 +62,7 @@ function BirthCheckbox() {
         </Modal.Body>
         <Modal.Footer className="nd-footer">
           <div className="nd-check-btn">
-            <div className="nd-chek-box mb-3">
+            <div >
               <UserForm />
             </div>
           </div>

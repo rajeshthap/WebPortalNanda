@@ -13,9 +13,9 @@ import TwelfthStepThreeView from "./TwelfthStepThreeView";
 import TwelfthStepFourView from "./TwelfthStepFourView";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
- 
+
 const BASE_URL = "https://brjobsedu.com/Nandagora";
- 
+
 const uploadItems = [
   { id: "pp_photo", label: "छात्रा की नवीनतम पासपोर्ट साइज फोटो" },
   { id: "stu_sign", label: "छात्रा के हस्ताक्षर" },
@@ -53,14 +53,14 @@ const uploadItems = [
   { id: "sch_doc", label: "विद्यालय द्वारा जारी प्रमाण पत्र..." },
   { id: "aww_doc", label: "आंगनबाड़ी कार्यकर्ती द्वारा प्रदत्त प्रमाण-पत्र।" },
 ];
- 
+
 const TwelfthStepFour = () => {
   const navigate = useNavigate();
   const [selectedFiles, setSelectedFiles] = useState({});
   const [uploadFiles, setUploadFiles] = useState({});
   const [dragOver, setDragOver] = useState(null);
   const [loading, setLoading] = useState(true);
- 
+
   let user = {};
   try {
     user = JSON.parse(localStorage.getItem("user")) || {};
@@ -68,19 +68,19 @@ const TwelfthStepFour = () => {
     user = {};
   }
   const user_id = user?.id;
- 
+
   const isImage = (name) => /\.(jpg|jpeg|png|gif)$/i.test(name);
   const isPdf = (name) => /\.pdf$/i.test(name);
- 
+
   useEffect(() => {
     if (!user_id) return;
- 
+
     const fetchUploadedFiles = async () => {
       try {
         const res = await axios.get(`${BASE_URL}/api4/step4update/${user_id}/`);
         const apiFiles = res.data || {};
         const prefilledFiles = {};
- 
+
         uploadItems.forEach((item, index) => {
           const key = `${item.id}-${index}`;
           if (apiFiles[item.id]) {
@@ -94,7 +94,7 @@ const TwelfthStepFour = () => {
             };
           }
         });
- 
+
         setSelectedFiles(prefilledFiles);
       } catch (err) {
         console.error("API से डेटा लाने में त्रुटि:", err);
@@ -102,14 +102,14 @@ const TwelfthStepFour = () => {
         setLoading(false);
       }
     };
- 
+
     fetchUploadedFiles();
   }, [user_id]);
- 
+
   useEffect(() => {
     localStorage.setItem("uploadedFiles", JSON.stringify(selectedFiles));
   }, [selectedFiles]);
- 
+
   const validateFileSize = (file) => {
     const min = 100 * 1024;
     const max = 1024 * 1024;
@@ -119,21 +119,21 @@ const TwelfthStepFour = () => {
     }
     return true;
   };
- 
+
   const handleFileChange = (e, fileKey) => {
     const file = e.target.files[0];
     if (file && validateFileSize(file)) {
       setUploadFiles((prev) => ({ ...prev, [fileKey]: file }));
     }
   };
- 
+
   const handleDragOver = (e, fileKey) => {
     e.preventDefault();
     setDragOver(fileKey);
   };
- 
+
   const handleDragLeave = () => setDragOver(null);
- 
+
   const handleDrop = (e, fileKey) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
@@ -142,7 +142,7 @@ const TwelfthStepFour = () => {
     }
     setDragOver(null);
   };
- 
+
   const handleDelete = (fileKey) => {
     setSelectedFiles((prev) => {
       const updated = { ...prev };
@@ -155,14 +155,14 @@ const TwelfthStepFour = () => {
       return updated;
     });
   };
- 
+
   const handleSingleSubmit = async (fileKey) => {
     const file = uploadFiles[fileKey];
     if (!file) {
       alert("कृपया पहले फ़ाइल चुनें!");
       return;
     }
- 
+
     const fieldName = fileKey.split("-")[0];
     const formData = new FormData();
     formData.append("user", user?.id || "");
@@ -171,20 +171,20 @@ const TwelfthStepFour = () => {
     formData.append("project", user?.block || "");
     formData.append("adhar_no", user?.aadhaar || "");
     formData.append(fieldName, file, file.name);
- 
+
     try {
       await axios.post(`${BASE_URL}/api4/step4/`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
- 
+
       alert(`${fieldName} सफलतापूर्वक अपलोड हो गया`);
       window.location.reload();
- 
+
       setSelectedFiles((prev) => ({
         ...prev,
         [fileKey]: { name: file.name, type: file.type, data: URL.createObjectURL(file) },
       }));
- 
+
       setUploadFiles((prev) => {
         const updated = { ...prev };
         delete updated[fileKey];
@@ -195,7 +195,7 @@ const TwelfthStepFour = () => {
       alert("अपलोड विफल। पुनः प्रयास करें।");
     }
   };
- 
+
   const handleSubmit = () => {
     const requiredFields = uploadItems.map((item, index) => `${item.id}-${index}`);
     const missingFields = requiredFields.filter((fileKey) => !selectedFiles[fileKey]);
@@ -206,9 +206,9 @@ const TwelfthStepFour = () => {
     alert("चरण 4 सफलतापूर्वक सबमिट हो गया। सभी दस्तावेज़ अपलोड हो चुके हैं।");
     navigate("/TwelfthFinalView");
   };
- 
+
   if (loading) return <p>लोड हो रहा है...</p>;
- 
+
   return (
     <>
       <DashHeader />
@@ -231,7 +231,7 @@ const TwelfthStepFour = () => {
                 </div>
               </div>
             </Row>
- 
+
             <div className="p-2 nd-data-doc">
               <Form>
                 <Row>
@@ -243,23 +243,24 @@ const TwelfthStepFour = () => {
                           {index + 1}. {Array.isArray(item.label) ? item.label.join(" ") : item.label}{" "}
                           <span className="alert-txt">*</span>
                         </h5>
- 
+
                         <Row className="nd-stepform-box align-items-center" style={{ minHeight: "80px" }}>
                           <Col lg={5} md={5} sm={12}>
                             <fieldset
-                              className={`upload_dropZone d-flex align-items-center justify-content-center py-2 ${
-                                dragOver === fileKey ? "border border-primary" : ""
-                              }`}
+                              className={`upload_dropZone d-flex align-items-center justify-content-center py-2 ${dragOver === fileKey ? "border border-primary" : ""
+                                }`}
                               onDragOver={(e) => handleDragOver(e, fileKey)}
                               onDragLeave={handleDragLeave}
                               onDrop={(e) => handleDrop(e, fileKey)}
                             >
-                              <img
-                                src={UploadFile}
-                                alt="upload-file"
-                                style={{ width: "50px", height: "50px", marginRight: "10px" }}
-                              />
-                              <div className="d-flex flex-column">
+
+
+                              <div className="d-flex flex-column upload-box">
+                                <img
+                                  src={UploadFile}
+                                  alt="upload-file"
+
+                                />
                                 <p className="nd-drop-txt mb-1" style={{ fontSize: "12px" }}>
                                   Drag & drop files <br />
                                   <i>or</i>
@@ -280,7 +281,7 @@ const TwelfthStepFour = () => {
                               </div>
                             </fieldset>
                           </Col>
- 
+
                           {uploadFiles[fileKey] && (
                             <Col lg={7} md={7} sm={12} className="d-flex flex-column align-items-start mt-2 mt-lg-0">
                               <div className="d-flex align-items-center mb-1">
@@ -298,7 +299,7 @@ const TwelfthStepFour = () => {
                               </div>
                             </Col>
                           )}
- 
+
                           {selectedFiles[fileKey] && !uploadFiles[fileKey] && (
                             <Col lg={7} md={7} sm={12} className="d-flex flex-column align-items-start mt-2 mt-lg-0">
                               <div className="d-flex align-items-center">
@@ -352,7 +353,7 @@ const TwelfthStepFour = () => {
                 </Row>
               </Form>
             </div>
- 
+
             <div className="nd-btnn text-center">
               <Button className="mt-3 nd-primary-btn" onClick={handleSubmit}>
                 सबमिट करें
@@ -365,6 +366,5 @@ const TwelfthStepFour = () => {
     </>
   );
 };
- 
+
 export default TwelfthStepFour;
- 

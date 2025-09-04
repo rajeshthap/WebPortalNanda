@@ -119,7 +119,7 @@ function TwelthdetailPopup() {
 
   return (
     <div>
-      <Button variant="primary" onClick={handleProceed}>
+      <Button variant="" className="nd-chek-box mb-3" onClick={handleProceed}>
         आवेदन जारी रखें
       </Button>
     </div>

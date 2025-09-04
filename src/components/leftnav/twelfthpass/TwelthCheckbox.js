@@ -83,7 +83,7 @@ function TwelthCheckbox() {
           </Modal.Body>
           <Modal.Footer className="nd-footer">
             <div className="nd-check-btn">
-              <div className="nd-chek-box mb-3">
+              <div >
                 <TwelthdetailPopup />
               </div>
             </div>
