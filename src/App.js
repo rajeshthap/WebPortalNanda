@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import React, { useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-icons-kit";
 import "font-awesome/css/font-awesome.min.css";
@@ -8,11 +7,9 @@ import "../src/custom/style.css";
 
 //-----------User dashboard-----------//
 // To use the provider in your App.js or Dashboard component:
-import { useAuth } from "../src/components/AuthContext";
 
 // Or, if inside a component to consume the context:
 // import { useFormContext } from "../context/FormContext";
-
 import FormView from "./AdminPannel/Sector_Login/sector_dashboard/sectorpraroop2024/FormView";
 import UserDashboard from "./components/leftnav/UserDashboard";
 import NandaYojana from "./components/leftnav/NandaYojana";
@@ -47,12 +44,11 @@ import TwelthStepThree from "./components/leftnav/twelfthpass/TwelthStepThree";
 import TwelthPass from "./components/leftnav/twelfthpass/TwelthPass";
 import CreateNewPassword from "./components/pages/CreateNewPassword";
 import FinalView from "./components/leftnav/NandaGoraForms/RegistrationForms/FinalView";
-// import FormStatus from "../src/components/leftnav/NandaGoraForms/RegistrationForms/FormStatus";
+import FormStatus from "../src/components/leftnav/NandaGoraForms/RegistrationForms/FormStatus";
 // import Girl12thtutorial from "./components/leftnav/Girl12thtutorial";
 import LoginFooter from "./components/footer/LoginFooter";
 import InnerNavigation from "./components/leftnav/InnerNavigation";
 import GirlsBornStep from "./components/leftnav/NandaGoraForms/RegistrationForms/GirlsBornStep";
-import FormStatus from "./components/leftnav/NandaGoraForms/RegistrationForms/FormStatus";
 // import Deepika from "./Deepika";
 //-----------Technical dashboard-----------//
 import EditStepButtonComponent from "./components/leftnav/twelfthpass/EditStepButtonComponent";

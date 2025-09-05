@@ -5,10 +5,10 @@ import { IoCloseCircle } from "react-icons/io5";
 import { FaCheckCircle } from "react-icons/fa";
 import "../../../../assets/css/NandaStepOne.css";
 import "../../../../assets/css/HomePage.css";
-import Footer from "../../../footer/Footer";
-import { Row, Col, Button, Modal, Form } from "react-bootstrap";
+import { Row, Col, Button, Modal, Form, Accordion } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import FormStatuspending from "../../FormStatuspending";
+
 
 const UserOtp = ({ phone, onConfirm, onCancel }) => {
   const [otp, setOtp] = useState("");
@@ -255,130 +255,137 @@ const TwelfthFormStatus = () => {
   };
 
   if (loading) return <p>लोड हो रहा है...</p>;
+  
+return (
+  <>
+    <Accordion defaultActiveKey="1">
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>बारहवीं फॉर्म स्थिति पृष्ठ</Accordion.Header>
+        <Accordion.Body>
+          <div className="mt-4">
+            <div className="box-container">
+              <Row>
+                <div className="nd-step1">
+                  <h3>बारहवीं फॉर्म स्थिति पृष्ठ</h3>
+                </div>
 
-  return (
-    <>
-      <div className="mt-4">
-        <div className="box-container">
-          <Row>
-            <div className="nd-step1">
-              <h3>बारहवीं फॉर्म स्थिति पृष्ठ</h3>
-            </div>
-
-            <Row className="nd-personalinfo nd-personalID">
-              <Col lg={3}>Form ID</Col>
-              <Col lg={9}>{formData.step1.form_id || "none"}</Col>
-            </Row>
-            <Row className="nd-personalinfo nd-personalID">
-              <Col lg={3}>Girl Name</Col>
-              <Col lg={9}>{formData.step1.girl_name || "none"}</Col>
-            </Row>
-            <Row className="nd-personalinfo nd-personalID">
-              <Col lg={3}>DOB (Y-M-D)</Col>
-              <Col lg={9}>{formData.step1.dob || "none"}</Col>
-            </Row>
-            <Row className="nd-personalinfo nd-personalID">
-              <Col lg={3}>Father Name</Col>
-              <Col lg={9}>{formData.step1.fath_name || "none"}</Col>
-            </Row>
-            <Row className="nd-personalinfo nd-personalID">
-              <Col lg={3}>Mother Name</Col>
-              <Col lg={9}>{formData.step1.moth_name || "none"}</Col>
-            </Row>
-            <Row className="nd-personalinfo nd-personalID">
-              <Col lg={3}>District</Col>
-              <Col lg={9}>{formData.step1.district || "none"}</Col>
-            </Row>
-            <Row className="nd-personalinfo nd-personalID">
-              <Col lg={3}>Project</Col>
-              <Col lg={9}>{formData.step1.project || "none"}</Col>
-            </Row>
-            <Row className="nd-personalinfo nd-personalID">
-              <Col lg={3}>Sector</Col>
-              <Col lg={9}>{formData.step1.sector || "none"}</Col>
-            </Row>
-            <Row className="nd-personalinfo nd-personalID">
-              <Col lg={3}>AWC (AWC/MINI AWC)</Col>
-              <Col lg={9}>{formData.step1.awc_type || "none"}</Col>
-            </Row>
-            <Row className="nd-personalinfo nd-personalID">
-              <Col lg={3}>AWC Code</Col>
-              <Col lg={9}>{formData.step1.awc_code || "none"}</Col>
-            </Row>
-          </Row>
-          <Row>
-            {[1, 2, 3, 4, 5].map((step) => (
-              <Row key={step} className="nd-personalinfo nd-personalID">
-                <Col lg={3} className="nd-personalID-txt nd-steps-checks">
-                  Step {step}
-                </Col>
-                <Col
-                  lg={9}
-                  className={
-                    isStepComplete(step)
-                      ? "personalID-complete"
-                      : "personalID-pendding"
-                  }
-                >
-                  {getStatusIcon(step)}
-                </Col>
+                <Row className="nd-personalinfo nd-personalID">
+                  <Col lg={3}>Form ID</Col>
+                  <Col lg={9}>{formData.step1.form_id || "none"}</Col>
+                </Row>
+                <Row className="nd-personalinfo nd-personalID">
+                  <Col lg={3}>Girl Name</Col>
+                  <Col lg={9}>{formData.step1.girl_name || "none"}</Col>
+                </Row>
+                <Row className="nd-personalinfo nd-personalID">
+                  <Col lg={3}>DOB (Y-M-D)</Col>
+                  <Col lg={9}>{formData.step1.dob || "none"}</Col>
+                </Row>
+                <Row className="nd-personalinfo nd-personalID">
+                  <Col lg={3}>Father Name</Col>
+                  <Col lg={9}>{formData.step1.fath_name || "none"}</Col>
+                </Row>
+                <Row className="nd-personalinfo nd-personalID">
+                  <Col lg={3}>Mother Name</Col>
+                  <Col lg={9}>{formData.step1.moth_name || "none"}</Col>
+                </Row>
+                <Row className="nd-personalinfo nd-personalID">
+                  <Col lg={3}>District</Col>
+                  <Col lg={9}>{formData.step1.district || "none"}</Col>
+                </Row>
+                <Row className="nd-personalinfo nd-personalID">
+                  <Col lg={3}>Project</Col>
+                  <Col lg={9}>{formData.step1.project || "none"}</Col>
+                </Row>
+                <Row className="nd-personalinfo nd-personalID">
+                  <Col lg={3}>Sector</Col>
+                  <Col lg={9}>{formData.step1.sector || "none"}</Col>
+                </Row>
+                <Row className="nd-personalinfo nd-personalID">
+                  <Col lg={3}>AWC (AWC/MINI AWC)</Col>
+                  <Col lg={9}>{formData.step1.awc_type || "none"}</Col>
+                </Row>
+                <Row className="nd-personalinfo nd-personalID">
+                  <Col lg={3}>AWC Code</Col>
+                  <Col lg={9}>{formData.step1.awc_code || "none"}</Col>
+                </Row>
               </Row>
-            ))}
+              <Row>
+                {[1, 2, 3, 4, 5].map((step) => (
+                  <Row key={step} className="nd-personalinfo nd-personalID">
+                    <Col lg={3} className="nd-personalID-txt nd-steps-checks">
+                      Step {step}
+                    </Col>
+                    <Col
+                      lg={9}
+                      className={
+                        isStepComplete(step)
+                          ? "personalID-complete"
+                          : "personalID-pendding"
+                      }
+                    >
+                      {getStatusIcon(step)}
+                    </Col>
+                  </Row>
+                ))}
 
-            {allStepsCompleted ? (
-              <div className="text-center nd-f-12 text-success">
-                सभी चरण सफलतापूर्वक जमा किए गए हैं। धन्यवाद!
-                <div className="nd-btnn text-center">
-                  <Button
-                    className="mt-3 ms-2 btn-danger"
-                    onClick={sendOtp}
-                    disabled={sendingOtp || deleting}
-                  >
-                    {sendingOtp
-                      ? "OTP भेजा जा रहा है..."
-                      : deleting
-                      ? "हटाया जा रहा है..."
-                      : "फॉर्म हटाएँ"}
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <>
-                <div className="text-center nd-f-12">
-                  फॉर्म अंतिम रूप से सबमिट नहीं किया गया है
-                </div>
-                <div className="text-center nd-f-12">
-                  <FormStatuspending /> अगले अधूरे चरण पर आगे बढ़ें।
-                </div>
-                <div className="nd-btnn text-center">
-                  <Button
-                    className="mt-3 nd-primary-btn"
-                    onClick={handleProceedClick}
-                    disabled={loading}
-                  >
-                    अगले अधूरे चरण पर जाएँ {firstIncompleteStep || 1}
-                  </Button>
-                </div>
-              </>
-            )}
-          </Row>
-        </div>
-      </div>
+                {allStepsCompleted ? (
+                  <div className="text-center nd-f-12 text-success">
+                    सभी चरण सफलतापूर्वक जमा किए गए हैं। धन्यवाद!
+                    <div className="nd-btnn text-center">
+                      <Button
+                        className="mt-3 ms-2 btn-danger"
+                        onClick={sendOtp}
+                        disabled={sendingOtp || deleting}
+                      >
+                        {sendingOtp
+                          ? "OTP भेजा जा रहा है..."
+                          : deleting
+                          ? "हटाया जा रहा है..."
+                          : "फॉर्म हटाएँ"}
+                      </Button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="text-center nd-f-12">
+                      फॉर्म अंतिम रूप से सबमिट नहीं किया गया है
+                    </div>
+                    <div className="text-center nd-f-12">
+                      <FormStatuspending /> अगले अधूरे चरण पर आगे बढ़ें।
+                    </div>
+                    <div className="nd-btnn text-center">
+                      <Button
+                        className="mt-3 nd-primary-btn"
+                        onClick={handleProceedClick}
+                        disabled={loading}
+                      >
+                        अगले अधूरे चरण पर जाएँ {firstIncompleteStep || 1}
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </Row>
+            </div>
+          </div>
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
 
-      <Modal show={showUserOtp} onHide={() => setShowUserOtp(false)} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>फॉर्म हटाने की पुष्टि करें</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <UserOtp
-            phone={phone}
-            onConfirm={deleteForm}
-            onCancel={() => setShowUserOtp(false)}
-          />
-        </Modal.Body>
-      </Modal>
-    </>
-  );
+    <Modal show={showUserOtp} onHide={() => setShowUserOtp(false)} centered>
+      <Modal.Header closeButton>
+        <Modal.Title>फॉर्म हटाने की पुष्टि करें</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <UserOtp
+          phone={phone}
+          onConfirm={deleteForm}
+          onCancel={() => setShowUserOtp(false)}
+        />
+      </Modal.Body>
+    </Modal>
+  </>
+)
 };
 
 export default TwelfthFormStatus;

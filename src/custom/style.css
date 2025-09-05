@@ -690,8 +690,6 @@ select.form-select {
   font-size: var(--nd-space-300);
 }
 
-
-
 .nd-card-info a {
   text-decoration: none;
 }
@@ -703,8 +701,6 @@ select.form-select {
 
 .nd-check-box-btn .form-check-input {
   border: 2px red solid !important;
-
-
 }
 
 .nd-f-12 {
@@ -718,6 +714,20 @@ select.form-select {
 
 .accordion-item {
   border: none !important;
+}
+
+.accordion-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #0056b3;
+  color: white;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
 }
 
 .dropdown-menu {
@@ -1017,7 +1027,5 @@ select.form-select {
   .nd-user-form {
     margin-top: var(--nd-space-300);
   }
-
-
-
+  
 }
