@@ -107,9 +107,8 @@ function TwelthdetailPopup() {
         alert("कृपया Step 4 में सभी आवश्यक फ़ाइलें अपलोड करें।");
         navigate("/TwelfthStepFour");
       } else {
-        alert("सभी चरण पूरे किए गए हैं। डैशबोर्ड पर जा रहे हैं।");
-        navigate("/UserDashboard");
-        window.location.reload();
+        alert("सभी चरण पूरे किए गए हैं। अंतिम अवलोकन पर जा रहे हैं।");
+        navigate("/TwelfthFinalView");
       }
     } catch (err) {
       console.error("Navigation check failed:", err);
