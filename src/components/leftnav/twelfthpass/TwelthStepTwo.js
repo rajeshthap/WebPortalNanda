@@ -23,18 +23,18 @@ const TwelthStepTwo = () => {
   const [siblings, setSiblings] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-   // back button code
-    useEffect(() => {
+  // back button code
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
       window.history.pushState(null, "", window.location.href);
-      const handlePopState = () => {
-        window.history.pushState(null, "", window.location.href);
-      };
-      window.addEventListener("popstate", handlePopState);
-      return () => {
-        window.removeEventListener("popstate", handlePopState);
-      };
-    }, [navigate]);
-    
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
+
   const validateForm = () => {
     const errors = [];
 
@@ -226,7 +226,7 @@ const TwelthStepTwo = () => {
       );
       console.log(" Phase2a submitted Successfully");
 
-      // Phase2c: previous girls (always post 3 rows)
+      // ----------- Phase2c: previous girls -----------
       try {
         const prevGirlsData = Array.from({ length: 3 })
           .map((_, i) => ({
@@ -244,7 +244,7 @@ const TwelthStepTwo = () => {
           .filter(
             (row) =>
               row.girl_name || row.dob || row.aadhaar_no || row.benefit_year
-          ); // keep only filled rows
+          );
 
         if (prevGirlsData.length > 0) {
           await axios.post(
@@ -254,19 +254,12 @@ const TwelthStepTwo = () => {
           );
           console.log(" Phase2C submitted Successfully");
         } else {
-          console.log("No filled rows for Phase2C, skipping submission");
+          console.log(" No filled rows for Phase2C, skipping submission");
         }
-
-        await axios.post(
-          "https://brjobsedu.com/Nandagora/api4/phase2c/create/",
-          prevGirlsData,
-          { headers: { "Content-Type": "application/json" } }
-        );
-
-        console.log(" Phase2c submitted Successfully (all rows in one go)");
       } catch (error) {
-        alert(
-          "Form Successfully Submitted\n" 
+        console.error(
+          " Phase2c failed:",
+          error.response?.data || error.message
         );
       }
 
@@ -290,11 +283,11 @@ const TwelthStepTwo = () => {
         formPayload,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      console.log("✅ Phase2b submitted Successfully");
+      console.log(" Phase2b submitted Successfully");
       navigate("/TwelthStepThree");
     } catch (error) {
       console.error(
-        "❌ Submission failed:",
+        " Submission failed:",
         error.response?.data || error.message
       );
       alert("Form submission failed. Please check your data and try again.");
@@ -465,6 +458,7 @@ const TwelthStepTwo = () => {
                                 type={field.includes("dob") ? "date" : "text"}
                                 name={`${field}_${index}`}
                                 value={formData[`${field}_${index}`] || ""}
+                                maxLength={12}
                                 onChange={(e) =>
                                   handleChange(
                                     `${field}_${index}`,
