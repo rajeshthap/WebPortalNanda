@@ -12,8 +12,8 @@ import "../../../assets/css/HomePage.css";
 import DashHeader from "../../leftnav/DashHeader";
 import InnerNavigation from "../../leftnav/InnerNavigation";
 import Footer from "../../footer/Footer";
-import TwelthPass from "../../leftnav/twelfthpass/TwelthPass";
 import OrphanStepOneView from "./OrphanStepOneView";
+import OrphanTwelfth from "./OrphanTwelfth";
 const OrphanStepTwo = () => {
   const navigate = useNavigate();
   const lastUpdatedData = useRef(null);
@@ -226,7 +226,7 @@ try {
         <div className="main-container">
           <InnerNavigation />
           <div className="main">
-            <TwelthPass />
+            <OrphanTwelfth />
             <div className="box-container">
               <Row>
                 <div className="nd-step1">
@@ -238,7 +238,7 @@ try {
                       लिखकर आगे बड़े।
                     </h3>
                   </div>
-                  <OrphanStepOneView />
+                  <OrphanStepOneView step="one"/>
                 </div>
               </Row>
 

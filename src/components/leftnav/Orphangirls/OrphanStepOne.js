@@ -1,31 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import "../../../assets/css/LeftNav.css";
-import "@fortawesome/fontawesome-free"; // Font Awesome library
+import "@fortawesome/fontawesome-free";
 import DashHeader from "../../leftnav/DashHeader";
 import "../../../assets/css/NandaStepOne.css";
 import "../../../assets/css/HomePage.css";
 import Footer from "../../footer/Footer";
 import InnerNavigation from "../../leftnav/InnerNavigation";
 import { Row, Col, Button } from "react-bootstrap";
-import TwelthPass from "../../leftnav/twelfthpass/TwelthPass";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-// Inside your existing imports, no change needed
+import OrphanTwelfth from "./OrphanTwelfth";
 
 const OrphanStepOne = () => {
-
-  const [errors, setErrors] = useState({ branch_name: "", acno: "" });
   const navigate = useNavigate();
-
+  const [user, setUser] = useState(null);
   const [bankList, setBankList] = useState([]);
-  const [allDistrictData, setAllDistrictData] = useState([]);
-
-  const [sectorData, setsectorData] = useState([]);
-  const [awcData, setawcData] = useState([]);
-  const [awc_codeData, setawc_codeData] = useState([]);
-  const [awc_typeData, setawc_typeData] = useState([]);
+  const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
     user: localStorage.getItem("user_id") || "",
@@ -33,29 +24,25 @@ const OrphanStepOne = () => {
     moth_name: "",
     fath_name: "",
     dob: "",
-    caste_category: "",
-    mem_name: "",
-    district: localStorage.getItem("district"),
-    project: "",
-    sector: "",
-    awc: "",
-    awc_type: "",
-    awc_code: "",
     mobile_no: "",
     email_id: "",
     adhar_no: "",
-    fam_mem: "",
-    fam_sis: "",
-    acno: "",
+    district: localStorage.getItem("district") || "",
+    project: "",
+    girl_add: "",
+    org_tele: "",
+    pan_no: "",
+    twelfth_pass_year: "",
+    school_name: "",
+    board_name: "",
+    vivran: "",
+    acn_no: "",
     ifsc_code: "",
     bank_name: "",
     branch_name: "",
-    pan_card: "",
   });
 
-  const [user, setUser] = useState(null);
-
-  //  Fetch Bank List Once
+  // Fetch Bank List Once
   useEffect(() => {
     axios
       .get("https://brjobsedu.com/Nandagora/api2/Bankdetails/")
@@ -63,155 +50,123 @@ const OrphanStepOne = () => {
       .catch((err) => console.error("Error fetching banks:", err));
   }, []);
 
-  //  Fetch all district data
-  useEffect(() => {
-    if (!formData.district) return;
-
-    const fetchAllDistrictData = async () => {
-      try {
-        const res = await axios.get(
-          `https://brjobsedu.com/Nandagora/api3/district-data/?district=${formData.district}`
-        );
-        setAllDistrictData(res.data || []);
-      } catch (err) {
-        console.error("Error fetching district data:", err);
-      }
-    };
-
-    fetchAllDistrictData();
-  }, [formData.district]);
-
-  
-  //this is filtering for sectors
-  useEffect(() => {
-    const uniqueSectors = allDistrictData.filter(
-      (item, index, self) =>
-        index === self.findIndex((t) => t.sector === item.sector)
-    );
-    setsectorData(uniqueSectors);
-  }, [allDistrictData]);
-
-  // this filtering is for awc(anganbadi)
-  useEffect(() => {
-    const filtered = allDistrictData.filter(
-      (item) => item.sector === formData.sector
-    );
-    const uniqueAWC = filtered.filter(
-      (item, index, self) => index === self.findIndex((t) => t.awc === item.awc)
-    );
-    setawcData(uniqueAWC);
-  }, [formData.sector, allDistrictData]);
-
-  // this filtering is for awc_code
-  useEffect(() => {
-    const filtered = allDistrictData.filter(
-      (item) => item.sector === formData.sector && item.awc === formData.awc
-    );
-    const uniqueAWCCode = filtered.filter(
-      (item, index, self) =>
-        index === self.findIndex((t) => t.awc_code === item.awc_code)
-    );
-    setawc_codeData(uniqueAWCCode);
-  }, [formData.awc, formData.sector, allDistrictData]);
-
-  // this filtering is done for awc_type
-  useEffect(() => {
-    const filtered = allDistrictData.filter(
-      (item) => item.awc_code === formData.awc_code
-    );
-    const uniqueAWCType = filtered.filter(
-      (item, index, self) =>
-        index === self.findIndex((t) => t.awc_type === item.awc_type)
-    );
-    setawc_typeData(uniqueAWCType);
-  }, [formData.awc_code, allDistrictData]);
-
-  // accessing user from local storage to save its data that was already filled during registration
+  // Get user from localStorage
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("user"));
     if (savedUser) {
       setUser(savedUser);
-      const updatedData = {
+      setFormData((prev) => ({
+        ...prev,
         girl_name: savedUser.name || "",
         adhar_no: savedUser.aadhaar || "",
         district: savedUser.district || "",
         project: savedUser.block || "",
         mobile_no: savedUser.phone || "",
-        
-      };
-      setFormData((prev) => ({ ...prev, ...updatedData }));
+      }));
     }
   }, []);
 
-  // reset all the filtered feilds on changing the secotr
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-      ...(name === "sector" && { awc: "", awc_code: "", awc_type: "" }),
-      ...(name === "awc" && { awc_code: "", awc_type: "" }),
-      ...(name === "awc_code" && { awc_type: "" }),
-    }));
+  const getMaxDob = () => {
+    const today = new Date();
+    today.setFullYear(today.getFullYear() - 15);
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = String(today.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
   };
 
- const handleInput = (e) => {
-  const { name, value } = e.target;
-  const updated = { ...formData, [name]: value };
-  setFormData(updated);
-};
+  const getPassYears = () => {
+    const currentYear = new Date().getFullYear();
+    const startYear = currentYear - 20;
+    const years = [];
+    for (let y = currentYear; y >= startYear; y--) years.push(y);
+    return years;
+  };
 
+  const capitalizeWords = (str) => {
+    return str
+      .split(" ")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  };
 
-  // On submit section
+  const validateEmail = (email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  // Input change handler
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    let newValue = value;
+
+    if (name === "moth_name" || name === "fath_name") {
+      newValue = capitalizeWords(value);
+    }
+
+    if (name === "pan_no") {
+      newValue = value.toUpperCase().slice(0, 10);
+    }
+
+    // Only allow numbers for account number
+    if (name === "acn_no") {
+      newValue = value.replace(/\D/g, "");
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: newValue }));
+  };
+
+  // Validation on blur
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "moth_name" || name === "fath_name") {
+      if (value && !/^[A-Za-z\u0900-\u097F ]+$/.test(value)) {
+        setErrors((prev) => ({
+          ...prev,
+          [name]: <span>"केवल अक्षर और स्पेस मान्य हैं।"</span>,
+        }));
+      } else {
+        setErrors((prev) => ({ ...prev, [name]: "" }));
+      }
+    }
+
+    if (name === "pan_no") {
+      if (!/^[A-Z0-9]{10}$/.test(value)) {
+        setErrors((prev) => ({
+          ...prev,
+          pan_no: <span>"PAN नंबर 10 अक्षरों/अंकों का होना चाहिए।"</span>,
+        }));
+      } else {
+        setErrors((prev) => ({ ...prev, pan_no: "" }));
+      }
+    }
+
+    if (name === "email_id") {
+      if (!validateEmail(value)) {
+        setErrors((prev) => ({
+          ...prev,
+          email_id: <span>"कृपया मान्य ईमेल आईडी दर्ज करें।"</span>,
+        }));
+      } else {
+        setErrors((prev) => ({ ...prev, email_id: "" }));
+      }
+    }
+  };
+
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const acno = formData.acno.trim();
-    if (!/^\d+$/.test(acno)) {
-      setErrors({ acno: "केवल संख्यात्मक मान दर्ज करें (Only numbers)." });
-      return;
-    }
-    if (acno.length < 9 || acno.length > 16) {
-      setErrors({ acno: "खाता संख्या 9 से 16 अंकों की होनी चाहिए." });
-      return;
-    }
-    setErrors({ acno: "", branch_name: "" });
-
+    // Check login
     const token = localStorage.getItem("access_token");
-    console.log("token",token);
     const user_id = localStorage.getItem("user_id");
-
     if (!token || !user) {
       alert("Please login first.");
       navigate("/UserLogin");
       return;
     }
 
-    const payload = {
-      user: user_id,
-      girl_name: formData.girl_name,
-      moth_name: formData.moth_name,
-      fath_name: formData.fath_name,
-      dob: formData.dob,
-      caste_category: formData.caste_category,
-      mobile_no: formData.mobile_no,
-      email_id: formData.email_id,
-      adhar_no: formData.adhar_no,
-      district: formData.district,
-      project: formData.project,
-      sector: formData.sector,
-      awc: formData.awc,
-      awc_type: formData.awc_type,
-      awc_code: formData.awc_code,
-      fam_mem: parseInt(formData.fam_mem) || 0,
-      fam_sis: parseInt(formData.fam_sis) || 0,
-      pan_card: formData.pan_card,
-      acno: formData.acno,
-      ifsc_code: formData.ifsc_code,
-      bank_name: formData.bank_name,
-      branch_name: formData.branch_name,
-    };
+    const payload = { ...formData, user: user_id };
 
     try {
       const res = await axios.post(
@@ -219,15 +174,6 @@ const OrphanStepOne = () => {
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
-
-      const returnedId = res.data.id || res.data.form_id || null;
-      if (returnedId) {
-        localStorage.setItem("submitted_form", JSON.stringify(formData));
-        localStorage.setItem("family_member_count", formData.fam_mem);
-        
-        localStorage.setItem("family_sister", formData.fam_sis);
-      }
-
       alert(res.data.message || "Form submitted Successfully!");
       navigate("/OrphanStepTwo");
     } catch (error) {
@@ -240,513 +186,448 @@ const OrphanStepOne = () => {
 
   return (
     <>
-      <div>
-        <DashHeader />
-        <div className="main-container">
-          <InnerNavigation />
-          <div className="main">
-            <TwelthPass />
-            <div className="box-container">
-              <Form onSubmit={handleSubmit}>
+      <DashHeader />
+      <div className="main-container">
+        <InnerNavigation />
+        <div className="main">
+          <OrphanTwelfth />
+          <div className="box-container">
+            <Form onSubmit={handleSubmit}>
+              <Row>
+                <div className="nd-step1">
+                  <h3>चरण 1 : व्यक्तिगत जानकारी</h3>
+                </div>
+
+                {/* कन्या शिशु का नाम */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group
+                    className="mb-3 nd-req-text"
+                    controlId="girl_name"
+                  >
+                    <Form.Label>
+                      कन्या शिशु का नाम <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="girl_name"
+                      placeholder="कन्या शिशु का नाम दर्ज करें"
+                      className="shadow1 nd-required"
+                      required
+                      value={formData.girl_name}
+                      disabled
+                      onChange={handleInput}
+                    />
+                    <span>
+                      कन्या का नाम परिवर्तित होने पर शपथ पत्र देना अनिवार्य है
+                    </span>
+                  </Form.Group>
+                </Col>
+
+                {/* माता का नाम */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group
+                    className="mb-3 nd-req-text"
+                    controlId="moth_name"
+                  >
+                    <Form.Label>माता का नाम</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="moth_name"
+                      placeholder="माता का नाम दर्ज करें"
+                      className="shadow1"
+                      value={formData.moth_name}
+                      onChange={handleInput}
+                      onBlur={handleBlur}
+                      isInvalid={!!errors.moth_name}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.moth_name}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+
+                {/* पिता का नाम */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group
+                    className="mb-3 nd-req-text"
+                    controlId="fath_name"
+                  >
+                    <Form.Label>पिता का नाम</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="fath_name"
+                      placeholder="पिता का नाम दर्ज करें"
+                      className="shadow1"
+                      value={formData.fath_name}
+                      onChange={handleInput}
+                      onBlur={handleBlur}
+                      isInvalid={!!errors.fath_name}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.fath_name}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+
+                {/* जन्म तिथि */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group className="mb-3 nd-req-text" controlId="dob">
+                    <Form.Label>
+                      कन्या की जन्म तिथि <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="date"
+                      name="dob"
+                      className="shadow1"
+                      required
+                      value={formData.dob}
+                      max={getMaxDob()}
+                      onChange={handleInput}
+                    />
+                  </Form.Group>
+                </Col>
+
+                {/* मोबाइल नंबर */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group
+                    className="mb-3 nd-req-text"
+                    controlId="mobile_no"
+                  >
+                    <Form.Label>
+                      मोबाइल नंबर <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="mobile_no"
+                      placeholder="मोबाइल नंबर दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.mobile_no}
+                      onChange={handleInput}
+                      disabled
+                    />
+                  </Form.Group>
+                </Col>
+
+                {/* ईमेल आईडी */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group className="mb-3 nd-req-text" controlId="email_id">
+                    <Form.Label>
+                      ईमेल आईडी <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="email"
+                      name="email_id"
+                      placeholder="ईमेल आईडी दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.email_id}
+                      onChange={handleInput}
+                      onBlur={handleBlur}
+                      isInvalid={!!errors.email_id}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.email_id}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+
+                {/* आधार नंबर */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group className="mb-3 nd-req-text" controlId="adhar_no">
+                    <Form.Label>
+                      माता/कन्या का आधार नंबर{" "}
+                      <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="adhar_no"
+                      placeholder="आधार नंबर दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.adhar_no}
+                      onChange={handleInput}
+                      disabled
+                    />
+                  </Form.Group>
+                </Col>
+
+                {/* जिला */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group className="mb-3 nd-req-text" controlId="district">
+                    <Form.Label>
+                      जिला <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="district"
+                      placeholder="जिला दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.district}
+                      onChange={handleInput}
+                      disabled
+                    />
+                  </Form.Group>
+                </Col>
+
+                {/* परियोजना / ब्लॉक */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group className="mb-3 nd-req-text" controlId="project">
+                    <Form.Label>
+                      परियोजना / ब्लॉक <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="project"
+                      placeholder="परियोजना / ब्लॉक दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.project}
+                      onChange={handleInput}
+                      disabled
+                    />
+                  </Form.Group>
+                </Col>
+
+                {/* कन्या का पता */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group className="mb-3 nd-req-text" controlId="girl_add">
+                    <Form.Label>
+                      कन्या का पता <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="girl_add"
+                      placeholder="कन्या का पता दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.girl_add}
+                      onChange={handleInput}
+                    />
+                  </Form.Group>
+                </Col>
+
+                {/* संगठन का टेलीफोन */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group className="mb-3 nd-req-text" controlId="org_tele">
+                    <Form.Label>
+                      संगठन का टेलीफोन <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="org_tele"
+                      placeholder="संगठन का टेलीफोन दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.org_tele}
+                      onChange={handleInput}
+                    />
+                  </Form.Group>
+                </Col>
+
+                {/* पैन नंबर */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group className="mb-3 nd-req-text" controlId="pan_no">
+                    <Form.Label>
+                      कन्या का पैन नंबर <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="pan_no"
+                      placeholder="पैन नंबर दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.pan_no}
+                      onChange={handleInput}
+                      onBlur={handleBlur}
+                      isInvalid={!!errors.pan_no}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.pan_no}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+
+                {/* 12वीं विवरण */}
                 <Row>
-                  <Row>
-                    <div className="nd-step1">
-                      <h3>Step 1 : व्यक्तिगत जानकारी</h3>
-                    </div>
-                  </Row>
-
-                  {/* कन्या शिशु का नाम */}
-
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="girl_name"
-                    >
-                      <Form.Label>
-                        कन्या शिशु का नाम <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="girl_name"
-                        placeholder="कन्या शिशु का नाम"
-                        className="shadow1 nd-required"
-                        required
-                        value={formData.girl_name}
-                        disabled
-                        onChange={handleInput}
-                      />
-                      <span>
-                        कन्या का नाम परिवर्तित होने पर शपथ पत्र देना अनिवार्य है
-                      </span>
-                    </Form.Group>
-                  </Col>
-
-                  {/* माता का नाम */}
-
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="moth_name"
-                    >
-                      <Form.Label>
-                        माता का नाम <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="moth_name"
-                        placeholder="माता का नाम"
-                        className="shadow1"
-                        required
-                        pattern="^[\u0900-\u097Fa-zA-Z ]{2,50}$"
-                        value={formData.moth_name}
-                        onChange={handleInput}
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  {/* पिता का नाम */}
-
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="fath_name"
-                    >
-                      <Form.Label>
-                        पिता का नाम <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="fath_name"
-                        placeholder="पिता का नाम"
-                        className="shadow1"
-                        required
-                        pattern="^[\u0900-\u097F a-zA-Z]{2,50}$"
-                        value={formData.fath_name}
-                        onChange={handleInput}
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  {/* अभिभावक का नाम */}
-
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="fath_name"
-                    >
-                      <Form.Label>
-                        स्थायी खाता संख्या कार्ड (PAN CARD){" "}
-                        <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="pan_card"
-                        placeholder="स्थायी खाता संख्या कार्ड"
-                        className="shadow1"
-                        required
-                        value={formData.pan_card}
-                        onChange={handleInput}
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  {/* जन्म तिथि */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group className="mb-3 nd-req-text" controlId="dob">
-                      <Form.Label>
-                        कन्या की जन्म तिथि <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="date"
-                        name="dob"
-                        className="shadow1"
-                        required
-                        value={formData.dob}
-                        onChange={handleInput}
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  {/* जन्म पंजीकरण संख्या */}
-
-                  <Col lg={4} md={4} sm={12}>
-                    <Form>
-                      <Form.Group
-                        className="mb-3 nd-req-text"
-                        controlId="exampleForm.ControlInput1"
-                      >
-                        <Form.Label>
-                          जाति श्रेणी <span className="alert-txt">*</span>
-                        </Form.Label>
-                        <Form.Select
-                          aria-label="Default select example"
-                          className="shadow1 nd-mt-6"
-                          required
-                          value={formData.caste_category}
-                          onChange={handleInput}
-                          name="caste_category"
-                        >
-                          <option selected="" disabled="">
-                            Please Select
-                          </option>
-                          <option value="General">General</option>
-                          <option value="st">ST</option>
-                          <option value="obc">OBC</option>
-                          <option value="sc">SC</option>
-                        </Form.Select>
-                      </Form.Group>
-                    </Form>
-                  </Col>
-
-                  {/* मोबाइल नंबर */}
-
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="mobile_no"
-                    >
-                      <Form.Label>
-                        मोबाइल नंबर <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="mobile_no"
-                        placeholder="मोबाइल नंबर"
-                        className="shadow1"
-                        required
-                        value={formData.mobile_no}
-                        onChange={handleInput}
-                        disabled
-                      />
-                    </Form.Group>
-                  </Col>
-                  {/* जिला */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="district"
-                    >
-                      <Form.Label>
-                        जिला <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="district"
-                        placeholder="जिला"
-                        className="shadow1"
-                        required
-                        value={formData.district}
-                        onChange={handleInput}
-                        disabled
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  {/* परियोजना / ब्लॉक */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="project"
-                    >
-                      <Form.Label>
-                        परियोजना / ब्लॉक <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="project"
-                        placeholder="परियोजना / ब्लॉक"
-                        className="shadow1"
-                        required
-                        value={formData.project}
-                        onChange={handleInput}
-                        disabled
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  {/* Sector */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group className="mb-3 nd-req-text" controlId="sector">
-                      <Form.Label>
-                        क्षेत्र / सेक्टर <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Select
-                        name="sector"
-                        className="shadow1"
-                        required
-                        value={formData.sector}
-                        onChange={handleChange}
-                      >
-                        <option value="">सेक्टर चुनें</option>
-                        {sectorData.map((item) => (
-                          <option key={item.id} value={item.sector}>
-                            {item.sector}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Form.Group>
-                  </Col>
-
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group className="mb-3 nd-req-text" controlId="awc">
-                      <Form.Label>
-                        आंगनवाड़ी केंद्र का नाम{" "}
-                        <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Select
-                        name="awc"
-                        className="shadow1"
-                        required
-                        value={formData.awc}
-                        onChange={handleChange}
-                      >
-                        <option value="">आंगनवाड़ी चुनें</option>
-                        {awcData.map((item) => (
-                          <option key={item.id} value={item.awc}>
-                            {item.awc}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Form.Group>
-                  </Col>
-
-                  {/* AWC कोड */}
-
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="awc_code"
-                    >
-                      <Form.Label>
-                        AWC कोड <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Select
-                        name="awc_code"
-                        className="shadow1"
-                        required
-                        value={formData.awc_code}
-                        onChange={handleChange}
-                      >
-                        <option value="">आंगनवाड़ी कोड चुनें</option>
-                        {awc_codeData.map((item) => (
-                          <option key={item.id} value={item.awc_code}>
-                            {item.awc_code}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Form.Group>
-                  </Col>
-
-                  {/* AWC टाइप */}
-
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="awc_code"
-                    >
-                      <Form.Label>
-                        AWC टाइप <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Select
-                        name="awc_type"
-                        className="shadow1"
-                        required
-                        value={formData.awc_type}
-                        onChange={handleChange}
-                      >
-                        <option value="">AWC टाइप</option>
-                        {awc_typeData.map((item) => (
-                          <option key={item.id} value={item.awc_type}>
-                            {item.awc_type}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Form.Group>
-                  </Col>
-
-                  {/* ईमेल आईडी */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="email_id"
-                    >
-                      <Form.Label>
-                        ईमेल आईडी <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="email"
-                        name="email_id"
-                        placeholder="ईमेल आईडी"
-                        className="shadow1"
-                        required
-                        value={formData.email_id}
-                        onChange={handleInput}
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  {/* आधार नंबर */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="adhar_no"
-                    >
-                      <Form.Label>
-                        माता/कन्या का आधार नंबर{" "}
-                        <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="adhar_no"
-                        placeholder="आधार नंबर"
-                        className="shadow1"
-                        required
-                        value={formData.adhar_no}
-                        onChange={handleInput}
-                        disabled
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  {/* परिवार के सदस्य */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="fam_mem"
-                    >
-                      <Form.Label>
-                        परिवार के सदस्य <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="number"
-                        name="fam_mem"
-                        placeholder="परिवार के सदस्य"
-                        className="shadow1"
-                        required
-                        value={formData.fam_mem}
-                        onChange={handleInput}
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  <Col lg={4} sm={12}>
-                    <Form.Group className="mb-3" controlId="fam_sis">
-                      <Form.Label>भाई बहन की संख्या *</Form.Label>
-                      <Form.Control
-                        type="number"
-                        name="fam_sis"
-                        value={formData.fam_sis}
-                        onChange={handleInput}
-                        required
-                      />
-                    </Form.Group>
-                  </Col>
-                  {/* खाता संख्या */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group className="mb-3 nd-req-text" controlId="acno">
-                      <Form.Label>
-                        माता/पिता/संरक्षक एवं कन्या शिशु के संयुक्त खाता संख्या{" "}
-                        <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="acno"
-                        placeholder="खाता संख्या"
-                        className="shadow1"
-                        required
-                        value={formData.acno}
-                        onChange={handleInput}
-                        isInvalid={!!errors.acno}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.acno}
-                      </Form.Control.Feedback>
-                    </Form.Group>
-                  </Col>
-
-                  {/* IFSC Code */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="ifsc_code"
-                    >
-                      <Form.Label>
-                        बैंक खाते का IFSC कोड{" "}
-                        <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="ifsc_code"
-                        placeholder="IFSC कोड"
-                        className="shadow1"
-                        required
-                        value={formData.ifsc_code}
-                        onChange={handleInput}
-                      />
-                    </Form.Group>
-                  </Col>
-
-                  {/* बैंक का नाम */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="bank_name"
-                    >
-                      <Form.Label>
-                        बैंक का नाम <span className="alert-txt">*</span>
-                      </Form.Label>
-
-                      <Form.Select
-                        name="bank_name"
-                        className="shadow1"
-                        required
-                        value={formData.bank_name}
-                        onChange={handleInput}
-                      >
-                        <option value="">बैंक का चयन करें</option>
-                        {bankList.map((bank) => (
-                          <option key={bank.id} value={bank.bank_name}>
-                            {bank.bank_name}
-                          </option>
-                        ))}
-                      </Form.Select>
-                    </Form.Group>
-                  </Col>
-
-                  {/* शाखा का नाम */}
-                  <Col lg={4} md={4} sm={12}>
-                    <Form.Group
-                      className="mb-3 nd-req-text"
-                      controlId="branch_name"
-                    >
-                      <Form.Label>
-                        शाखा का नाम <span className="alert-txt">*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="branch_name"
-                        placeholder="शाखा का नाम"
-                        className="shadow1"
-                        required
-                        value={formData.branch_name}
-                        onChange={handleInput}
-                        isInvalid={!!errors.branch_name}
-                      />
-                      <Form.Control.Feedback type="invalid">
-                        {errors.branch_name}
-                      </Form.Control.Feedback>
-                    </Form.Group>
+                  <div className="nd-step1">
+                    <Form.Label>
+                      12वीं उत्तीर्ण <span className="alert-txt">*</span>
+                    </Form.Label>
+                  </div>
+                  <Col lg={12}>
+                    <table className="table table-bordered shadow1">
+                      <thead className="table-light">
+                        <tr>
+                          <th>उत्तीर्ण वर्ष</th>
+                          <th>विद्यालय का नाम</th>
+                          <th>बोर्ड का नाम</th>
+                          <th>विवरण</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <Form.Select
+                              name="twelfth_pass_year"
+                              value={formData.twelfth_pass_year || ""}
+                              onChange={handleInput}
+                              className="shadow1"
+                              required
+                            >
+                              <option value="">साल चुनें</option>
+                              {getPassYears().map((year) => (
+                                <option key={year} value={year}>
+                                  {year}
+                                </option>
+                              ))}
+                            </Form.Select>
+                          </td>
+                          <td>
+                            <Form.Control
+                              type="text"
+                              name="school_name"
+                              placeholder="विद्यालय का नाम दर्ज करें"
+                              value={formData.school_name || ""}
+                              onChange={handleInput}
+                              className="shadow1"
+                              required
+                            />
+                          </td>
+                          <td>
+                            <Form.Control
+                              type="text"
+                              name="board_name"
+                              placeholder="बोर्ड का नाम दर्ज करें"
+                              value={formData.board_name || ""}
+                              onChange={handleInput}
+                              className="shadow1"
+                              required
+                            />
+                          </td>
+                          <td>
+                            <Form.Control
+                              as="textarea"
+                              rows={2}
+                              name="vivran"
+                              placeholder="विवरण दर्ज करें"
+                              value={formData.vivran || ""}
+                              onChange={handleInput}
+                              className="shadow1"
+                            />
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </Col>
                 </Row>
-                <div className="nd-step1 ">
-                  <div>
-                    <Button variant="primary" type="submit" className="nd-btn">
-                      Submit
-                    </Button>
-                  </div>
+
+                {/* बैंक विवरण */}
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group className="mb-3 nd-req-text" controlId="acn_no">
+                    <Form.Label>
+                      बैंक खाता संख्या <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="acn_no"
+                      placeholder="बैंक खाता संख्या दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.acn_no}
+                      onChange={handleInput} // only allows digits
+                      onBlur={(e) => {
+                        const val = e.target.value.trim();
+                        if (val.length < 9 || val.length > 16) {
+                          setErrors((prev) => ({
+                            ...prev,
+                            acn_no: "खाता संख्या 9 से 16 अंकों की होनी चाहिए.",
+                          }));
+                        } else {
+                          setErrors((prev) => ({ ...prev, acn_no: "" }));
+                        }
+                      }}
+                      isInvalid={!!errors.acn_no}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      {errors.acn_no}
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </Col>
+
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group
+                    className="mb-3 nd-req-text"
+                    controlId="ifsc_code"
+                  >
+                    <Form.Label>
+                      बैंक खाते का IFSC कोड <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="ifsc_code"
+                      placeholder="IFSC कोड दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.ifsc_code}
+                      onChange={handleInput}
+                    />
+                  </Form.Group>
+                </Col>
+
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group
+                    className="mb-3 nd-req-text"
+                    controlId="bank_name"
+                  >
+                    <Form.Label>
+                      बैंक का नाम <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Select
+                      name="bank_name"
+                      className="shadow1"
+                      required
+                      value={formData.bank_name}
+                      onChange={handleInput}
+                    >
+                      <option value="">बैंक का चयन करें</option>
+                      {bankList.map((bank) => (
+                        <option key={bank.id} value={bank.bank_name}>
+                          {bank.bank_name}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                </Col>
+
+                <Col lg={4} md={4} sm={12}>
+                  <Form.Group
+                    className="mb-3 nd-req-text"
+                    controlId="branch_name"
+                  >
+                    <Form.Label>
+                      शाखा का नाम <span className="alert-txt">*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="branch_name"
+                      placeholder="शाखा का नाम दर्ज करें"
+                      className="shadow1"
+                      required
+                      value={formData.branch_name}
+                      onChange={handleInput}
+                    />
+                  </Form.Group>
+                </Col>
+
+                <div className="nd-btnn text-center">
+                  <Button type="submit" className="mt-3 nd-secondary-btn">
+                    Submit Step 1
+                  </Button>
                 </div>
-              </Form>
-            </div>
+              </Row>
+            </Form>
           </div>
         </div>
       </div>

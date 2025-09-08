@@ -9,10 +9,10 @@ import Footer from "../../footer/Footer";
 import InnerNavigation from "../InnerNavigation";
 import { Row, Col, Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import TwelthPass from "../../leftnav/twelfthpass/TwelthPass";
 import OrphanStepTwoView from "./OrphanStepTwoView";
 import OrphanStepOneView from "./OrphanStepOneView";
 import axios from "axios";
+import OrphanTwelfth from "./OrphanTwelfth";
 
 const OrphanStepThree = () => {
   const navigate = useNavigate();
@@ -307,7 +307,7 @@ const OrphanStepThree = () => {
         <div className="main-container">
           <InnerNavigation />
           <div className="main">
-            <TwelthPass />
+            <OrphanTwelfth />
             <div className="box-container">
               <Row>
                 <div className="nd-step1">

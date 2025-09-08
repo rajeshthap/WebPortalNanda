@@ -21,47 +21,82 @@ const uploadItems = [
   { id: "stu_sign", label: "छात्रा के हस्ताक्षर" },
   { id: "par_sign", label: " माता / पिता/अभिभावक के हस्ताक्षर जमा करें " },
   { id: "mark10", label: "हाईस्कूल का प्रमाण-पत्र। " },
-  { id: "mark12", label: "कक्षा 12वीं उत्तीर्ण का अंक पत्र एवं प्रमाण पत्र। OR राष्ट्रीय मुक्त विद्यालय / अन्य शिक्षण संस्थान से कक्षा 12 उत्तीर्ण करने वाली आवेदिका द्वारा स्वप्रमाणित अंक पत्र की छायाप्रति "},
+  {
+    id: "mark12",
+    label:
+      "कक्षा 12वीं उत्तीर्ण का अंक पत्र एवं प्रमाण पत्र। OR राष्ट्रीय मुक्त विद्यालय / अन्य शिक्षण संस्थान से कक्षा 12 उत्तीर्ण करने वाली आवेदिका द्वारा स्वप्रमाणित अंक पत्र की छायाप्रति ",
+  },
   { id: "stu_adhar", label: "छात्रा एवं माता-पिता/अभिभावक का आधार कार्ड" },
   { id: "stu_pan", label: "छात्रा एवं माता-पिता/अभिभावक का पैन कार्ड " },
   { id: "stu_dom", label: " छात्रा का स्थाई निवास प्रमाण पत्र " },
   {
     id: "hou_tax",
-    label: " राष्ट्रीय मुक्त विद्यालय / अन्य शिक्षण संस्थान से कक्षा 12 उत्तीर्ण करने वाली आवेदिका द्वारा स्वप्रमाणित अंक पत्र की छायाप्रति ",
+    label:
+      " राष्ट्रीय मुक्त विद्यालय / अन्य शिक्षण संस्थान से कक्षा 12 उत्तीर्ण करने वाली आवेदिका द्वारा स्वप्रमाणित अंक पत्र की छायाप्रति ",
   },
   { id: "inc_cer", label: "आय प्रमाण पत्र" },
-  { id: "fam_reg", label: "परिवार रजिस्टर की नकल या सभासद/पार्षद द्वारा दिया गया प्रमाण पत्र तथा राशन कार्ड की प्रति (बालिका का नाम राशन कार्ड में अंकित होना अनिवार्य है) " },
-  { id: "cas_cer", label: " सामाजिक आर्थिक और जाति जनगणना(SECC) में परिवार की स्थिति के आंकलन की प्रति (यदि उपलबध है)" },
-  { id: "unm_cer", label: "  परिवार के विगत 03 बार के बिजली के बिलों की प्रति तथा विगत 01 बार के पानी के बिल की प्रति कनेक्शन न होने की स्तिथि में शपथ पत्र में आवश्यक रूप से उल्लेख करे।" },
+  {
+    id: "fam_reg",
+    label:
+      "परिवार रजिस्टर की नकल या सभासद/पार्षद द्वारा दिया गया प्रमाण पत्र तथा राशन कार्ड की प्रति (बालिका का नाम राशन कार्ड में अंकित होना अनिवार्य है) ",
+  },
+  {
+    id: "cas_cer",
+    label:
+      " सामाजिक आर्थिक और जाति जनगणना(SECC) में परिवार की स्थिति के आंकलन की प्रति (यदि उपलबध है)",
+  },
+  {
+    id: "unm_cer",
+    label:
+      "  परिवार के विगत 03 बार के बिजली के बिलों की प्रति तथा विगत 01 बार के पानी के बिल की प्रति कनेक्शन न होने की स्तिथि में शपथ पत्र में आवश्यक रूप से उल्लेख करे।",
+  },
   {
     id: "old_ben",
-    label: "शासनादेशानुसार योजना का लाभ केवल 02 बालिकाओं हेतु ही अनुमन्य है इसलिए आवेदित बालिका के परिवार की अन्य बालिकाओं को पूर्व में 12वीं कक्षा पूरी करने पर योजना का लाभ दिये जाने / न दिये जाने विषयक शपथ –पत्र में निम्न बिंदु आवश्यक रूप से शामिल होंगे :- मैं प्रमाणित करता/ करती हूँ की यह लाभ मेरी प्रथम/द्वितीय पुत्री द्वारा लिया जा रहा है, मेरी यह पुत्री अविवाहित है। मेरे द्वारा चल अचल सम्पति एवं अन्य चाही गयी समस्त सूचनाएं सही –सहीदी गयी है मेरे द्वारा किसी भी तथ्य को छुपाया नहीं गया है मेरे द्वारा परिवार के समस्त खातो का विवरण,एक वर्ष के बैंक स्टेटमेंट सहित दे दिया गया है",
+    label: (
+      <>
+        "शासनादेशानुसार योजना का लाभ केवल 02 बालिकाओं हेतु ही अनुमन्य है इसलिए
+        आवेदित बालिका के परिवार की अन्य बालिकाओं को पूर्व में 12वीं कक्षा पूरी
+        करने पर योजना का लाभ दिये जाने / न दिये जाने विषयक शपथ –पत्र में निम्न
+        बिंदु आवश्यक रूप से शामिल होंगे :- <br />
+        मैं प्रमाणित करता/ करती हूँ की यह लाभ मेरी प्रथम/द्वितीय पुत्री द्वारा
+        लिया जा रहा है, मेरी यह पुत्री अविवाहित है।
+        <br /> मेरे द्वारा चल अचल सम्पति एवं अन्य चाही गयी समस्त सूचनाएं सही
+        –सहीदी गयी है मेरे द्वारा किसी भी तथ्य को छुपाया नहीं गया है | <br />{" "}
+        मेरे द्वारा परिवार के समस्त खातो का विवरण,एक वर्ष के बैंक स्टेटमेंट सहित
+        दे दिया गया है"
+      </>
+    ),
   },
   { id: "gir_pas", label: "लाभार्थी बालिका के बैंक पासबुक की छाया प्रति " },
   {
     id: "fam_pas",
-    label: " परिवार के समस्त सदस्यों के बैंक पासबुक की प्रति / विगत 01 वर्ष के बैंक स्टेटमैन्ट की प्रति ",
+    label:
+      " परिवार के समस्त सदस्यों के बैंक पासबुक की प्रति / विगत 01 वर्ष के बैंक स्टेटमैन्ट की प्रति ",
   },
   { id: "fur_edu", label: "उच्च शिक्षा में दाखिले के पूर्ण अभिलेखों की प्रति" },
-  { id: "sch_doc", label: " विद्यालय द्वारा जारी प्रमाण पत्र    स्वप्रमाणित अंक पत्र की छायाप्रति" },
+  {
+    id: "sch_doc",
+    label:
+      " विद्यालय द्वारा जारी प्रमाण पत्र    स्वप्रमाणित अंक पत्र की छायाप्रति",
+  },
   { id: "aww_doc", label: "आंगनबाड़ी कार्यकर्ती द्वारा प्रदत्त प्रमाण-पत्र।" },
 ];
 
 const TwelfthStepFour = () => {
   const navigate = useNavigate();
 
-   // back button code
-    useEffect(() => {
+  // back button code
+  useEffect(() => {
+    window.history.pushState(null, "", window.location.href);
+    const handlePopState = () => {
       window.history.pushState(null, "", window.location.href);
-      const handlePopState = () => {
-        window.history.pushState(null, "", window.location.href);
-      };
-      window.addEventListener("popstate", handlePopState);
-      return () => {
-        window.removeEventListener("popstate", handlePopState);
-      };
-    }, [navigate]);
-    
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [navigate]);
+
   const [selectedFiles, setSelectedFiles] = useState({});
   const [uploadFiles, setUploadFiles] = useState({});
   const [dragOver, setDragOver] = useState(null);
@@ -188,7 +223,11 @@ const TwelfthStepFour = () => {
 
       setSelectedFiles((prev) => ({
         ...prev,
-        [fileKey]: { name: file.name, type: file.type, data: URL.createObjectURL(file) },
+        [fileKey]: {
+          name: file.name,
+          type: file.type,
+          data: URL.createObjectURL(file),
+        },
       }));
 
       setUploadFiles((prev) => {
@@ -203,10 +242,18 @@ const TwelfthStepFour = () => {
   };
 
   const handleSubmit = () => {
-    const requiredFields = uploadItems.map((item, index) => `${item.id}-${index}`);
-    const missingFields = requiredFields.filter((fileKey) => !selectedFiles[fileKey]);
+    const requiredFields = uploadItems.map(
+      (item, index) => `${item.id}-${index}`
+    );
+    const missingFields = requiredFields.filter(
+      (fileKey) => !selectedFiles[fileKey]
+    );
     if (missingFields.length > 0) {
-      alert(`कृपया सभी आवश्यक दस्तावेज़ अपलोड करें।\nअपूर्ण: ${missingFields.join(", ")}`);
+      alert(
+        `कृपया सभी आवश्यक दस्तावेज़ अपलोड करें।\nअपूर्ण: ${missingFields.join(
+          ", "
+        )}`
+      );
       return;
     }
     alert("चरण 4 सफलतापूर्वक सबमिट हो गया। सभी दस्तावेज़ अपलोड हो चुके हैं।");
@@ -227,7 +274,11 @@ const TwelfthStepFour = () => {
               <div className="nd-step1">
                 <div>
                   <h3>Step 4 : चयन मानक सम्बंधित प्रमाण पत्र</h3>
-                  <h3>Note: किसी भी फील्ड को ब्लेंक ना छोड़े, जानकारी/दस्तावेज ना होने की स्थिति में "उपलब्धि नहीं है / Not Applicable" लिखकर आगे बढ़े।</h3>
+                  <h3>
+                    Note: किसी भी फील्ड को ब्लेंक ना छोड़े, जानकारी/दस्तावेज ना
+                    होने की स्थिति में "उपलब्धि नहीं है / Not Applicable" लिखकर
+                    आगे बढ़े।
+                  </h3>
                 </div>
                 <div>
                   <TwelfthStepOneView step="one" />
@@ -244,30 +295,42 @@ const TwelfthStepFour = () => {
                   {uploadItems.map((item, index) => {
                     const fileKey = `${item.id}-${index}`;
                     return (
-                      <Col key={index} lg={12} md={12} sm={12} className="nd-p-12 mb-3">
+                      <Col
+                        key={index}
+                        lg={12}
+                        md={12}
+                        sm={12}
+                        className="nd-p-12 mb-3"
+                      >
                         <h5 style={{ fontSize: "14px", marginBottom: "5px" }}>
-                          {index + 1}. {Array.isArray(item.label) ? item.label.join(" ") : item.label}{" "}
+                          {index + 1}.{" "}
+                          {Array.isArray(item.label)
+                            ? item.label.join(" ")
+                            : item.label}{" "}
                           <span className="alert-txt">*</span>
                         </h5>
 
-                        <Row className="nd-stepform-box align-items-center" style={{ minHeight: "80px" }}>
+                        <Row
+                          className="nd-stepform-box align-items-center"
+                          style={{ minHeight: "80px" }}
+                        >
                           <Col lg={5} md={5} sm={12}>
                             <fieldset
-                              className={`upload_dropZone d-flex align-items-center justify-content-center py-2 ${dragOver === fileKey ? "border border-primary" : ""
-                                }`}
+                              className={`upload_dropZone d-flex align-items-center justify-content-center py-2 ${
+                                dragOver === fileKey
+                                  ? "border border-primary"
+                                  : ""
+                              }`}
                               onDragOver={(e) => handleDragOver(e, fileKey)}
                               onDragLeave={handleDragLeave}
                               onDrop={(e) => handleDrop(e, fileKey)}
                             >
-
-
                               <div className="d-flex flex-column upload-box">
-                                <img
-                                  src={UploadFile}
-                                  alt="upload-file"
-
-                                />
-                                <p className="nd-drop-txt mb-1" style={{ fontSize: "12px" }}>
+                                <img src={UploadFile} alt="upload-file" />
+                                <p
+                                  className="nd-drop-txt mb-1"
+                                  style={{ fontSize: "12px" }}
+                                >
                                   Drag & drop files <br />
                                   <i>or</i>
                                 </p>
@@ -278,10 +341,16 @@ const TwelfthStepFour = () => {
                                   accept="image/jpeg, image/png, image/svg+xml, application/pdf"
                                   onChange={(e) => handleFileChange(e, fileKey)}
                                 />
-                                <label className="btn nd-primary-btn py-1" htmlFor={fileKey}>
+                                <label
+                                  className="btn nd-primary-btn py-1"
+                                  htmlFor={fileKey}
+                                >
                                   Choose file
                                 </label>
-                                <p className="nd-upload-file mb-0" style={{ fontSize: "12px" }}>
+                                <p
+                                  className="nd-upload-file mb-0"
+                                  style={{ fontSize: "12px" }}
+                                >
                                   Upload size 100KB - 1MB (PDF, JPG, PNG)
                                 </p>
                               </div>
@@ -289,9 +358,18 @@ const TwelfthStepFour = () => {
                           </Col>
 
                           {uploadFiles[fileKey] && (
-                            <Col lg={7} md={7} sm={12} className="d-flex flex-column align-items-start mt-2 mt-lg-0">
+                            <Col
+                              lg={7}
+                              md={7}
+                              sm={12}
+                              className="d-flex flex-column align-items-start mt-2 mt-lg-0"
+                            >
                               <div className="d-flex align-items-center mb-1">
-                                <Button variant="success" size="sm" onClick={() => handleSingleSubmit(fileKey)}>
+                                <Button
+                                  variant="success"
+                                  size="sm"
+                                  onClick={() => handleSingleSubmit(fileKey)}
+                                >
                                   Upload
                                 </Button>
                                 <Button
@@ -307,7 +385,12 @@ const TwelfthStepFour = () => {
                           )}
 
                           {selectedFiles[fileKey] && !uploadFiles[fileKey] && (
-                            <Col lg={7} md={7} sm={12} className="d-flex flex-column align-items-start mt-2 mt-lg-0">
+                            <Col
+                              lg={7}
+                              md={7}
+                              sm={12}
+                              className="d-flex flex-column align-items-start mt-2 mt-lg-0"
+                            >
                               <div className="d-flex align-items-center">
                                 {isImage(selectedFiles[fileKey].name) ? (
                                   <img
@@ -339,7 +422,9 @@ const TwelfthStepFour = () => {
                                     PDF
                                   </div>
                                 ) : (
-                                  <span className="text-success fw-bold">{selectedFiles[fileKey].name}</span>
+                                  <span className="text-success fw-bold">
+                                    {selectedFiles[fileKey].name}
+                                  </span>
                                 )}
                                 <Button
                                   variant="outline-danger"

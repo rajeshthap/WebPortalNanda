@@ -6,12 +6,12 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import DashHeader from "../DashHeader";
 import InnerNavigation from "../InnerNavigation";
 import Footer from "../../footer/Footer";
-import TwelthPass from "../../leftnav/twelfthpass/TwelthPass";
 import OrphanStepOneView from "./OrphanStepOneView";
 import OrphanStepTwoView from "./OrphanStepTwoView";
 import OrphanStepThreeView from "./OrphanStepThreeView";
 import OrphanStepFourView from "./OrphanStepFourView";
 import axios from "axios";
+import OrphanTwelfth from "./OrphanTwelfth";
 
 const uploadItems = [
   { id: "pp_photo", label: "छात्रा की नवीनतम पासपोर्ट साइज फोटो" },
@@ -166,7 +166,7 @@ const OrphanStepFour = () => {
       <div className="main-container">
         <InnerNavigation />
         <div className="main">
-          <TwelthPass />
+          <OrphanTwelfth />
           <div className="box-container">
             <Row>
               <div className="nd-step1">
