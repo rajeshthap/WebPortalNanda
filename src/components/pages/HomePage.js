@@ -15,7 +15,7 @@ import Orphanage from "../leftnav/Orphangirls/Orphanage";
 function HomePage() {
   const carouselItems = [
     { id: 1, src: OnlineImage, alt: "Slide 1", caption: "" },
-    { id: 1, src: OnlineImage, alt: "Slide 1", caption: "" },
+    { id: 2, src: OnlineImage, alt: "Slide 2", caption: "" },
   ];
   return (
     <div className="container-fluid">

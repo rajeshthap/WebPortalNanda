@@ -11,7 +11,7 @@ import Twelve from "../../assets/images/12thpass.png";
 import LoginIcon from "../../assets/images/login.png";
 import UserRegistration from "../modal/UserRegistration";
 import ForgotPassword from "../modal/ForgotPassword";
-import { useAuth } from "../AuthContext";
+import HomePage from "../pages/HomePage";
 
 function UserLogin() {
 
@@ -33,7 +33,6 @@ function UserLogin() {
         };
       }, [navigate]);
   
- const { refreshToken, refreshAccessToken, logout , login} = useAuth();
   const validatePhone = (phone) => /^\d{10}$/.test(phone);
 
   const handleCaptcha = (value) => {
@@ -203,8 +202,10 @@ const { access, refresh, user_data: user } = response.data || {};
               </Card>
             </Col>
           </Row>
+          
         </div>
       </div>
+      <HomePage/>
     </div>
   );
 }
