@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import OrphanStepOneView from "./OrphanStepOneView";
-import TwelfthStepTwoView from "./TwelfthStepTwoView";
-import TwelfthStepThreeView from "./TwelfthStepThreeView"; 
-import TwelfthStepFourView from "./TwelfthStepFourView";
+import OrphanStepTwoView from "./OrphanStepTwoView";
 
 function EditOrphan({ step, data }) {
   const [showModal, setShowModal] = useState(false);
@@ -17,21 +15,15 @@ function EditOrphan({ step, data }) {
   const handleClose = () => {
     setShowModal(false);
     if (step === "one") {
-      navigate("/OrphanStepTwo");
+      navigate("/OrphanStepTwo"); 
     } else if (step === "two") {
-      navigate("/TwelthStepThree");
-    } else if (step === "three") {
-      navigate("/TwelfthStepFour"); 
-    } else if (step === "four") {
       navigate("/dashboard"); 
     }
   };
 
   const getStepComponent = () => {
     if (step === "one") return <OrphanStepOneView />;
-    if (step === "two") return <TwelfthStepTwoView />;
-    if (step === "three") return <TwelfthStepThreeView />;
-    if (step === "four") return <TwelfthStepFourView />;
+    if (step === "two") return <OrphanStepTwoView />;
     return null;
   };
 
@@ -41,10 +33,9 @@ function EditOrphan({ step, data }) {
         {step === "one"
           ? "स्टेप 1 एडिट करें"
           : step === "two"
-          ? "स्टेप 2 एडिट करें"
+          ? "स्टेप 2 दस्तावेज़ देखें/एडिट करें"
           : step === "three"
-          ? "स्टेप 3 देखें/एडिट करें"
-          : "स्टेप 4 दस्तावेज़ देखें/एडिट करें"}
+          }
       </Button>
 
       <Modal
@@ -60,10 +51,9 @@ function EditOrphan({ step, data }) {
             {step === "one"
               ? "स्टेप 1 एडिट करें"
               : step === "two"
-              ? "स्टेप 2 एडिट करें"
+              ? "स्टेप 2 दस्तावेज़ देखें/एडिट करें"
               : step === "three"
-              ? "स्टेप 3 देखें/एडिट करें"
-              : "स्टेप 4 दस्तावेज़ देखें/एडिट करें"}
+            }
           </Modal.Title>
         </Modal.Header>
 

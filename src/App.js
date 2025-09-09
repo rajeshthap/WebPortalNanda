@@ -157,12 +157,8 @@ import TwelfthStepFour from "./components/leftnav/twelfthpass/TwelfthStepFour";
 import TwelfthStepFourView from "./components/leftnav/twelfthpass/TwelfthStepFourView";
 import OrphanStepOne from "./components/leftnav/Orphangirls/OrphanStepOne";
 import OrphanStepTwo from "./components/leftnav/Orphangirls/OrphanStepTwo";
-import OrphanStepThree from "./components/leftnav/Orphangirls/OrphanStepThree";
-import OrphanStepFour from "./components/leftnav/Orphangirls/OrphanStepFour";
 import OrphanStepOneView from "./components/leftnav/Orphangirls/OrphanStepOneView";
 import OrphanStepTwoView from "./components/leftnav/Orphangirls/OrphanStepTwoView";
-import OrphanStepThreeView from "./components/leftnav/Orphangirls/OrphanStepThreeView";
-import OrphanStepFourView from "./components/leftnav/Orphangirls/OrphanStepFourView";
 
 function App() {
   const location = useLocation();
@@ -336,8 +332,6 @@ function App() {
     "/TwelfthStepFour",
     "/OrphanStepOne",
     "/OrphanStepTwo",
-    "/OrphanStepThree",
-    "/OrphanStepFour",
     "/TwelthExcelPFMS",
     "/TwelthSectorWiseView",
     "/TwelthAllAppl",
@@ -427,8 +421,6 @@ function App() {
         />
         <Route path="/OrphanStepOneView" element={<OrphanStepOneView />} />
         <Route path="/OrphanStepTwoView" element={<OrphanStepTwoView />} />
-        <Route path="/OrphanStepThreeView" element={<OrphanStepThreeView />} />
-        <Route path="/OrphanStepFourView" element={<OrphanStepFourView />} /> 
         <Route path="/SteptwoView" element={<SteptwoView />} />
         <Route path="/StepthreeView" element={<StepthreeView />} />
         <Route path="/TwelfthStepThreeView" element={<TwelfthStepThreeView />} />
@@ -444,8 +436,6 @@ function App() {
         <Route path="/TwelthPass" element={<TwelthPass />} />
         <Route path="/OrphanStepOne" element={<OrphanStepOne />} />
         <Route path="/OrphanStepTwo" element={<OrphanStepTwo />} />
-        <Route path="/OrphanStepThree" element={<OrphanStepThree />} />
-        <Route path="/OrphanStepFour" element={<OrphanStepFour />} />
         <Route path="/DashBoard" element={<DashBoard />} /> {/* Correct path */}
         <Route path="/UserDashboard" element={<UserDashboard />} />{" "}
         {/* Correct path */}
